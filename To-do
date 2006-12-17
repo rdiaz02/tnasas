@@ -1,0 +1,6 @@
+- Selección de genes usando robust Wilcoxon statistic as in 
+	Dettling & Buhlman 2003, Bioinformatics 19: 1061-1069 (boosting)
+- Usar EP technique of Boulesteix (Bioinformatics, 2003, 19: 2465).
+- Para lo anterior: maybe use randomForests for pre-screening?
+- Añadir posibilidad de imputación en cross-validation
+- Posibilidad de pasar nuevos datos

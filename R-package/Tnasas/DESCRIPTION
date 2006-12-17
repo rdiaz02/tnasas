@@ -1,0 +1,13 @@
+Package: Tnasas
+Version: 1.0
+Date: 2006-01-19
+Title: This is not a substitute for a statistician
+Author: Ramon Diaz-Uriarte <rdiaz@ligarto.org>
+Maintainer: Ramon Diaz-Uriarte <rdiaz@ligarto.org>
+Depends: R (>= 2.0.0)
+Description: whatever
+LazyLoad: Yes
+License: GPL version 2 or newer
+URL: http://www.asterias.info,
+http://ligarto.org/rdiaz
+Packaged: Fri Feb 10 14:08:32 2006; root

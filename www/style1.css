@@ -1,0 +1,112 @@
+/* A lot of this style sheet comes from liberal copying and modifications
+   of the style sheets from the Biopython web site (http://www.biopython,org)
+   and the bluefish site (http://bluefish.openoffice.nl)*/
+
+
+	body {
+		margin: 10px 10px 10px 10px;
+/*		background-color: #314e6c; */
+		font-family: 'Bitstream Vera Sans',Verdana,sans;
+	}
+.license{ font-family: arial, verdana, sans-serif;
+          color:black;
+          font-size:large;
+          background:#FFF;
+          font-style:italic;
+          }
+
+.description {
+		font-family:verdana, arial, sans-serif;
+		color:#999;
+		font-size:x-small;
+		font-weight:bold;
+		background:#FFF;
+		text-transform:none;
+		letter-spacing:normal;
+		}
+	#page {
+		margin-left: 1px;
+                margin-right: 10px;
+		border-left: 1px solid black;
+		border-right: 1px solid black;
+		background-color: white;
+		/* background-image: url("images/bg.jpg"); */
+		background-repeat: repeat-x;
+                padding-left:10px;
+                padding-right:10px;
+                }
+
+
+	#links {
+		padding-right:15px;
+		}
+
+
+img { 
+border: 0;
+ }
+
+h1 {
+     font-weight: bold;
+     text-align:center;
+     margin: 0px;
+     padding: 0px;
+     }
+
+/* pre { */
+/* font-size: large;   */
+/* } */
+
+h2 {
+     /* border-bottom: 1px solid #cccccc; */
+     padding-top: 30px;
+     margin-bottom: 15px;
+     text-align: center;
+     }
+
+h3 { 
+     padding-top: 15px;
+     margin-bottom: 8px; 
+     }
+hr {
+     color: #023390;
+     background-color: #023390;
+     }
+
+p { 
+    margin-left: 60px;
+ }
+
+li.l1 { margin-top: 100px; }
+
+
+/* #title { */
+/*          position: absolute; */
+/*          top: 44px; */
+/*          left: 220px; */
+/*          font-style: italic; */
+/*          font-weight: bold;  */
+/*          padding: 3px; */
+/*          margin: 0px; */
+/*          } */
+
+/* #subtitle { */
+/*             position: absolute; */
+/*             top: 43px; */
+/*             right: 120px; */
+/*             color: gray; */
+/*             font-size: small; */
+/*             padding: 2px; */
+/*             margin: 0px; */
+/*             } */
+
+
+
+/* .title { */
+/*          font-family:verdana, arial; */
+/*          font-size:small; */
+/*          color:#000080; */
+/*          text-transform:uppercase; */
+/*          font-weight:bold; */
+/*          } */
+

@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+<title>Tnasas</title>
+
+<script type="text/javascript" language="javascript">
+	function getArgs(  ) {
+	    var args = new Object(  );
+	    var query = location.search.substring(1);      // Get query string
+	    var pairs = query.split("&");                  // Break at &
+	    for(var i = 0; i < pairs.length; i++) {
+	        var pos = pairs[i].indexOf('=');          // Look for "name=value"
+	        if (pos == -1) continue;                  // If not found, skip
+	        var argname = pairs[i].substring(0,pos);  // Extract the name
+	        var value = pairs[i].substring(pos+1);    // Extract the value
+	        args[argname] = unescape(value);          // Store as a property
+       						  // In JavaScript 1.5, use decodeURIComponent(  ) 
+					          // instead of escape(  )
+    	    }
+	    return args;     // Return the object
+	}	
+
+</script>
+</head>
+
+<body>
+<BODY background="images/fondo3.jpg">
+
+<form action="http://tnasas.bioinfo.cnio.es/cgi-bin/tnasasR.cgi"
+enctype="multipart/form-data" method="POST">
+
+
+
+
+<center>
+<table border=0 cellspacing=0 width="100%">
+  <tr bgcolor="#D4DFF4">
+    <td rowspan="3" align=center width=140>
+      <a href="http://tnasas.bioinfo.cnio.es">
+      <img SRC="tnasas_logo_small.gif"
+      border=0
+      alt="tnasas (cluster: prot30)">
+      </a>
+    </td>
+    <td bgcolor="#4466FF" align=center width="100%">
+      <a href="http://bioinfo.cnio.es" STYLE="text-decoration:none">
+      <font color=white>
+      <b>Bioinformatics Unit</b>
+      </font>
+      </a>
+        -  
+      <a href="http://www.cnio.es" STYLE="text-decoration:none">
+      <font color=white>
+      <b>CNIO</b>
+      </font>
+      </a>
+    </td>
+    <td rowspan="3" align=center width=124>
+      <a href="http://bioinfo.cnio.es">
+      <img src="bioinfo.png" border=0>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td bgcolor="#D4DFF4" align=center valign=middle  STYLE="font-size:12">
+      <br>
+      <font size=5>
+      <b>Tnasas</b>
+      </font>
+      <br> 
+    </td>
+  </tr>
+  <tr>
+    <td bgcolor="#4466FF" align=center>
+       
+    </td>
+  </tr>
+</table>
+</center>
+<br>
+
+
+<h2>Tnasas: a class prediction and gene selection tool</h2>
+
+<p style="font-family: 'Bitstream Vera Sans',Verdana,sans; font-size: 9pt"> Tnasas is a
+    web tool for building class prediction models (but, as the name says,
+    this is not a substitute for a statistician). We include five class
+    prediction models/algorithms and three gene selection
+    methods/algorithms. We pay particular attention to obtaining honest
+    estimates of the prediction error rate and assessing instability of solutions.
+For further details see the
+<a href="./help/tnasas-help.html" target="help_window">help</a>.</p>
+
+<p style="font-family: 'Bitstream Vera Sans',Verdana,sans; font-size: 9pt"">To use this web
+tool you need to provide two files, one with the gene expression data and one with
+the class labels, and press "Submit".</p>
+<hr>
+
+<h3>Input files</h3>
+
+<TABLE>
+<tr><td>
+<b>Expression data file:</b> (<a href="./help/tnasas-help.html#input"
+target="help_window">?</a>) 
+</td><td>
+<script Language="Javascript">
+  var args = getArgs();
+  if (args.datadir) {
+    document.write("<span style=\"color: red\">Input Data from <i>pre</i>P</b></span><input type=\"hidden\" value =" + args.datadir + "  name=\"covariate2\">");
+   }else {
+  	document.write("<input type=\"FILE\" name=\"covariate\" size = \"40\" maxlength =\"200\">");
+   }
+</script>
+</td></tr>
+
+<tr><td>
+<b>Class file: </b> (<a href="./help/tnasas-help.html#input" target="help_window">?</a>)
+</td><td>
+<input type="FILE" name="class", size = "40" maxlength = "200">
+</td></tr>
+</table>
+<hr/ >
+<h3>Class prediction algorithm and gene selection method</h3>
+
+<table>
+  <tr><td width="100"></td><td width="400"><b>Classification algorithm</b></td><td width="400"><b>Gene selection
+  method</b></td></tr>
+  <tr><td></td>
+    <td width="400"><input type="RADIO" name="model" checked value="dlda">DLDA (<a href="./help/tnasas-help.html#dlda" target="help_window">?</a>)</input></td>
+    <td width="400"><input type="RADIO" name="genesel" checked value="Fratio">F ratio (<a href="./help/tnasas-help.html#Fratio" target="help_window">?</a>)</input></td></tr>
+  <tr><td></td>
+    <td width="400"><input type="RADIO" name="model" value="knn">KNN (<a href="./help/tnasas-help.html#knn" target="help_window">?</a>)</input></td>
+    <td width="400"><input type="RADIO" name="genesel" value="Wilcoxon">Wilcoxon statistic (<a href="./help/tnasas-help.html#Wilcoxon" target="help_window">?</a>)</input></td></tr>
+  <tr><td></td>
+    <td width="400"><input type="RADIO" name="model" value="randomforest">Random forest (<a href="./help/tnasas-help.html#randomforest" target="help_window">?</a>)</input></td>
+    <td width="400"><input type="RADIO" name="genesel" value="randomforest">Random forest (<a href="./help/tnasas-help.html#randomforestvs" target="help_window">?</a>)</input></td></tr>
+  <tr><td></td>
+    <td width="400"><input type="RADIO" name="model" value="svm">SVM (<a href="./help/tnasas-help.html#SVM" target="help_window">?</a>)</input></td>
+    <td width="400"></td></tr>
+  <tr><td></td>
+    <td width="400"><input type="RADIO" name="model" value="PAM">Shrunken centroids (PAM) (<a href="./help/tnasas-help.html#PAM" target="help_window">?</a>)</input></td>
+    <td width="400"></td></tr>
+</table>    
+
+
+    
+<hr/ >
+<h3>Type of gene identifier and species</h3>
+<p style="font-family: 'Bitstream Vera Sans',Verdana,sans; font-size: 9pt">
+This information is used to provide clickable links (that take you to the one-query-version of our 
+<a href="http://idconverter.bioinfo.cnio.es">IDConverter</a>) in the
+results. (<a href="./help/tnasas-help.html#idc" target="help_window">Help</a>)
+
+</p>
+
+<table>
+  <tr><td width="100"></td><td width="400"><b>Type of ID for gene names</b></td>
+    <td width="400"><b>Organism</b></td></tr>
+  <tr><td></td><td>
+      <input type="RADIO" name="idtype" value="affy">  Affymetrix ID</input>
+    </td><td>
+      <input type="RADIO" name="organism" value="Hs">  Human (<i>Homo sapiens</i>)</input>
+  </td></tr>
+  
+  <tr><td></td><td>
+      <input type="RADIO" name="idtype" value="clone">  Clone ID (IMAGE Consortium)</input>
+    </td><td>
+      <input type="RADIO" name="organism" value="Mm">  Mouse (<i>Mus musculus</i>)</input>
+  </td></tr>
+  <tr><td></td><td>
+      <input type="RADIO" name="idtype" value="acc">  GenBank Accession</input>
+    </td><td>
+      <input type="RADIO" name="organism" value="Rn">  Rat (<i>Rattus norvegicus</i>)</input>
+  </td></tr>
+  <tr><td></td><td>
+      <input type="RADIO" name="idtype" value="ensembl">  Ensembl Gene</input>
+    </td><td>
+      <input type="RADIO" name="organism" checked value="None">  None of the above</input>
+  </td></tr>
+  <tr><td></td><td>
+      <input type="RADIO" name="idtype" value="ug">  Unigene cluster</input>
+    </td><td></td></tr>
+  <tr><td></td><td>
+      <input type="RADIO" name="idtype" value="entrez">  Entrez Gene</input>
+    </td><td></td></tr>
+  <tr><td></td><td>
+      <input type="RADIO" name="idtype" value="cnio">  CNIO ID</input>
+    </td><td></td></tr>
+  <tr><td></td><td>
+      <input type="RADIO" name="idtype" checked value="None">  None of the above</input>
+    </td><td></td></tr>
+</table>
+
+
+
+
+<br><br>
+<input value="Submit" type = "SUBMIT">
+<br>
+<p style="font-family: 'Bitstream Vera Sans',Verdana,sans">
+Push the "Submit" to start execution.</p>
+<hr>
+
+
+<a href="./help/tnasas-help.html" target="help_window">Help</a>
+
+
+
+
+</form>
+
+<hr />
+<p>
+<a href="http://www.python.org/">
+<img src="PythonPowered.gif" align=top width=110
+     height=44 alt="[Python Powered]" border=0>
+</a>
+
+<a href="http://www.r-project.org/">
+<img src="Rlogo-5.png" align=top width=100
+     height=76 alt="[R Project for Statistical Computing]" border=0>
+</a>
+</p>
+<TABLE width="100%"><TR>
+<TD align="right" width="200"><a href="http://asterias.bioinfo.cnio.es"><img src="asterias_app.png" width="200" height="40" border="0"></a></TD>
+</TR>
+</TABLE>
+<address>Send comments to <a href="mailto:rdiaz@cnio.es">webmaster</a></address>
+<!-- hhmts start -->Last modified: Thu Feb  9 02:55:49 CET 2006 <!-- hhmts end -->
+</body> </html>
+
+

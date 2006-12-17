@@ -1,0 +1,974 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Help - Tnasas</title>
+<style type="text/css">
+                 body { margin-left: 10%; margin-right: 10%; color: black;} 
+<!--                  body { margin-left: 10%; margin-right: 10%; color: black; background="fondo3.jpg";} -->
+                 <!-- h1 { margin-left: -8%;} -->
+                 h2,h3,h4,h5,h6 { margin-left: -4%; }
+div.box { border: solid; border-width: thin; width: 100%; padding: 0.2em; }
+div.color {background: rgb(204,204,255);
+           padding: 0.5em;
+           border: none;
+           }
+body { font-family: Verdana, sans-serif; }
+h1,h2 { font-family: Verdana, sans-serif; }
+pre { font-family: monospace; }
+               </style>
+  </head>
+<body background="fondo3.jpg"> 
+
+
+
+<br />
+
+<center>
+<!-- Creative Commons License -->
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/"><img alt="Creative Commons License" border="0" src="somerights20.gif" /></a><br />
+<span class="license">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/">Creative Commons License</a></span>.
+<!-- /Creative Commons License -->
+</center>
+<!--
+
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"> <Work rdf:about="">
+<dc:title>Tnasas help</dc:title>
+<dc:date>1996, 2004</dc:date>
+<dc:description>Help for the Tnasas predictor building tool.</dc:description>
+<dc:creator><Agent>
+<dc:title>Ramón Díaz-Uriarte</dc:title>
+</Agent></dc:creator>
+<dc:rights><Agent>
+<dc:title>Ramón Díaz-Uriarte</dc:title>
+</Agent></dc:rights>
+<dc:type
+rdf:resource="http://purl.org/dc/dcmitype/Text"
+/>
+<license
+rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.0/"
+/>
+</Work>
+
+<License
+rdf:about="http://creativecommons.org/licenses/by-nc-sa/2.0/">
+<permits
+rdf:resource="http://web.resource.org/cc/Reproduction"
+/>
+<permits
+rdf:resource="http://web.resource.org/cc/Distribution"
+/>
+<requires
+rdf:resource="http://web.resource.org/cc/Notice"
+/>
+<requires
+rdf:resource="http://web.resource.org/cc/Attribution"
+/>
+<prohibits
+rdf:resource="http://web.resource.org/cc/CommercialUse"
+/>
+<permits
+rdf:resource="http://web.resource.org/cc/DerivativeWorks"
+/>
+<requires
+rdf:resource="http://web.resource.org/cc/ShareAlike"
+/>
+</License>
+
+</rdf:RDF>
+
+-->
+<br />
+
+<hr>
+<center>
+<h1>Tnasas help</h1>
+</center>
+
+
+
+    <hr>
+    <ol>
+      <li><a href="#intro">Introduction and purpose</a></li>
+      <li><a href="#methods">Methods included</a></li>
+      <li><a href="#selection.bias">Finding the important genes: "selection
+	  bias"</a>
+	<ul>
+	  <li><a href="#recv">Further potential biases: finding the best subset
+	      among subsets</a></li>
+	</ul>
+      </li>
+      <li><a href="#what">What the program does</a></li>
+      <li><a href="#fast">Is the program fast?</a></li>
+      <li><a href="#usage">Usage</a>
+	<ul> 
+	  <li><a href="#input">Input</a></li>
+	  <li><a href="#output">Output</a></li>
+	</ul>
+	</li>	
+	  <li><a href="#examples">Examples</a></li>
+
+      <li><a href="#authors">Authors and Acknowledgements</a></li>
+      <li><a href="#terms.use">Terms of use</a></li>
+      <li><a href="#privacy">Privacy and	Security</a></li>
+      <li><a href="#warranty">Disclaimer</a></li>  
+      <li><a href="#refs">References</a></li>
+    </ol>
+      <hr>
+
+    <h2><a name="intro">Introduction and purpose</a></h2>
+    <p>This is a web interface to help in the process of building a "good
+      predictor." We have implemented a few strategies that seem to be
+      relatively popular. However, as the name of the application
+      suggests, "This is Not A Substitute for A Statistician".</p>
+
+    <p> We hope that, by making available a tool that builds simple,
+      yet ---if we believe the literature; see <a href="#predictors">below</a>-- powerful predictors, AND
+      cross-validating the whole process, we can make
+      people aware of the widespread problem of <a href="#selection.bias">"selection bias"</a>. At the same
+      time, we hope to make it easy for people to see that <b>some data sets are
+      "easy", and some are "hard"</b>: whatever the method you use, with some data
+      sets you always can do a great job, and with others the situation seems hopeless. 
+	  Finally, Tnasas can be used as a <b>benchmark</b> against some
+	  (overly) optimistic claims that occasionally
+	  are attached to new methods and algorithms. This is a particularly
+	  important feature, since many new predictor methods are being proposed
+	  in the literature often without careful comparisons with alternative
+	  methods; Tnasas can be used as a simple, effective way of comparing the
+	  peformance of the newly proposed methods and can, itself, become a
+	  benchmarking tool. As a side issue, we hope it will be easy to see
+	that with many data sets it is often very hard to do a good predictive
+	job with only a few genes (this is often a mirage from selection
+    bias).</p>
+
+    <p>In addition, we want to make people aware of the problems related to the
+    instability of solutions: we often find many solutions that are equally
+    good from the point of view of prediction error rate, but that share very
+    few, if any, genes.</p>
+
+    <p>Tnasas allows you to combine several <a href="#methods">classification
+    algorithms</a> with different methods for <a href="#var.sel">gene selection</a>.
+
+
+    
+    <h2><a name="methods">Methods included</a></h2>
+    <p>We have included several methods, support vector machines (SVM),
+      k-nearest neighbor (NN), diagonal linear discriminant analysis
+      (DLDA), random forest, and shrunken centroids that have been shown to
+      perform very well with microarray data
+      (<cite>Dudoit et al., 2002</cite>; <cite>Romualdi et al., 2003</cite>;
+<cite>Díaz-Uriarte and Alvarez de Andrés, 2005</cite>).</p>
+
+
+    <p>Full explanations of the methods used can be used in the
+      <a href="#references">references</a>. What follows is a quick summary:</p>
+
+      <ul> 
+      
+      <li><b><a name="dlda">Diagonal Linear Discriminant Analysis (DLDA)</a></b> DLDA is the
+      maximum likelihood discriminant rule, for multivariate normal class
+      densities, when the class densities have the same diagonal
+      variance-covariance matrix (i.e., variables are uncorrelated, and for
+      each variable, its variance is the same in all classes). This yields a
+      simple linear rule, where a sample is assigned to the class <i>k</i>
+      which minimizes <!-- MATH $\Sigma_{j = 1}^p (x_j -
+      \bar{x}_{kj})^2/\hat{\sigma}^2_j$ --> <IMG WIDTH="159" HEIGHT="39"
+      ALIGN="MIDDLE" BORDER="0" SRC="img53.png" ALT="$ \Sigma_{j = 1}^p (x_j -
+      \bar{x}_{kj})^2/\hat{\sigma}^2_j$">, where <i>p</i> is the number of
+      variables, <IMG WIDTH="22" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+      SRC="img55.png" ALT="$ x_j$"> is the value on variable (gene) <i>j</i> of
+      the test sample, <IMG WIDTH="30" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+      SRC="img56.png" ALT="$ \bar{x}_{kj}$"> is the sample mean of class
+      <i>k</i> and variable (gene) <i>j</i>, and <IMG WIDTH="24" HEIGHT="39"
+      ALIGN="MIDDLE" BORDER="0" SRC="img57.png" ALT="$ \hat{\sigma}^2_j$"> is
+      the (pooled) estimate of the variance of gene <i>j</i>. In spite of its
+      simplicity and its somewhat unrealistic assumptions (independent
+      multivariate normal class densities), this method has been found to work
+      very well. In contrast to the more common Fisher's LDA technique, DLDA
+	works even when the number of cases is smaller than the number of variables.
+	Details and explanations of DLDA can be found in 
+      <cite>Dudoit et al. 2002</cite>.</li>
+
+      <li><b><a name="knn">Nearest neighbor (KNN)</a></b> KNN is a non-parametric
+      classification method that predicts the sample of a test case as the
+      majority vote among the k nearest neighbors of the test case (
+	<cite>Ripley 1996</cite>; <cite>Hastie et al., 2001</cite>). To decide on
+      ``nearest'' here we use, as in <cite>Dudoit et al. (2002)</cite> the Euclidean
+      distance. The number of neighbors used (<i>k</i>) is often chosen by
+      cross-validation (for a given training set, the performance of the KNN
+      for a set of values of <i>k</i> is determined by cross-validation, and the
+      <i>k</i> that produces the smallest error is used).  However, since
+      finding the optimal <i>k</i> by cross-validation is time consuming, we
+      have set <i>k = 1</i>, as this is often a successful rule (<cite>Ripley 1996</cite>; <cite>Hastie et al., 2001</cite>).</li>
+      
+      <li><b><a name="svm">Support Vector Machines (SVM)</a></b>SVM are becoming increasingly popular classifiers
+	in many areas, including microarrays (<cite>Furey et al.,
+	  2000</cite>; <cite>Lee &amp; Lee, 2003</cite>; <cite>Ramaswamy et al., 2001</cite>).
+	SVM (with linear kernel, as used here) try to find an
+	optimal separating hyperplane between the classes. When 
+	the classes are linearly separable, the hyperplane is located
+	so that it has maximal margin (i.e., so that there is maximal distance between the
+	hyperplane and the nearest point of any of the classes) which should
+	lead to better performance on test data. When the data are not separable,
+	there is no separating hyperplane; in this case, we still try to maximize the margin
+	but allow some classification errors subject to the constraint that
+	the total error (distance from the hyperplane in the ``wrong side'') is
+	less than a constant. For problems involving more than two classes
+	there are several possible approaches; the one used here
+	is the ``one-against-one'' approach, as implemented
+	in libsvm (<cite> Chang &amp; Lin, 2003</cite>). 
+	Reviews and introductions to SVM can be found in <cite>Burgues,
+	  1998</cite> and <cite>Hastie et al., 2001</cite>.
+      </li>
+
+      <li><b><a name="randomforest">Random forests</a></b> Random forests are an ensemble of classification trees,
+	that can be used directly with a number of variables much larger than
+	the number of samples; random forests show very good predictive
+	performance, comparable to SVMs and are quite resistant to overfitting (<cite>Breiman, 2001, 2003</cite>; see
+	also
+	<cite>Liaw and Wiener, 2002</cite>). Random forests return a prediction as the
+	unweighted majority of predictions from a very large (e.g., 5000)
+	collection of classification trees; the important features about these
+	trees are that each is grown using a bootstrap sample of the data set,
+	and that at each node only a random
+	subset of the original variables is examined. As part of a random
+	forest run, we also obtain measures of the importance of variables, and
+	classification trees implicitly include possible interactions
+	(non-additive effects) of predictor variables. We have recently
+      exhaustively examined the performance of random forest with microarray
+      data (<cite>Díaz-Uriarte and Alvarez de Andrés, 2005</cite>).</li>
+
+
+      <li><b><a name="PAM">Shrunken centroids</a></b>The method of ``nerest
+      shrunken centroids'' was originally described in <cite>Tibshiranie et
+      al., 2002</cite>. It uses ``de-noised'' versions of centroids to classify
+      a new observations to the nearest centroid. The ``de-noising'' is
+      achieved using soft-thresholding or penalization, so that for each gene,
+      class centroids  are shrunken towards the overall centroid. This method
+      is very similar to a DLDA with shrinkage on the centroids. The optimal amount of shrinkage
+      can be found with cross-validation, and used to select the number of
+      genes to retain in the final classifier.  To determine the best number of
+      features we choose the number of genes that minimizes the cross-validated
+      error rate and, in case of several solutions with minimal error rates, we
+      choose the one with smallest  number of genes (larger penalty).</li>
+    </ul>
+
+
+    <h3><a name="var.sel">Variable selection</a>: finding the "important genes"</h3>
+    <p>What genes should we use when
+      building the predictor? Often, researchers would like to build the
+      predictor using only genes that are "relevant" for the prediction. In
+      addition, using only "relevant" genes can lead to "better" predictions
+      ("better" in the sense of, e.g., smaller variance). How should we select
+      those genes?</p>
+
+    <p>A popular approach is to first select a set of genes, with some
+      relatively simple, fast, method, and then feed these selected genes to
+      our predictor. This is called, in the machine learning literature, the
+      "filter approach" (e.g., <cite>Kohavi &amp; John, 1998</cite>) because we
+      first "filter" the predictor variables (in our case genes), keep only a
+      subest, and then build the predictor. We provide three ways of ranking
+    genes, and each can be used with any of the above class-prediction
+    algorithms (except PAM, which includes gene selection as part of the
+    algorithm itself). 
+
+    <ul>
+      <li><b><a name="Fratio">F-ratio, or between to within classes sums of
+      squares</a></b>, the popular ANOVA F-ratio, used also in <cite>Dudoit et
+      al., 2002</cite>.</li>
+      <li><b><a name="Wilcoxon">Wilcoxon statistic</a></b> a non-parametric
+      test for differences between two classes. When there are more than two
+      classes we use a "one-vs-all" approach.</li>
+      <li><b><a name="randomforestvs">Random forests</a></b> We use <a
+      href="#randomforest">random forest</a> to
+      obtain variable importances, and rank genes based on those variable
+      importances. </li>
+    </ul>
+
+    After ranking the genes, we examine the performance of the class prediction
+    algorithm using different numbers of the best ranked genes and select the
+    best performing predictor. In the current version of Tnasas
+      we build the predictor <b>using the best <i>g</i> &#061;2, 5, 10, 20, 35,
+      50, 75, 120, 200, 500, 1000, 2000 and the total number of genes</b>.
+    
+
+
+
+    <h2><a name="selection.bias">Finding the important genes: "selection bias"</a></h2>
+    <p>Suppose we select the first 50 genes with the F-ratio, as explained
+      <a href="#var.sel">above</a>; then we use, e.g., DLDA, and we report the
+      error rate of our classifier using 10-fold cross-validation. This sounds
+      familiar, &hellip; but is actually a bad idea: <b>the error rate we just
+	estimated can be severely biased down</b>.</p>
+
+    <p>This is the problem of <b>selection bias</b>, which has been discussed
+      in the microarray literature by <cite>Ambroise &amp; McLachlan (2002)</cite> and
+     <cite>Simon et al. (2003)</cite> (this problem has been well
+      known in statistics for a long time). Essentially, the problem is that we
+      use all the subjects to do the filtering, and therefore the
+      cross-validation of only the DLDA, with an already selected set of genes,
+      cannot account for the effect of pre-selecting the genes. As just said,
+      this can lead to <b>severe underestimates of prediction error</b> (and the
+      references given provide several alarming examples). In addition it is
+      very easily to obtain "excellent" predictors with completely random data,
+      if we do not account for the preselection (we present some numerical
+      examples with KNN and SVM in our <a
+	href="http://bioinfo.cnio.es/~rdiaz/R-course-CNIO.html">R
+	course</a>.</p>
+
+    <p>A way to obtain better estimates of the prediction error is to use
+    cross-validation over the whole process of
+    "select-genes-then-build-predictor": leave aside a set of samples, and with
+    the remaining samples do the gene selection and building of the predictor, and then
+    predict the left out samples. This way, the left-out samples do not
+    participate in the selection of the genes, and the "selection bias" problem
+    is avoided.</p>
+    
+    <p>In the procedures we have implemented, the problem of selection bias is
+      taken into account: all the cross-validated error rates include the
+      process of gene selection.</p>
+
+
+    <h3><a name="recv">Further potential biases: finding the best subset among subsets</a></h3>
+    <p>OK, so we have taken care of selection bias. But what if we repeat the
+      process of selecting a number of genes for different numbers of genes, say
+      10, 50, 200, and 500, and then keep the one that leads to the smallest
+      cross-validated error rate? We have a similar problem to selection bias;
+      here the bias comes from selecting, <i>a posteriori</i>, the "best"
+      number of predictors based on the performance of each of a number of
+      predictors with our data set.</p>
+
+    <p>To give an example, suppose we use DLDA, and we use either 10, 50, or
+      100 genes. And suppose the cross-validated error rates (cross-validated
+      including variable selection) are 15%, 12%, and 20%. Now, we select the
+      DLDA with 50 genes. But we cannot say that the expected error rate, when
+      applied to a new sample, will be 12%; it will probably be higher. We
+      cannot know how much of our low error rates
+      is due to our "capitalizing on chance".</p>
+
+    <p>Thus, we need to add another layer of cross-validation (or bootstrap if
+      we prefer). We need to evaluate the error rate of a prediction rule that
+      is built by selecting among a set of rules the one with the smallest
+      error. Because that is what we are doing: we are building, say, 3
+      prediction rules (one with 10 genes, one with 50, one with 100), and then
+      choosing the rule with the smallest error rate.</p>
+
+
+<!--     <p>Note that this added layer of cross-validation is needed regardless of -->
+<!--       how we compute the error rate to rank the number of genes to use in the -->
+<!--       predictor. We can choose the -->
+<!--       number of genes that minimizes the error rate with an error rate estimated -->
+<!--       including the selection of genes, or without including the effect of gene -->
+<!--       selection; this does not matter. What matters is that we are selecting -->
+<!--       the number of genes to use in the predictor based on a particular -->
+<!--       statistic. So we need to examine how this process of selection works -->
+<!--       (because this process of selection might depend a lot on just chance, and -->
+<!--       lead to predictors that are very poor when used to predict new -->
+<!--       samples).</p> -->
+
+    <p>If we need to add this extra lyaer of cross-validation, why do we use,
+      to select the number of of genes, the
+      cross-validated error rate accounting for "selection bias"? This
+      certainly takes a lot more time. The reason is that, a priori, selecting
+      the number of genes this way should lead to better predictors, since we
+      base our choice on an estimate of prediction error rate that
+      accounts for selection bias.</p>
+    
+    <p>The methods we have implemented return, as part of their final output, the
+      cross-validated error rate of the complete process; in other words, we
+      cross-validate the process of "building several predictors and then
+      choosing the one with the smallest error rate".</p>
+
+    <p><font size="-1">So is all of this statisticians paranoia? No it is
+	not. As we have just said, the references provided give some very
+	sobering examples. And it is extremely easy to obtain "excellent
+	predictors" from completely random data if one does not account for
+	selection biases. More generally, the issue of variable selection is a
+	very delicate one. It is well know in the statistical literature that
+	most of the "usual" variable selection procedures, such as the
+	(in)famous <b>stepwise, backwards, and forward methods</b> in, for example,
+	linear regression, are severely biased (and, for example, lead to
+	p-values that are not meaningful). This is issue is ellaborated upon 
+	beautifully by Frank Harrell Jr. in his book <cite>Regression modeling
+	  strategies</cite>; some of the main arguments can be found 
+	at <a href="http://www.pitt.edu/~wpilib/statfaq/regrfaq.html">this
+	  site</a>. This is very relevant here, because some people think they
+	can escape this problem by doing something like: "first, select 50
+	genes; then go to my favourite stats program ZZZZ, and do a logistic
+	regression, selecting variables with bacwkards ---or forward or
+	whatever--- variable selection". This approach solves nothing, and it
+	compounds the problem: we have the problem of selection bias because
+	of the preselection of genes <b>and</b> we have addedd the nasty
+	problem of using stepwise variable selection. A very didactic
+	excersise in these situations is to bootstrap the whole process
+	(<cite>Regression modeling
+	  strategies</cite> ellaborates on these issues); it is often amazing
+	how many widely dissimilar models are obtained. Repeating the
+	exercise a couple of times will turn most people into skeptics of the
+	virtues of variable selection methods. These problems are particularly
+	sever and serious with microarray data sets, were we often have
+	relatively few subjects (e.g., less than 100) but several thousands of
+	genes; in these settings, it is extremely easy to obtain "excellent
+	predictors" from purely random data; we can capitalize on chance
+	to build a fantastic logistic regression model using stepwise
+	regression methods; a logistic regression model that will fail
+	miserably when we apply it to new samples &hellip; </font></p>
+	
+
+    <h2><a name="what">What the program does</a></h2>
+    Essentially, this is what the program does. 
+
+    <h3>To find the best number of predictors</h3>
+
+    <ol>
+      <li>Draw a 10-fold cross-validation sample, and with each of the 10
+      "training sets":
+      <ol>
+	<li>Rank the genes using one of the ranking methods <a href="#var.sel">above</a>.</li>
+	<li> For each <i>g</i> number of genes (where <i>g</i> is  2, 5, 10, 20, 35,
+	50, 75, 120, 200, 500, 1000, 2000 and the total number of genes).
+	<ol>
+	  <li>Build the predictor using those <i>g</i> genes.</li>
+	  <li>Predict the left-out sample.</li>
+	</ol>
+      </li>
+    </ol>
+    <li>Compute the cross-validation error corresponding to each <i>g</i>
+    number of genes.</li>
+    <li>Select as the "best number of genes" <i>gb</i> the one that results in the
+    smallest cross-validation error. If there are several equally good, choose
+    the one corresponding to the smaller number of genes.</li>
+    <li>Now run the gene ranking method on the complete sample, and select the
+    top <i>gb</i> genes.
+    
+  </ol>
+
+  <p>If using <a href="#PAM">shrunken centroids</a> a somewhat similar
+  procedure is used implicitly by the method.</p>
+
+  
+    <h3>To evaluate the error rate of this procedure</h3>
+    Do a 10-fold cross-validation of the procedure above. So: 
+    <ol>
+      <li>Divide the whole data set in 10 approximately equal subsets.</li>
+      <li>For each of the 10 subsets do:
+	<ol>
+	  <li>Leave aside this subset; these data left aside are <a
+	      name="out.of.bag">"out-of-bag"</a>. </li>
+	  <li>With the other 9 subsets, (the "in-bag") use the procedure above to
+	    find the best number of genes, and train a predictor with those genes
+	    (but, again, only using the "in-bag" samples).</li>
+	  <li>Predict the out-of-bag samples with the predictor just found.</li>
+	</ol>
+      <li>At the end of the process, each sample has been in the "out-of-bag"
+	set exactly once. Thus, for each sample we have a prediction where that
+	sample has been out-of-bag. Using the out-of-bag predictions, and
+	comparing them with the true class labels we obtain the "error rate".</li>
+    </ol>
+
+    <h3>Cross-validation: how many folds?</h3>
+    <p>The number of folds we use is 10 if possible. If there are not enough
+    samples, we use as many folds as possible given the data (so that there is
+    at least one testing sample in the testing data set, and so that there is
+    at least one training sample from each class in every training sample). The
+    cross-validation samples are selected so that the relative proportions of
+    each class are the same (or as close to the same as possible) in all
+    training and test samples.</p>
+    
+    <h2><a name="fast">Is the program fast?</a></h2>
+    <p>Some procedures are faster than others. NN and DLDA with randking based
+    on the F-ratio are relatively fast (< 3 minutes). SVM and random
+    forest are slower than NN and DLDA. The Wilcoxon and random forest ranking are
+    slower than the F-ratio. Shrunken centroids is relatively fast.</p>
+	
+
+
+    <h2><a name="usage">Usage</a></h2>
+    
+    <h3><a name="input">Input</a></h3>
+
+    <h4><a name="covariates">Covariates file</a></h4>
+    <p>The file with the covariates; generally the gene 
+    expression data. In this file, rows represent variables (generally genes),
+    and columns represent subjects, or samples, or arrays.</p>
+
+    <p> The file for the covariates should be <a name="requirements">formated</a> as:</p> 
+    <ul> 
+      <li>Data should conform to the "genes in rows,  patients (or arrays) in columns". 
+          In other words, each row of the data file is supposed to represent a different gene 
+          or variable.</li> 
+      <li>Use tab (\t) as the field separator within rows.</li> 
+      <li>Use newline or carriage return (\n) between rows. It is also convenient to finish each 
+              file with one carriage return (\n).</li> 
+      <li>Array names: if you want to name your arrays (useful for the output of
+	the analyses) do as follows:
+	<ol>
+	  <li>Place a line that starts with "&#035;";</li>
+	  <li>After the "&#035;" put "Name" or "NAME" or "name" (don't say we
+	    don't give you choices);</li>
+	  <li>Write the array names (separated by tabs).</li>
+	</ol>
+      <li>The first column is assumed to contain the ID information for genes, marker, 
+        or whatever. This will be used to label the output (but it also means that whatever is 
+        in the first column is not used in the analyses).</li> 
+      <li>You can have an arbitrary number of rows with comments. These rows must always start 
+        with an "&#035;".</li>
+	    <li><b>Gene names and array names MUST be unique</b>. If
+	      they are not, the program will let you know. If you do
+	      not want to provide array names, that is OK, and we will
+	      name them with sequential integers starting at 1. If you
+	      do not want to provide gene names, then put some
+	      arbitrary labels on the first column (e.g., fill it with
+	      a sequence of integers).
+	      Why do we need gene and array names to be unique?
+	      Because in many steps, we need to provide either where
+	      we classify a given array (and what should we do if two
+	      or more arrays are named "A"?), or the genes used in the
+	      classifier (and what should we do if two or more genes
+	      are named "gene B"?).</li>
+
+      <li><b>Missing values are NOT allowed</b>. You can use the 
+	      <a href="http://gepas.bioinfo.cnio.es/cgi-bin/preprocess">preprocessor</a> and do
+	      several things with your data before sending it
+	      to Tnasas. We would probably recommend you do imputation after
+	      eliminating genes with too many (more than, say, 20&#037;?) missing. Anyway,
+	      how best to deal with missing values is not a trivial issue and is outside
+	      the scope of this help file.
+      
+      <li> This is a small covariate data file: 
+        <div class="color"> 
+          <pre> 
+#Name     ge1      ge2      ge1      ge1      ge2 
+gene1   23.4    45.6    44      76      85.6 
+genW@   3      34      23      56      13 
+geneX#  23      25.6    29.4    13.2    1.98   </pre> </div> 
+        </li> 
+
+    </ul>
+    
+    
+    <h4><a name="class">Class file</a></h4>
+    <p>These are the class labels 
+      (e.g., healthy or affected, or different types of cancer) that group the
+      samples. Our predictor will try to predict these class labels.</p>
+    
+	<p>Please note that we do not allow any data set with 3 or fewer cases in any class.
+	  Why? Because, on the one hand, any results from such data would be hard to believe;
+	  on the other hand, that would result in some cross-validation samples
+    having some training samples with 0 elements from one of the classes.</p>
+	  
+    <p>Separate values by tab (\t), and finish the file with a carriage return or newline.  
+      No missing values are allowed here. Class labels can be anything you wish; they 
+      can be integers, they can be words, whatever. </p>  
+    <p> This is a simple example of class labels file  </p>
+    <div class="color"> 
+      <pre>  
+CL1     CL2     CL1     CL4     CL2     CL2     CL1     CL4       </pre>        </div>       
+  
+
+
+<h4><a name="idc">Type of gene identifier and species</a></h4>
+<p>If you use any of the currently standard identifiers for your gene IDs
+for either human, mouse, or rat genomes, you can obtain additional
+information by clicking on the gene names in the output. This
+information is returned from <a
+href="http://idclight.bioinfo.cnio.es">IDClight</a> based on that provided
+by our <a href="http://idconverter.bioinfo.cnio.es">IDConverter</a>
+tool.</p>
+
+
+
+
+
+
+    <h3><a name="output">Output</a></h3>
+    <p>Two forms of output are provided:</p>
+    <ul>
+      <li>A <b>plot</b>.
+      <p>This plot shows the cross-validated error rate of the predictor
+      when built using different numbers of genes. This already accounts for
+      <a href="#selection.bias">selection bias</a>.  The final model selected
+      will be the one with the smallest cross-validated error
+      rate.</p>
+      <p> With gray lines we show the same type of error vs. number of genes as
+      obtained with each of the cross-validation samples. </p>
+      <p> For comparison, the plots shows the error rate we can achieve
+      by always betting on the most frequent class (a dotted blue line)
+      and the estimate of the error rate from the 10-fold cross-validation (a dotted
+      red line) that is returned also in the Results).</p>
+      </li>
+      
+      <li>The <b>results text</b>. Here you find:
+      <ol>
+	<li>OPTIONS: information about the options and defaults used by the
+	run.</li>
+	<li>RESULTS:
+	<ol>
+	  <li>Error Rate: the 10-fold cross-validated
+	  error rate of the predictor built by choosing the predictor
+	  with the set of genes that leads to smallest error (as seen in
+	  the figure). Thus, this estimate of the error rate takes care
+	  of the two potential types of severe underestimates of error
+	  rates (see <a href="#selection.bias">Selection bias</a> and 
+	  <a href="#recv">Further biases</a>). (Technically, this 
+	  estimate of the error rate is not unbiased, but the amount of bias is 
+	  negligible compared to the severe biased introduced
+	  if not accounting for selection of genes and number of genes).</li>
+	  <li>Confussion matrix: a 2-way table of true class ("Observed"),
+	  in the horizontal, and predicted, in the vertical. This
+	  confussion matrix is based on <a href="#out.of.bag">"out-of-bag"</a> predictions. In
+	  other words, for each case, its prediction is based on a model
+	  (number of genes + predictor) where this case did not
+	  participate; so it did not participate in the selection of
+	  genes, it did not participate in the selection of the nubmer of
+	  genes, and it did not participate in the fitting of the model.
+	  We also provide the total error (i.e., the number of
+	  missclassifications relative to the total number of cases)
+	  broken down by original class, and the relative error per class
+	  (number of misclassifications relative to the size of the
+	  class). Precisely because these confussion matrix is based on
+	  <a href="#out.of.bag">"out-of-bag"</a> predictions, the sum of the entries in the "Total
+	  Error" column is identical to the "error
+	  rate".
+	  <p>Lets show an example:</p>
+	  
+	  <div class="color"><pre>  
+Confussion Matrix:
+           N  T TotalError RelativeErrorPerClass
+Observed N 4  3       0.06            0.42857143
+Observed T 1 42       0.02            0.02325581</pre>
+	  </div>
+	  
+	  <p>The Total Error is obtained as the number of misclassifications relative to the
+	  total number of predictions. The total number of
+	  missclassifications is 3 + 1 = 4, and the total number of
+	  predictions is 50. As said before, all these are "out-of-bag"
+	  predictions. So the "Error rate" here is
+	  4&#047;50 = 0.08. </p>
+	  
+	  <p>The "TotalError" column entries are 3&#047;50 = 0.06 and
+	  1&#047;50 = 0.02, when the true, observed, classes are "N"
+	  and "T" respectively. Sure enough, the "Error rate" = 0.08 = 0.06 + 0.02.</p>
+
+	  <p>The "RelativeErrorPerClass" give you a view of how well it
+	  is doing relative to the size of the class. It is 3&#047;7 = 0.429 when the true class is "N" and 1&#047;43 = 0.023 when the true
+	  class is "T". In other words, the overall error rate of the predictor
+is not bad (0.08), but the error rate for those of class "N" is not
+good (almost 50&#037;); how can these two facts be reconciled? Notice
+that the size of class "N" is very small compared to that of "T" (7
+vs. 43). And, as you can see, the predictor in this case can do a
+good job by emphasizing good predictions for the large class
+	  ("T").</p>
+
+
+<p>The above comments are something to pay attention to with very unbalanced
+classes. An extreme example: if we have a situation where 99&#037; of the cases
+are class "A" and 1&#037; of the cases are of class "B", we can achieve a very
+low prediction error (1&#037;) if we always assign every case to class "A".</p>
+
+</li>
+
+<li>Number of predictors that yields minimum error. Well, the number of
+predictors that yields the minimum median 10-fold cross-validated error rate
+accounting for selection bias.
+		This is something you get directly from the
+		figure.</li>
+	      <li>Selected predictor genes: if the previous output says its 50
+		genes, these are the top 50 genes, according to the ranking
+		criterion you choose.</li>
+		
+		<li>OOB predictions: the OOB predictions. We also
+		provide the true class and the labels. You can use these data
+		to reproduce the confussion matrix above.</li>
+
+		<li>Cases with incorrect predictions (errors). If there are any
+		incorrect predictions, we show those, indicating the true class
+		and the predicted class.</li>
+
+		<li><b>Stability assessments</b>.
+		<ol>
+		  <li>Genes selected in each of the cross-validation runs.</li>
+		  <li>Number of shared genes. The number of genes selected in
+		  common between any two runs (e.g., between the run with the
+		  complete sample and the 2nd cross-validated run, or between
+		  the 4th and 7th cv run). Of course, this is a symmetric matrix.</li>
+		  <li>Proportion of shared genes (relative to row total). This
+		  is the above table divided by the total number of gene
+		  selected by the procedure of the given row. So suppose the
+		  third row, the 2nd cv run, selected 20 genes. Then the third
+		  row of this table is the same as the third row of the table
+		  above divided by 20. Thus, this is not a symmetric
+		  matrix.</li>
+		  <li>Gene freqs. in cross-validated runs of genes selected in
+		  model with all data. Take each of the genes selected from the
+		  complete data run, and count how many times it shows up in
+		  the selections from the cross-validation runs.</li>
+		  <li>Gene frequencies in cross-validated runs. Count how many
+		  times any gene (that shows up at least once in the
+		  cross-validation runs) appeared among the selected ones in
+		  the cross-validation runs.</li>
+		  </ol>
+
+		
+	    </ol>
+	  </li>
+	</ol>
+      </li>
+    </ul>
+	
+	  <h4>Sending results to <a name="fatigo"></a><a name="fatiwise"></a>other GEPAS applications</h4>
+	  <p>The lists of genes can be sent to 
+	    <a href="http://fatigo.bioinfo.cnio.es">FatiGO</a> and
+	    <a href="http://fatiwise.bioinfo.cnio.es">FatiWise</a>. With these two
+	    tools you can either examine the list of genes used to build the predictor,
+	    or you can compare between the genes used in the predictor vs. the 
+	    genes not used for the predictos.</p>
+
+
+<h3><a name="examples">Examples</a></h3>
+<p>Examples of several runs, one with fully commented results, are available 
+<a href="http://tnasas.bioinfo.cnio.es/Examples/index.html">here</a>.
+
+
+
+    <h2><a name="authors">Authors and Acknowledgements</a></h2>
+    
+    <p>This program was developped by Juan M. Vaquerizas and 
+      <a href="http://bioinfo.cnio.es/~rdiaz" target="_blank">Ramón Díaz-Uriarte</a>, 
+      from the <a href="http://bioinfo.cnio.es" target="_blank">Bioinformatics Unit</a> at
+      <a href="http://www.cnio.es" target="_blank">CNIO</a>.
+      This tool is, essentially, a web interface to a set of 
+      <a href="http://www.R-project.org/">R</a> functions, 
+      plus a small piece of C++ code (for the dlda part), written by 
+      Ramón. Some of these
+      functions themselves call functions in the packages
+      <a href="http://cran.r-project.org/src/contrib/Descriptions/e1071.html">e1071</a> (by 
+E. Dimitriadou, K. Hornik, F. Leisch, D. Meyer, and A. Weingessel), 
+      <a
+	href="http://cran.r-project.org/src/contrib/Descriptions/VR.html">class</a>
+      (by W. Venables and B. Ripley),
+     <a
+    href="http://cran.r-project.org/src/contrib/Descriptions/pamr.html">pamr</a>
+(by T. Hastie, R. Tibshirani, Balasubramanian Narasimhan, G. Chu), 
+    <a
+    href="http://cran.r-project.org/src/contrib/Descriptions/supclust.html">supclust</a>
+    (by M. Dettling and M. Maechler), 
+      <a
+	href="http://www.bioconductor.org/repository/release1.3/package/html/multtest.html">multtest</a>
+      (by Y. Ge and S. Dudoit) and
+      <a
+	href="http://cran.r-project.org/src/contrib/Descriptions/randomForest.html">randomForest</a>
+      (by A. Liaw, M. Wiener, with Fortran code by L. Breiman and A. Cutler).
+      Our set of functions themselves will (soon) be converted into an R
+      package and released under the GPL.</p>
+
+  
+    <p>We want to thank all these authors for the great tools that they have
+      made available for all to use. If you find this useful, and since R and Bioconductor are
+      developed by a team of volunteers, we suggest you consider making a
+      donation to the <a href="http://www.R-project.org/foundation/main.html">
+	R foundation for statistical computing</a>.</p>
+      
+ <!--    <p>We also want to thank the people of the <a href="http://bioinfo.cnio.es" target="_blank"> -->
+<!-- 	CNIO Bioinformatics Unit</a> for beta testing, and comments with the design of the tool. In -->
+<!--       particular thanks to J. Santoyo and <a href="http://bioinfo.cnio.es/~jherrero" target="_blank">J. Herrero</a> for help with the graphical design and with the -->
+<!--       catching of errors. -->
+      
+ <!--    <h2>For your records: versions, etc</h2> -->
+<!--     You <b>want to keep this in your records</b>. -->
+<!--     <ul> -->
+<!--       <li> Version of R: -->
+<!-- 	<pre> -->
+<!--          platform i386-pc-linux-gnu -->
+<!--          arch     i386              -->
+<!--          os       linux-gnu         -->
+<!--          system   i386, linux-gnu   -->
+<!--          status                     -->
+<!--          major    1                 -->
+<!--          minor    8.1               -->
+<!--          year     2003              -->
+<!--          month    11                -->
+<!--          day      21                -->
+<!--          language R        -->
+<!-- 	</pre> -->
+<!--       </li> -->
+<!--       <li> Version of limma: 1.2.8</li> -->
+<!--       <li> Normalization commands: -->
+<!-- 	<pre> -->
+<!-- 	normalizeWithinArrays(temp.raw, layout = temp.layout, -->
+<!--                                             iterations = 10) -->
+<!--         normalizeBetweenArrays(temp.norm, method = "scale") -->
+<!-- 	</pre> -->
+<!--       </li> -->
+<!--       <li> Other options (defaults used by limma):  -->
+	
+<!-- 	<pre> -->
+<!--          normalizeWithinArrays: -->
+<!--                method="printtiploess" ## or loess -->
+<!--                span=0.3 -->
+<!-- 	</pre> -->
+<!--       </li> -->
+              
+<!--     </ul> -->
+    
+
+<!--     <h2><a name="bugs">Before you start: If "The program doesn't work"</a></h2> -->
+<!--     <p>Please, before calling/emailing us if "the program doesn't work", make -->
+<!--       sure you have read this documentation. In particular, make sure -->
+<!--       your data are <a href="#requirements">formatted appropriately</a>. Juanma has spent a lot -->
+<!--       of time trying to catch many mistakes, <b>and</b> providing -->
+<!--       meaningful error messages; please read them and act accordingly -->
+<!--       (i.e., fix the reported problems before asking us).<br> -->
+<!--       Please, also make sure that javascript is enabled on your web browser. -->
+<!--       This tool has been tested in Explorer 6.0, Netscape 7.0 and Konqueror 3.1.1. <br> -->
+      
+      
+    <h2><a name="terms.use">Terms of use</a></h2>
+    <ul>
+      <li>You acknowledge that the Tnasas Software is experimental in nature
+	and is supplied "AS IS", without obligation by the authors, the CNIO's
+	Bioinformatics Unit or the CNIO to provide accompanying
+	services or support. The entire risk as to the quality and performance of the
+	Software is with you. The CNIO and the authors expressly disclaim any and all
+	warranties regarding the software, whether express or implied, including but
+	not limited to warranties pertaining to merchantability or fitness for a
+	particular purpose.</li>
+      <li>If you use Tnasas for any publication, we would appreciate if you
+	could let us know and if you cite our program (you know, "credit where
+	credit is due"). For now, you can give the main web site:
+	<a href="http://tnasas.bioinfo.cnio.es">http://tnasas.bioinfo.cnio.es</a>) in
+	that publication.</li>
+    <li>We appreciate if you give us feedback concerning bugs, errors or misconfigurations.
+	Complaints or suggestions are welcome.</li>
+    </ul>
+    <br>
+    
+    <h2><a name="privacy">Privacy and	Security</a></h2>
+    <p>Uploaded data set are saved in temporary directories in the server and are
+      accessible through the web until they are erased after some time. Anybody can
+      access those directories, nevertheless the name of the directories are not
+      trivial, thus it is not easy for a third person to access your data.</p>
+    <p>In any case, you should keep in mind that communications between the client
+      (your computer) and the server are not encripted at all, thus it is also
+      possible for somebody else to look at your data while you are uploading or
+      dowloading them.</p>
+      <br>
+      
+    <h2><a name="warranty">Disclaimer</a></h2>
+    <p>This software is experimental in nature and is supplied "AS IS", without
+      obligation by the authors or the CNIO the to provide accompanying services or
+      support. The entire risk as to the quality and performance of the software is
+      with you. The authors expressly disclaim any and all warranties regarding the
+      software, whether express or implied, including but not limited to warranties
+      pertaining to merchantability or fitness for a particular purpose.<br>
+      
+      <!--     (If you are lost using these types of applications, or new, you -->
+      <!--       might want to read  -->
+      <!--       <a href="http://www.catb.org/~esr/faqs/smart-questions.html"> -->
+      <!-- 	How To Ask Questions The Smart Way</a>, by Eric Raymond.) -->
+      
+      
+      
+    <h2><a name="refs">References</a></h2>
+    
+<p>Ambroise C, McLachlan GJ (2002) Selection bias in gene extraction on the basis
+    of microarray gene-expression data. 
+      <a href="http://www.pnas.org/cgi/content/abstract/99/10/6562">Proc Natl
+	Acad Sci USA 99: 6562--6566</a>.</p>
+
+<p>Breiman L (2001) Random forests. <i>Machine Learning</i> 45: 5--32
+(<a href="http://oz.Berkeley.edu/users/breiman/randomforest2001.pdf">Tech. report</a>).</p>
+
+<p>Breiman L (2003) <a
+      href="http://oz.berkeley.edu/users/breiman/Using_random_forests_v4.0.pdf">
+      Manual--Setting Up, Using, And Understanding Random Forests V4.0</a>.</p>
+
+
+<p>Díaz-Uriarte R, Alvarez de Andrés, S (2005) Gene selection and
+classification of microarray data using random forest. In review.
+(<a
+href="http://ligarto.org/rdiaz/Papers/rfVS/randomForestVarSel.html">tech.
+report</a>.)</p>
+
+
+<p>Dudoit S, Fridlyand J, Speed TP (2002) Comparison of discrimination methods for
+  the classification of tumors suing gene expression data. J Am Stat Assoc 97:
+  77--87. (<a
+	href="http://www.stat.berkeley.edu/~sandrine/tecrep/576.pdf">tech. report</a>.)</p>
+
+
+<p>Furey TS, Cristianini N, Duffy N, Bednarski DW, Schummer M, et~al. (2000)
+  Support vector machine classification and validation of cancer tissue samples
+  using microarray expression data. Bioinformatics 16: 906--914.</p>
+
+
+<p>Harrell JFE (2001) Regression modeling strategies. New York: Springer.</p>
+
+
+<p>Hastie T, Tibshirani R, Friedman J (2001) The elements of
+  statistical learning. New York: Springer.</p>
+
+
+<p>Kohavi R, John GH (1998) The Wrapper Approach, in Feature Selection for
+    Knowledge Discovery and Data Mining, H. Liu & H. Motoda (Ed.), Kluwer,
+    33-50 (<a href="http://citeseer.nj.nec.com/357135.html">reprint</a>).</p>
+
+
+<p>Lee Y, Lee CK (2003) Classification of multiple cancer types by multicategory
+  support vector machines using gene expression data. Bioinformatics 19:
+  1132--1139.</p>
+
+
+<p>Liaw A, Wiener M (2002) 
+    <a href="http://cran.r-project.org/doc/Rnews/Rnews_2002-3.pdf">
+Classification and regression by randomForest</a>. <i>R
+      News</i>, 2: 18--22.</p>
+
+
+<p>Ramaswamy S, Tamayo P, Rifkin R, Mukherjee S, Yeang C, et~al. (2001) Multiclass
+  cancer diagnosis using tumor gene expression signatures. Proc Natl Acad Sci
+  USA 98: 15149--15154.</p>
+
+<p>Ripley BD (1996) Pattern recognition and neural networks. Cambridge: Cambridge
+  University Press.</p>
+
+<p>Romualdi C, Campanaro S, Campagna D, Celegato B, Cannata N, et~al. (2003)
+  Pattern recognition in gene expression profiling using DNA array: a
+  comparative study of different statistical methods applied to cancer
+  classification. 
+    <a href="http://hmg.oupjournals.org/cgi/content/full/12/8/823">Hum Mol Genet 12: 823--836.</a>.</p>
+
+<p>Simon R, Radmacher MD, Dobbin K, McShane LM (2003) Pitfalls in the use of DNA
+  microarray data for diagnostic and prognostic classification. Journal of the
+  National Cancer Institute 95: 14--18.</p>
+
+<p>Tibshirani, R., Hastie, T., Narasimhan, B.  & Chu, G. (2002) Diagnosis
+  of multiple cancer types by shrunken centroids of gene expression.
+Proc Natl Acad Sci USA, 99: 6567--6572.</p>
+
+
+
+
+
+<h3>Copyright</h3>
+This document is copyrighted. Copyright © 2003, 2004, 2005, 2006, Ramón Díaz-Uriarte, Juan M. Vaquerizas, 
+<hr>
+
+<!-- Created: Wed Jul 24 15:37:41 CEST 2002 -->
+<!-- hhmts start -->Last modified: 9 February 2006 <!-- hhmts end -->
+
+<hr>
+<p>
+      <a href="http://validator.w3.org/check/referer"><img border="0"
+          src="valid-html401.png"
+          alt="Valid HTML 4.01!" height="31" width="88"></a>
+<a href="http://www.anybrowser.org/campaign/">
+	<img src="anybrowser3.gif"
+	  width="88"
+	  height="31"
+	  alt="Viewable With Any Browser" border="0"></a>
+
+  </body>
+</html>
