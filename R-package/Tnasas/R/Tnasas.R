@@ -772,7 +772,7 @@ f.pred.errors.PAM <- function(data, y,
                  "Error rate of predictor building rule",
                  "Original sample",
                  "CV samples"),
-               lty = c(2, 2, 1, 1),
+               lty = c(2, 3, 1, 1),
                col = c("blue", "red", "black", "grey"),
                cex = 1, lwd = 2)
 
@@ -1070,7 +1070,7 @@ f.pred.errors <- function(data, y,
                  "Error rate of predictor building rule",
                  "Original sample",
                  "CV samples"),
-               lty = c(2, 2, 1, 1),
+               lty = c(2, 3, 1, 1),
                col = c("blue", "red", "black", "grey"),
                cex = 1, lwd = 2)
 
