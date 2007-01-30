@@ -228,7 +228,7 @@ if(length(arrayNames) > 0) {
 }
 xdata <- t(xdata)
 trycl <- try(
-             Class <- factor(scan("class", sep = "\t", what = "char", strip.white = TRUE))
+             Class <- factor(scan("class", sep = "\t", what = "char", strip.white = TRUE, nlines = 1))
              )
 ## to prevent problems with a space at end of classes
 if(class(trycl) == "try-error")
