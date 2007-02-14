@@ -239,9 +239,9 @@ if(length(unique(Class)) < 2) {
     caughtUserError(paste("Your data should contain at least two classes\n",
                        "but your data have only one.\n"))
 }
-if(min(tclass) < 3) {
+if(min(tclass) < 5) {
     caughtUserError(paste("At least one of your classes has less\n",
-                       "than 3 cases/subjects/arrays. Although \n",
+                       "than 5 cases/subjects/arrays. Although \n",
                        "the programs can deal with this, would you\n",
                        "believe it?\n"))
 }
@@ -287,7 +287,8 @@ if(max(num.genes) < num.cols.datos)
 
 ## if at least one class has size 11, we use 10-fold CV
 ## otherwise, we use the largest fold possible.
-cv.error.k <- knumber <- min(10, max(table(classes)) - 1)
+## has to be - 2, because I do another round of CV.
+cv.error.k <- knumber <- min(10, max(table(classes)) - 2)
 
 
 
