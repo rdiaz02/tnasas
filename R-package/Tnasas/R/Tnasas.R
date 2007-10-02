@@ -340,77 +340,77 @@ html.data.frame <- function (object, first.col = "Name",
 
 
 
-HTML.cvPred <- function(x, file = "results.txt", append = TRUE) {
+HTML.cvPred <- function (x, file = "results.txt", append = TRUE) 
+{
     sink(file, append)
     cat("<h3>Prediction error (using cross-validation)</h3>")
     cat("<p><b>Error rate</b>", round(x[[1]], 4), "</p>")
     cat("<p>Confussion Matrix:<br><pre>")
     print(x[[2]])
     cat("</pre></p>")
-    cat("<br>Number of predictors that yields minimum error rate:", x[[3]], "<br>")
+    cat("<br>Number of predictors that yields minimum error rate:", 
+        x[[3]], "<br>")
     cat("<h3>Selected predictor genes:</h3>")
     cat("<TABLE frame=\"box\">\n")
     cat("<tr><th width=200>Gene name</th></tr>\n")
-    gns <- x$geneNames[x[[4]]]
-    for(i in 1:length(gns)) {
+    if(length(x[[4]] == 1) && (x[[4]] == "All the genes")) {
+      cat("<tr><td> All the genes in the data set</td></tr>\n")
+    } else {
+      gns <- x$geneNames[x[[4]]]
+      for (i in 1:length(gns)) {
         cat("<tr><td>", linkGene(gns[i]), "</td></tr>\n")
+      }
     }
     cat("</TABLE>")
     cat("<h3>OOB predictions (and true ---observed--- class): </h3>")
-    
-    html.data.frame(x[[5]], file = file, append = TRUE,
-                    first.col = "Subject/array")
-    
+    html.data.frame(x[[5]], file = file, append = TRUE, first.col = "Subject/array")
     wrong.pred <- which(x[[5]][, 1] != x[[5]][, 2])
-    if(length(wrong.pred)) {
+    if (length(wrong.pred)) {
         cat("<h4>Cases with incorrect predictions (errors): </h4>")
-        html.data.frame(x[[5]][wrong.pred,], file = file,
-                        append = TRUE, first.col = "Subject/array")
+        html.data.frame(x[[5]][wrong.pred, ], file = file, append = TRUE, 
+            first.col = "Subject/array")
     }
-    
     ks <- length(x$genesSelected.cv)
     num.selected <- unlist(lapply(x$genesSelected.cv, length))
-    
     cv.names <- paste("CV.run.", 1:ks, sep = "")
-    
     cat("<br><br><h3> Stability assessments </h3>")
     cat("<h4> Genes selected in each of the cross-validation runs </h4>")
-    for(i in 1:ks) {
-        cat(paste("<h5>CV run  ", i, " (", num.selected[i], " genes selected):   ", sep = ""), "</h5>")
-        tmpgs <- x$geneNames[x$genesSelected.cv[[i]] ]
+    for (i in 1:ks) {
+        cat(paste("<h5>CV run  ", i, " (", num.selected[i], " genes selected):   ", 
+            sep = ""), "</h5>")
+        tmpgs <- x$geneNames[x$genesSelected.cv[[i]]]
         tmpgsl <- linkGene(tmpgs)
         cat("<TABLE frame=\"box\">\n")
         cat("<tr><th width=200>Gene name</th></tr>\n")
-        for(i in 1:length(tmpgsl)) {
+        for (i in 1:length(tmpgsl)) {
             cat("<tr><td>", tmpgsl[i], "</td></tr>\n")
         }
         cat("</TABLE>")
     }
-        
-    shared.genes <- matrix(NA, nrow = (ks + 1), ncol = (ks + 1))
+    shared.genes <- matrix(NA, nrow = (ks + 1), ncol = (ks + 
+        1))
     tmp.genesSelected <- list()
     tmp.genesSelected[[1]] <- x[[4]]
     tmp.genesSelected <- c(tmp.genesSelected, x$genesSelected.cv)
-    for(i in 1:(ks + 1)) {
-        for(j in 1:(ks + 1)) { ## sure, need not be symmetric, but this is fast
-            shared.genes[i, j] <-
-                length(intersect(tmp.genesSelected[[i]],
-                                 tmp.genesSelected[[j]]))
+    for (i in 1:(ks + 1)) {
+        for (j in 1:(ks + 1)) {
+            shared.genes[i, j] <- length(intersect(tmp.genesSelected[[i]], 
+                tmp.genesSelected[[j]]))
         }
     }
-    prop.shared <- round(shared.genes/c(x[[3]], num.selected), 3)
-    
+    prop.shared <- round(shared.genes/c(x[[3]], num.selected), 
+        3)
     num.selected <- c(x[[3]], num.selected)
     num.selectedS <- paste("(", num.selected, ")", sep = "")
-    colnames(shared.genes) <- colnames(prop.shared) <- c("OriginalSample", cv.names)
-    rownames(shared.genes) <- rownames(prop.shared) <- paste(c("OriginalSample", cv.names), num.selectedS)
-    
+    colnames(shared.genes) <- colnames(prop.shared) <- c("OriginalSample", 
+        cv.names)
+    rownames(shared.genes) <- rownames(prop.shared) <- paste(c("OriginalSample", 
+        cv.names), num.selectedS)
     options(width = 200)
     cat("<br><br><h4>Number of shared genes</h4>")
     cat("<pre>")
     print(as.table(shared.genes))
     cat("</pre>")
-    
     cat("<h4>Proportion of shared genes (relative to row total)</h4>")
     cat("<pre>")
     print(as.table(prop.shared))
@@ -418,37 +418,37 @@ HTML.cvPred <- function(x, file = "results.txt", append = TRUE) {
     options(width = 80)
     unlisted.genes.selected <- unlist(x$genesSelected.cv)
     named.unlisted.selected <- x$geneNames[unlisted.genes.selected]
-    
-    
-    in.all.data <-
-        which(names(table(named.unlisted.selected, dnn = NULL)) %in% x$geneNames[x[[4]]])
     cat("<br><br><h4>Gene freqs. in cross-validated runs of genes selected in model with all data</h4>")
 
-    sgad <- sort(table(named.unlisted.selected, dnn = NULL)[in.all.data], decreasing = TRUE)
-    sgadl <- linkGene(names(sgad))
-    cat("<TABLE frame=\"box\">\n")
-    cat("<tr><th width=200>Gene name</th><th>Frequency</th></tr>\n")
-    for(i in 1:length(sgadl)) {
+    if(length(x[[4]] == 1) && (x[[4]] == "All the genes")) {
+      cat("<p> See table below </p>")
+    } else {
+      in.all.data <- which(names(table(named.unlisted.selected, 
+                                       dnn = NULL)) %in% x$geneNames[x[[4]]])
+      sgad <- sort(table(named.unlisted.selected, dnn = NULL)[in.all.data], 
+                   decreasing = TRUE)
+      sgadl <- linkGene(names(sgad))
+      cat("<TABLE frame=\"box\">\n")
+      cat("<tr><th width=200>Gene name</th><th>Frequency</th></tr>\n")
+      for (i in 1:length(sgadl)) {
         cat("<tr><td>", sgadl[i], "</td><td>", sgad[i], "</td></tr>\n")
-    }
-    cat("</TABLE>")
-    
-    
-    
+      }
+      cat("</TABLE>")
+    } 
+
     cat("<h4>Gene frequencies in cross-validated runs</h4>")
-    tmp.table <- sort(table(named.unlisted.selected, dnn = NULL),
-                      decreasing = TRUE)
+    tmp.table <- sort(table(named.unlisted.selected, dnn = NULL), 
+        decreasing = TRUE)
     tmp.table.l <- linkGene(names(tmp.table))
     cat("<TABLE frame=\"box\">\n")
     cat("<tr><th width=200>Gene name</th><th>Frequency</th></tr>\n")
-    for(i in 1:length(tmp.table.l)) {
-        cat("<tr><td>", tmp.table.l[i], "</td><td>", tmp.table[i], "</td></tr>\n")
+    for (i in 1:length(tmp.table.l)) {
+        cat("<tr><td>", tmp.table.l[i], "</td><td>", tmp.table[i], 
+            "</td></tr>\n")
     }
     cat("</TABLE>")
     sink()
 }
-
-
 
 
 
