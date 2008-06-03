@@ -404,6 +404,7 @@ write.table(setdiff(colnames(datos), geneNames[the.run[[4]]]), sep = "\t",
             quote = FALSE,
             row.names = FALSE, col.names = FALSE,
             file = nonselected.genes.file)
+save.image()
 cat("\n\n Normal termination\n")
 
 
