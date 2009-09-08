@@ -722,14 +722,15 @@ f.pred.errors.PAM <- function(data, y,
         ## check levels are the same in input and output: I think it is OK,
         ## but this is a paranoid check
         ## <paranoid check>
-        oob.tmp <- factor(OOB.predictions)
-        try(paranoid.check <- any(OOB.predictions != oob.tmp))
-        if(class(paranoid.check) == "try-error") {
-          error.msg <- paranoid.check
-          stop(paste("OOOOOPS: try-error in paranoid check", error.msg))
-        } else if(paranoid.check) {
-          stop("OOOOPS: factor error in paranoid check")
-        }
+        ## search below for paranoid. check: this is silly
+#         oob.tmp <- factor(OOB.predictions)
+#         try(paranoid.check <- any(OOB.predictions != oob.tmp))
+#         if(class(paranoid.check) == "try-error") {
+#           error.msg <- paranoid.check
+#           stop(paste("OOOOOPS: try-error in paranoid check", error.msg))
+#         } else if(paranoid.check) {
+#           stop("OOOOPS: factor error in paranoid check")
+#         }
         ## </paranoid check>
         
       } ### </ if(cv.error)>
@@ -1019,14 +1020,17 @@ f.pred.errors <- function(data, y,
         ## check levels are the same in input and output: I think it is OK,
         ## but this is a paranoid check
         ## <paranoid check>
-        oob.tmp <- factor(OOB.predictions)
-        try(paranoid.check <- any(OOB.predictions != oob.tmp))
-        if(class(paranoid.check) == "try-error") {
-          error.msg <- paranoid.check
-          stop(paste("OOOOOPS: try-error in paranoid check", error.msg))
-        } else if(paranoid.check) {
-          stop("OOOOPS: factor error in paranoid check")
-        }
+        ## NO!! This is silly: it will fail if OOB.predictions are all identical.
+        ## Commented out!!!
+#         
+#         oob.tmp <- factor(OOB.predictions)
+#         try(paranoid.check <- any(OOB.predictions != oob.tmp))
+#         if(class(paranoid.check) == "try-error") {
+#           error.msg <- paranoid.check
+#           stop(paste("OOOOOPS: try-error in paranoid check", error.msg))
+#         } else if(paranoid.check) {
+#           stop("OOOOPS: factor error in paranoid check")
+#         }
         ## </paranoid check>
         
       } ### </ if(cv.error)>

@@ -298,9 +298,9 @@ errorRun = soFar.endswith("Execution halted\n")
 if os.path.exists(tmpDir + "/pid.txt"):
     ## do we need to kill an R process?
     if (time.time() - os.path.getmtime(tmpDir + "/pid.txt")) > R_MAX_time:
-        lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
         try:
-            os.system('export LAM_MPI_SESSION_SUFFIX=' + lamenv +
+            lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
+	    os.system('export LAM_MPI_SESSION_SUFFIX=' + lamenv +
                       '; lamhalt -H; lamwipe -H')
         except:
             None
