@@ -1,1 +1,27 @@
-README
+License and copyright
+======================
+
+All of the Tnasas Python code is copyright (C) 2003-2006 Ramon Diaz-Uriarte
+<rdiaz02@gmail.com>. The Tnasas R package itself is under the GNU GPL. The
+rest of the code files are under the Affero Public license.
+
+All of the code is released under the Affero Public License. A copy of
+the license is included with this distribution (see
+AfferoPublicLicense.html or oagpl.html).
+
+The documentation is released under a Creative Commons License. See the
+documentation for the explicit terms of the license.
+
+Please, respect the licenses, copyright, and remember to give credit where
+credit is due.
+
+
+
+
+Installation
+=============
+
+You need LAM/MPI, and some basic setup for the web-based setting up of
+LAM, etc. See the Asterias-common set of files, also available from The
+Launchpad (https://launchpad.net/projects/asterias) or Bioinformatics.org
+(http://bioinformatics.org/asterias).
