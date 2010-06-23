@@ -100,10 +100,8 @@ def printPalsURL(newDir,
     gl_base = application_url + '/tmp/' + newDir + '/'
     gl1 = gl_base + f1
     gl2 = gl_base + f2
-
     clean_for_PaLS(tmpDir + '/' + f1, tmpDir + '/' + f1)
     clean_for_PaLS(tmpDir + '/' + f2, tmpDir + '/' + f2)
-    
     outstr0 = '<br /> <hr> ' + \
               '<h3> Send results to <a href = "http://pals.bioinfo.cnio.es">' + \
               '<IMG BORDER="0" SRC="../../palsfavicon40.png" align="middle"></a></h3>'
@@ -162,7 +160,7 @@ def printErrorRun():
     outf.write("of the run. Unless it is obvious to you that this is a fault of your data ")
     outf.write("(and that there is no way we could have avoided the crash) ")
     outf.write("please let us know so we can fix the problem. ")
-    outf.write("Please sed us this URL and the output below</p>")
+    outf.write("Please send us this URL and the output below</p>")
     ## xx: eliminar, for production, from here to xxx
 ###     outf.write("<p> This is the output from the R run:<p>")
 ###     outf.write("<pre>")
@@ -204,7 +202,6 @@ def printOKRun():
     allResults.close()
     outf.write('<hr> <a href="http://tnasas.bioinfo.cnio.es/tmp/' +
                newDir + '/all.results.tar.gz">Download</a> all figures and text results.')  
-
     try:
         outf.write(printPalsURL(newDir, tmpDir))
     except:

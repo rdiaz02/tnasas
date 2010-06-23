@@ -45,7 +45,7 @@ system(paste("/http/mpi.log/counterAppsFromR.py Tnasas", getwd()))
 ## attach pid to name in R.running.procs
 hostn <- system("hostname", intern = TRUE)
 cat("\n HOSTNAME IS ", hostn, "\n")
-new.name1 <- unlist(strsplit(getwd(), "\/"))
+new.name1 <- unlist(strsplit(getwd(), "/"))
 new.name1 <- paste(new.name1[length(new.name1)], "@", hostn, sep = "")
 new.name <- paste("R.", new.name1, "%", pid, sep = "")
 new.name1 <- paste("R.", new.name1, sep = "")

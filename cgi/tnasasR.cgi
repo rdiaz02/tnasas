@@ -9,7 +9,7 @@ import time
 import shutil
 import dircache
 ##import string
-import whrandom
+import random
 from stat import ST_SIZE
 import cgitb
 cgitb.enable() ## zz: eliminar for real work?
@@ -23,6 +23,8 @@ MAX_class_size = 61897L
 ##  f5 <- rep(paste(paste(letters, collapse = ""),
 ##                  paste(LETTERS, collapse="")), 1000)
 ## so each of 1000 labels has 48 chars.
+
+R_exec = "/var/www/bin/R-2.11-patched/bin/R"
 
 acceptedIDTypes = ('None', 'cnio', 'affy', 'clone', 'acc', 'ensembl', 'entrez', 'ug', 'rsrna', 'rspeptide', 'hugo')
 acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
@@ -203,7 +205,7 @@ for directory in currentTmp:
 
 
 ### Creating temporal directories
-newDir = str(whrandom.randint(1, 10000)) + str(os.getpid()) + str(whrandom.randint(1, 100000)) + str(int(currentTime)) + str(whrandom.randint(1, 10000))
+newDir = str(random.randint(1, 10000)) + str(os.getpid()) + str(random.randint(1, 100000)) + str(int(currentTime)) + str(random.randint(1, 10000))
 redirectLoc = "/tmp/" + newDir
 tmpDir = "/http/tnasas/www/tmp/" + newDir
 os.mkdir(tmpDir)
@@ -331,7 +333,7 @@ touchRrunning = os.system("/bin/touch /http/tnasas/www/R.running.procs/R." + new
 shutil.copy("/http/tnasas/cgi/f1.R", tmpDir)
 ## we add the 2> error.msg because o.w. if we kill R we get a server error as standard
 ## error is sent to the server
-Rcommand = "cd " + tmpDir + "; " + "/usr/bin/R CMD BATCH --no-restore --no-readline --no-save -q f1.R 2> error.msg &"
+Rcommand = "cd " + tmpDir + "; " + R_exec + " --no-restore --no-readline --no-save --slave <f1.R >f1.Rout 2> error.msg &"
 Rrun = os.system(Rcommand)
 # tryrrun = os.system('/http/mpi.log/tryRrun2.py ' + tmpDir +' 10 ' + 'Tnasas &')
 createResultsFile = os.system("/bin/touch " + tmpDir + "/results.txt")
