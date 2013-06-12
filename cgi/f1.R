@@ -56,7 +56,8 @@ system(paste("mv ../../R.running.procs/", new.name1,
 
 library(Tnasas)
 runif(1)
-library(GDD)
+library(Cairo)
+## library(GDD)
                                         #library(CGIwithR)
 save.seed <- .Random.seed ## in case there are problems
 png.width <- 500
@@ -78,7 +79,7 @@ graphDir <- paste(getwd(), "/", sep = "")
 
 
 caughtUserError <- function(message) {
-    GDD("predictor_error_rates.png", width = png.width,
+    CairoPNG("predictor_error_rates.png", width = png.width,
            height = png.height, 
            ps = png.pointsize)
     plot(x = c(0, 1), y = c(0, 1),
@@ -101,7 +102,7 @@ caughtUserError <- function(message) {
 }
 
 caughtOurError <- function(message) {
-    GDD("predictor_error_rates.png", width = png.width,
+    CairoPNG("predictor_error_rates.png", width = png.width,
            height = png.height, 
            ps = png.pointsize)
     plot(x = c(0, 1), y = c(0, 1),
@@ -343,7 +344,7 @@ n.print <- function(x) paste(substitute(x), paste(x, collapse = ", "),
                                  sep = " : ")
 
 
-GDD(image.file, width = 700, height = 500, ps = 10)
+CairoPNG(image.file, width = 700, height = 500, ps = 10)
 
 
 par(las = 1)
