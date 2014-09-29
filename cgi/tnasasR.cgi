@@ -169,11 +169,11 @@ os.chmod(tmpDir, 0700)
 fs = cgi.FieldStorage()
 
 
-idtype = radioUpload('idtype', acceptedIDTypes)
-organism = radioUpload('organism', acceptedOrganisms)
+idtype = dummyUpload('idtype','None', tmpDir)
+organism = dummyUpload('organism', 'None', tmpDir)
 
-model = radioUpload('model', acceptedModels)
-genesel = radioUpload('genesel', acceptedGeneSels)
+model = radioUpload('model', acceptedModels, fs, tmpDir)
+genesel = radioUpload('genesel', acceptedGeneSels, fs, tmpDir)
 
 
 ##check if file coming from preP
@@ -182,7 +182,7 @@ if(fs.getfirst("covariate2")!= None):
     prep_tmpdir = fs.getfirst("covariate2")
     shutil.copy("/asterias-web-apps/prep/www/tmp/" + prep_tmpdir +"/outdata.txt",tmpDir + "/covariate")
 else:
-    fileUpload('covariate')
+    fileUpload('covariate', fs, tmpDir)
     if os.stat(tmpDir + '/covariate')[ST_SIZE] > MAX_covariate_size:
         shutil.rmtree(tmpDir)
         commonOutput()
@@ -192,7 +192,7 @@ else:
         print "</body></html>"
         sys.exit()
 
-fileUpload('class')
+fileUpload('class', fs, tmpDir)
 if os.stat(tmpDir + '/class')[ST_SIZE] > MAX_class_size:
     shutil.rmtree(tmpDir)
     commonOutput()

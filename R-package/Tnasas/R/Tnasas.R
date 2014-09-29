@@ -27,7 +27,6 @@
 
 
 ##  zz: watch out: use and fix for ever a multtest package.
-
 .First.lib <- function(lib, pkg) {
     library.dynam("Tnasas", pkg, lib) ## beware, must be last
     require(supclust)
@@ -67,10 +66,11 @@ dldaC <- function (ls, cll, ts) {
 ###}
 
 
+
+## F statistic for gene selection
 geneSelect.F <- function(data, class) {
-    ## F statistic for gene selection
     class <- as.numeric(factor(class)) - 1
-    tmp <- mt.maxT(t(data), class, B = 1, test = "f")[, c(1, 2)]
+    tmp   <- mt.maxT(t(data), class, B = 1, test = "f")[, c(1, 2)]
     selected <- tmp[, 1]
     return(selected)
 }

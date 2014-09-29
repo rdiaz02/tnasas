@@ -1,0 +1,20 @@
+useDynLib("Tnasas", .registration = TRUE)
+
+export(
+	"dldaC",
+	"geneSelect.F", "geneSelect.Wilcoxon",
+	"geneSelect.rF", "cv.balance",
+	"internalPredictor.svmLinear",
+	"internalPredictor.dldaC",
+	"internalPredictor.knn",
+	"internalPredictor.rF",
+	"print.cvPred",
+	"linkGene","linkGene2",
+	"html.data.frame",
+	"HTML.cvPred",
+	"pamr.listgenes.fixed",
+	"VarSelPAM",
+	"f.pred.errors.PAM",
+	"f.pred.errors"
+)
+
