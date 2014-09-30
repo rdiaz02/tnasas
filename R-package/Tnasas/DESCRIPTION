@@ -4,7 +4,7 @@ Date: 2006-01-19
 Title: This is not a substitute for a statistician
 Author: Ramon Diaz-Uriarte <rdiaz@ligarto.org>
 Maintainer: Ramon Diaz-Uriarte <rdiaz@ligarto.org>
-Depends: R (>= 2.0.0), multtest, Cairo, Hmisc, randomForest, supclust, e1071, kknn, pamr
+Depends: R (>= 2.0.0), multtest, Cairo, Hmisc, randomForest, supclust, e1071, kknn, pamr 
 Description: whatever
 LazyLoad: Yes
 License: GPL version 2 or newer

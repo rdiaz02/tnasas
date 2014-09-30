@@ -186,7 +186,7 @@ internalPredictor.dldaC <- function(x, y, test.data) {
 
 
 internalPredictor.knn <- function(x, y, test.data) {
-    knn1(x, test.data, y)
+    class::knn1(x, test.data, y)
 }
 
 

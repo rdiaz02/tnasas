@@ -20,7 +20,9 @@ import cgitb
 cgitb.enable() ## zz: eliminar for real work?
 sys.stderr = sys.stdout ## eliminar?
 
-R_MAX_time = 4 * 3600 ## 4 hours is max duration allowd for any process
+sys.path.append("/asterias-web-apps/web-apps-common")
+from web_apps_config import R_MAX_time
+## R_MAX_time = 4 * 3600 ## 4 hours is max duration allowd for any process
 
 ## For redirections, from Python Cookbook
 
@@ -202,10 +204,10 @@ def printOKRun():
     allResults.close()
     outf.write('<hr> <a href="http://tnasas.iib.uam.es/tmp/' +
                newDir + '/all.results.tar.gz">Download</a> all figures and text results.')  
-    try:
-        outf.write(printPalsURL(newDir, tmpDir))
-    except:
-        None
+    # try:
+    #     outf.write(printPalsURL(newDir, tmpDir))
+    # except:
+    #     None
     outf.write("</body></html>")
     outf.close()
     Rresults.close()
