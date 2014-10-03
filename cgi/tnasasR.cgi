@@ -185,7 +185,7 @@ else:
     fileUpload('covariate', fs, tmpDir, APP_NAME)
     if os.stat(tmpDir + '/covariate')[ST_SIZE] > MAX_covariate_size:
         shutil.rmtree(tmpDir)
-        commonOutput()
+        commonOutput(APP_NAME)
         print "<h1> TNASAS ERROR </h1>"
         print "<p> Covariate file way too large </p>"
         print "<p> Covariate files this size not allowed.</p>"
@@ -195,7 +195,7 @@ else:
 fileUpload('class', fs, tmpDir, APP_NAME)
 if os.stat(tmpDir + '/class')[ST_SIZE] > MAX_class_size:
     shutil.rmtree(tmpDir)
-    commonOutput()
+    commonOutput(APP_NAME)
     print "<h1> TNASAS ERROR </h1>"
     print "<p> Class file way too large </p>"
     print "<p> Class files this size not allowed.</p>"
@@ -230,7 +230,7 @@ for Rtouchfile in RrunningFiles:
 numRtnasas = len(glob.glob("/asterias-web-apps/tnasas/www/R.running.procs/R.*@*%*"))
 if numRtnasas > MAX_tnasas:
     shutil.rmtree(tmpDir)
-    commonOutput()
+    commonOutput(APP_NAME)
     print "<h1> Tnasas problem: The servers are too busy </h1>"
     print "<p> Because of the popularity of the application "
     print " the maximum number of simultaneous runs of tnasas has been reached.</p>"
@@ -256,7 +256,7 @@ while 1:
            or (line.find('"#name"') == 0) or (line.find('"#NAME"') == 0) or (line.find('"#Name"') == 0):
         num_name_lines = num_name_lines + 1
         if num_name_lines > 1:
-            commonOutput()
+            commonOutput(APP_NAME)
             print """ You have more than one line with #Name (or #NAME or #name), in the data matrix \
                    but only one is allowed."""
             sys.exit()
