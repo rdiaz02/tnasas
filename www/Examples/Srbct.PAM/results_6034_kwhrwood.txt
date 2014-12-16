@@ -1,0 +1,208 @@
+OPTIONS and SETTINGS:
+Sizes of numbers of genes in predictor examined:  Not available (can differ in each run)
+Number of folds in cross-validation:              10
+Classification algorithm:                         PAM
+Gene selection:                                   
+**********************************************************
+**********************************************************
+ RESULTS: 
+
+Error rate: 0.0317 
+
+Confussion Matrix:
+            0  1  2 3 TotalError RelativeErrorPerClass
+Observed 0 22  0  0 1 0.01587302            0.04347826
+Observed 1  0 20  0 0 0.00000000            0.00000000
+Observed 2  0  1 11 0 0.01587302            0.08333333
+Observed 3  0  0  0 8 0.00000000            0.00000000
+
+Number of predictors that yields minimum error rate: 31 
+
+Selected predictor genes: 
+ [1] "G742"  "G1389" "G509"  "G246"  "G1955" "G545"  "G187"  "G1915" "G1954"
+[10] "G758"  "G1295" "G846"  "G1158" "G1601" "G836"  "G276"  "G2046" "G1916"
+[19] "G1884" "G1327" "G1319" "G1084" "G1645" "G1074" "G153"  "G976"  "G335" 
+[28] "G1606" "G1066" "G910"  "G1116"
+
+OOB predictions (and true ---observed--- class): 
+          OOB.predictions TrueClass
+Column_1                0         0
+Column_2                0         0
+Column_3                0         0
+Column_4                0         0
+Column_5                0         0
+Column_6                0         0
+Column_7                0         0
+Column_8                0         0
+Column_9                0         0
+Column_10               3         0
+Column_11               0         0
+Column_12               0         0
+Column_13               0         0
+Column_14               0         0
+Column_15               0         0
+Column_16               0         0
+Column_17               0         0
+Column_18               0         0
+Column_19               0         0
+Column_20               0         0
+Column_21               0         0
+Column_22               0         0
+Column_23               0         0
+Column_24               3         3
+Column_25               3         3
+Column_26               3         3
+Column_27               3         3
+Column_28               3         3
+Column_29               3         3
+Column_30               3         3
+Column_31               3         3
+Column_32               2         2
+Column_33               2         2
+Column_34               1         2
+Column_35               2         2
+Column_36               2         2
+Column_37               2         2
+Column_38               2         2
+Column_39               2         2
+Column_40               2         2
+Column_41               2         2
+Column_42               2         2
+Column_43               2         2
+Column_44               1         1
+Column_45               1         1
+Column_46               1         1
+Column_47               1         1
+Column_48               1         1
+Column_49               1         1
+Column_50               1         1
+Column_51               1         1
+Column_52               1         1
+Column_53               1         1
+Column_54               1         1
+Column_55               1         1
+Column_56               1         1
+Column_57               1         1
+Column_58               1         1
+Column_59               1         1
+Column_60               1         1
+Column_61               1         1
+Column_62               1         1
+Column_63               1         1
+
+
+ Cases with incorrect predictions (errors): 
+          OOB.predictions TrueClass
+Column_10               3         0
+Column_34               1         2
+
+
+ Stability assessments 
+ ---------------------
+
+ Genes selected in each of the cross-validation runs 
+CV run  1 (12 genes selected):    
+ [1] "G1389" "G509"  "G742"  "G187"  "G1955" "G545"  "G246"  "G1954" "G1915"
+[10] "G1601" "G1295" "G2046"
+
+---
+CV run  2 (8 genes selected):    
+[1] "G509"  "G246"  "G742"  "G1389" "G1955" "G545"  "G187"  "G1954"
+
+---
+CV run  3 (25 genes selected):    
+ [1] "G742"  "G1915" "G1389" "G509"  "G1955" "G276"  "G187"  "G246"  "G545" 
+[10] "G1295" "G1954" "G1884" "G1084" "G1601" "G836"  "G846"  "G1916" "G1074"
+[19] "G1319" "G758"  "G1645" "G335"  "G1327" "G1158" "G2046"
+
+---
+CV run  4 (32 genes selected):    
+ [1] "G742"  "G509"  "G1389" "G246"  "G1955" "G545"  "G187"  "G1295" "G758" 
+[10] "G1915" "G1954" "G846"  "G1158" "G276"  "G836"  "G1601" "G2046" "G1884"
+[19] "G1327" "G85"   "G1916" "G1645" "G1606" "G422"  "G910"  "G153"  "G335" 
+[28] "G1319" "G1116" "G1084" "G255"  "G1074"
+
+---
+CV run  5 (9 genes selected):    
+[1] "G742"  "G1389" "G509"  "G1955" "G246"  "G545"  "G187"  "G1954" "G758" 
+
+---
+CV run  6 (18 genes selected):    
+ [1] "G742"  "G1389" "G246"  "G509"  "G1955" "G545"  "G187"  "G1954" "G1601"
+[10] "G758"  "G836"  "G846"  "G1158" "G1915" "G1074" "G1327" "G1116" "G1295"
+
+---
+CV run  7 (12 genes selected):    
+ [1] "G509"  "G1389" "G742"  "G246"  "G1955" "G545"  "G1954" "G187"  "G1601"
+[10] "G846"  "G1295" "G1915"
+
+---
+CV run  8 (16 genes selected):    
+ [1] "G742"  "G1389" "G509"  "G545"  "G1915" "G246"  "G1955" "G1954" "G187" 
+[10] "G846"  "G1601" "G1916" "G1066" "G1295" "G2046" "G758" 
+
+---
+CV run  9 (12 genes selected):    
+ [1] "G1389" "G742"  "G509"  "G545"  "G187"  "G246"  "G1955" "G1954" "G758" 
+[10] "G1158" "G836"  "G1601"
+
+---
+CV run  10 (19 genes selected):    
+ [1] "G1389" "G742"  "G509"  "G246"  "G1955" "G545"  "G758"  "G187"  "G1954"
+[10] "G836"  "G1295" "G846"  "G976"  "G1884" "G1158" "G1601" "G1084" "G1915"
+[19] "G1327"
+
+---
+
+
+ Number of shared genes 
+                    OriginalSample CV.run.1 CV.run.2 CV.run.3 CV.run.4 CV.run.5 CV.run.6 CV.run.7 CV.run.8 CV.run.9 CV.run.10
+OriginalSample (31)             31       12        8       25       29        9       18       12       16       12        19
+CV.run.1 (12)                   12       12        8       12       12        8       11       11       12        9        11
+CV.run.2 (8)                     8        8        8        8        8        8        8        8        8        8         8
+CV.run.3 (25)                   25       12        8       25       25        9       17       12       15       12        18
+CV.run.4 (32)                   29       12        8       25       32        9       18       12       15       12        18
+CV.run.5 (9)                     9        8        8        9        9        9        9        8        9        9         9
+CV.run.6 (18)                   18       11        8       17       18        9       18       12       13       12        16
+CV.run.7 (12)                   12       11        8       12       12        8       12       12       12        9        12
+CV.run.8 (16)                   16       12        8       15       15        9       13       12       16       10        13
+CV.run.9 (12)                   12        9        8       12       12        9       12        9       10       12        12
+CV.run.10 (19)                  19       11        8       18       18        9       16       12       13       12        19
+
+
+ Proportion of shared genes (relative to row total) 
+                    OriginalSample CV.run.1 CV.run.2 CV.run.3 CV.run.4 CV.run.5 CV.run.6 CV.run.7 CV.run.8 CV.run.9 CV.run.10
+OriginalSample (31)          1.000    0.387    0.258    0.806    0.935    0.290    0.581    0.387    0.516    0.387     0.613
+CV.run.1 (12)                1.000    1.000    0.667    1.000    1.000    0.667    0.917    0.917    1.000    0.750     0.917
+CV.run.2 (8)                 1.000    1.000    1.000    1.000    1.000    1.000    1.000    1.000    1.000    1.000     1.000
+CV.run.3 (25)                1.000    0.480    0.320    1.000    1.000    0.360    0.680    0.480    0.600    0.480     0.720
+CV.run.4 (32)                0.906    0.375    0.250    0.781    1.000    0.281    0.562    0.375    0.469    0.375     0.562
+CV.run.5 (9)                 1.000    0.889    0.889    1.000    1.000    1.000    1.000    0.889    1.000    1.000     1.000
+CV.run.6 (18)                1.000    0.611    0.444    0.944    1.000    0.500    1.000    0.667    0.722    0.667     0.889
+CV.run.7 (12)                1.000    0.917    0.667    1.000    1.000    0.667    1.000    1.000    1.000    0.750     1.000
+CV.run.8 (16)                1.000    0.750    0.500    0.938    0.938    0.562    0.812    0.750    1.000    0.625     0.812
+CV.run.9 (12)                1.000    0.750    0.667    1.000    1.000    0.750    1.000    0.750    0.833    1.000     1.000
+CV.run.10 (19)               1.000    0.579    0.421    0.947    0.947    0.474    0.842    0.632    0.684    0.632     1.000
+
+
+
+ Gene freqs. in cross-validated runs of genes selected in model with all data 
+
+G1389  G187 G1954 G1955  G246  G509  G545  G742 G1601 G1295 G1915  G758  G846 
+   10    10    10    10    10    10    10    10     8     7     7     7     6 
+G1158  G836 G1327 G2046 G1074 G1084 G1884 G1916 G1116 G1319 G1645  G276  G335 
+    5     5     4     4     3     3     3     3     2     2     2     2     2 
+G1066  G153 G1606  G910  G976 
+    1     1     1     1     1 
+
+
+
+ Gene frequencies in cross-validated runs 
+
+G1389  G187 G1954 G1955  G246  G509  G545  G742 G1601 G1295 G1915  G758  G846 
+   10    10    10    10    10    10    10    10     8     7     7     7     6 
+G1158  G836 G1327 G2046 G1074 G1084 G1884 G1916 G1116 G1319 G1645  G276  G335 
+    5     5     4     4     3     3     3     3     2     2     2     2     2 
+G1066  G153 G1606  G255  G422   G85  G910  G976 
+    1     1     1     1     1     1     1     1 
+

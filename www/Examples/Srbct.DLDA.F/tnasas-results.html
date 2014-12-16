@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US"><head><title>Tnasas (cluster)</title>
+<link rev="made" href="mailto:jvaquerizas%40cnio.es" />
+<style type="text/css">
+<!--/* <![CDATA[ */
+A {text-decoration: none}
+
+
+/* ]]> */-->
+</style>
+<script type="text/javascript">//<![CDATA[
+
+
+function open_win(res,action,faticosa)
+{
+	win = window.open("http://tnasas.bioinfo.cnio.es/?&res="+res+"&act="+action+"&faticosa="+faticosa,"FatiGO","resizable=1,directories=1,location=1,status=1,scrollbars=1,toolbar=1,menubar=1");    
+    return false;
+
+}
+
+
+function open_win2(res,action,faticosa)
+{
+	win2 = window.open("http://tnasas.bioinfo.cnio.es/?&res="+res+"&act="+action+"&faticosa="+faticosa,"FatiWise","resizable=1,directories=1,location=1,status=1,scrollbars=1,toolbar=1,menubar=1");    
+    return false;
+
+}
+
+function help_win(anchor)
+{
+
+	win_help = window.open("/help/tnasas-help.html"+anchor,"TNASAS_HELP","resizable=1,directories=1,location=1,status=1,scrollbars=1,toolbar=1,menubar=1");
+	win_help.focus();
+	return false;
+
+}
+
+function deselect_gs()
+{
+      document.tnasas.varsel[0].checked = false;
+      document.tnasas.varsel[1].checked = false;
+      document.tnasas.varsel[2].checked = false;
+      document.tnasas.varsel[0].disabled = true;
+      document.tnasas.varsel[1].disabled = true;
+      document.tnasas.varsel[2].disabled = true;
+      return false;
+}
+
+function select_gs()
+{
+      document.tnasas.varsel[0].disabled = false;
+      document.tnasas.varsel[1].disabled = false;
+      document.tnasas.varsel[2].disabled = false;
+      return false;
+}
+
+
+
+
+
+//]]></script>
+</head><body link="#4466FF" alink="#4466FF" vlink="#4466FF" text="#000000" background="/images/fondo3.jpg"><form method="post" action="/" enctype="multipart/form-data" name="tnasas">
+		
+		<center>
+    		<table border=0 cellspacing=0 width="100%">
+    			<tr bgcolor="#D4DFF4">
+    				<td rowspan="3" align=center width=140>
+    					<a href="http://tnasas.bioinfo.cnio.es">
+						<img SRC="/images/tnasas_logo_small.gif" border=0 alt="Tnasas (cluster)">
+						</a>
+					</td>
+    				<td bgcolor="#4466FF" align=center width="100%">
+    					<a href="http://bioinfo.cnio.es" STYLE="text-decoration:none">
+    					<font color=white>
+						<b>Bioinformatics Unit</b>
+						</font>
+						</a>
+    					&nbsp; - &nbsp;
+    					<a href="http://www.cnio.es" STYLE="text-decoration:none">
+    					<font color=white>
+						<b>CNIO</b>
+						</font>
+						</a>
+					</td>
+    				<td rowspan="3" align=center width=124>
+    					<a href="http://bioinfo.cnio.es">
+    					<img src="/images/bioinfo.png" border=0>
+						</a>
+					</td>
+    			</tr>
+				<tr>
+    				<td bgcolor="#D4DFF4" align=center valign=middle  STYLE="font-size:12">
+    					<br>
+    					<font size=5>
+						<b>&nbsp;Tnasas (cluster)</b>
+						</font>
+						<br>&nbsp;
+    				</td>
+				</tr>
+				<tr>
+    				<td bgcolor="#4466FF" align=center>
+    					&nbsp;
+    				</td>
+				</tr>
+			</table>
+		</center>
+		<br><br>
+<br><table border=0 width="100%"><tr><td align="left" class="titulo"><b>Results</b></td><td align="right" class="texto">
+<!-- boton de vuelta atras --><input type="submit" name="Back" value="Back to input form" /></td></tr></table><hr><br><br><center><table border=0 width=80%><tr><td><img src="predictor_error_rates_6006_gavtawpk.png" border=0 alt="Predictor Error Rates"></td></tr><tr><td><br><br><pre>OPTIONS and SETTINGS:
+Sizes of numbers of genes in predictor examined:  2, 5, 10, 20, 35, 50, 75, 120, 200, 500, 1000, 2000, 2308
+Number of folds in cross-validation:              10
+Classification algorithm:                         dlda
+Gene selection:                                   F
+**********************************************************
+**********************************************************
+ RESULTS: 
+
+Error rate: 0.0317 
+
+Confussion Matrix:
+            0  1  2 3 TotalError RelativeErrorPerClass
+Observed 0 23  0  0 0 0.00000000                 0.000
+Observed 1  0 19  1 0 0.01587302                 0.050
+Observed 2  0  0 12 0 0.00000000                 0.000
+Observed 3  0  1  0 7 0.01587302                 0.125
+
+Number of predictors that yields minimum error rate: 20 
+
+Selected predictor genes: 
+ [1] "G1389" "G742"  "G123"  "G1158" "G846"  "G246"  "G545"  "G1955" "G1606"
+[10] "G335"  "G509"  "G1386" "G836"  "G758"  "G1954" "G783"  "G1884" "G255" 
+[19] "G153"  "G1295"
+
+OOB predictions (and true ---observed--- class): 
+          OOB.predictions TrueClass
+Column_1                0         0
+Column_2                0         0
+Column_3                0         0
+Column_4                0         0
+Column_5                0         0
+Column_6                0         0
+Column_7                0         0
+Column_8                0         0
+Column_9                0         0
+Column_10               0         0
+Column_11               0         0
+Column_12               0         0
+Column_13               0         0
+Column_14               0         0
+Column_15               0         0
+Column_16               0         0
+Column_17               0         0
+Column_18               0         0
+Column_19               0         0
+Column_20               0         0
+Column_21               0         0
+Column_22               0         0
+Column_23               0         0
+Column_24               3         3
+Column_25               1         3
+Column_26               3         3
+Column_27               3         3
+Column_28               3         3
+Column_29               3         3
+Column_30               3         3
+Column_31               3         3
+Column_32               2         2
+Column_33               2         2
+Column_34               2         2
+Column_35               2         2
+Column_36               2         2
+Column_37               2         2
+Column_38               2         2
+Column_39               2         2
+Column_40               2         2
+Column_41               2         2
+Column_42               2         2
+Column_43               2         2
+Column_44               1         1
+Column_45               1         1
+Column_46               1         1
+Column_47               2         1
+Column_48               1         1
+Column_49               1         1
+Column_50               1         1
+Column_51               1         1
+Column_52               1         1
+Column_53               1         1
+Column_54               1         1
+Column_55               1         1
+Column_56               1         1
+Column_57               1         1
+Column_58               1         1
+Column_59               1         1
+Column_60               1         1
+Column_61               1         1
+Column_62               1         1
+Column_63               1         1
+
+
+ Cases with incorrect predictions (errors): 
+          OOB.predictions TrueClass
+Column_25               1         3
+Column_47               2         1
+
+
+ Stability assessments 
+ ---------------------
+
+ Genes selected in each of the cross-validation runs 
+CV run  1 (20 genes selected):    
+ [1] "G123"  "G742"  "G1389" "G1158" "G846"  "G783"  "G246"  "G1386" "G545" 
+[10] "G1003" "G335"  "G836"  "G1606" "G509"  "G1295" "G1955" "G1954" "G1915"
+[19] "G758"  "G1601"
+
+---
+CV run  2 (20 genes selected):    
+ [1] "G1389" "G123"  "G846"  "G742"  "G1158" "G1386" "G153"  "G509"  "G1606"
+[10] "G1955" "G1915" "G246"  "G1295" "G335"  "G545"  "G255"  "G758"  "G1884"
+[19] "G836"  "G1954"
+
+---
+CV run  3 (10 genes selected):    
+ [1] "G335"  "G1606" "G1389" "G742"  "G1158" "G836"  "G246"  "G123"  "G758" 
+[10] "G1955"
+
+---
+CV run  4 (20 genes selected):    
+ [1] "G1389" "G123"  "G742"  "G1158" "G846"  "G246"  "G1954" "G545"  "G1606"
+[10] "G1386" "G1955" "G335"  "G509"  "G836"  "G758"  "G783"  "G1884" "G1295"
+[19] "G1601" "G255" 
+
+---
+CV run  5 (50 genes selected):    
+ [1] "G1389" "G742"  "G123"  "G1955" "G1158" "G846"  "G187"  "G246"  "G1606"
+[10] "G545"  "G335"  "G509"  "G836"  "G758"  "G1884" "G1386" "G153"  "G783" 
+[19] "G1954" "G1601" "G1295" "G255"  "G1327" "G975"  "G1003" "G1116" "G1387"
+[28] "G1804" "G74"   "G1279" "G951"  "G165"  "G976"  "G1066" "G1207" "G1915"
+[37] "G589"  "G998"  "G236"  "G1375" "G1067" "G1730" "G937"  "G1662" "G417" 
+[46] "G422"  "G1974" "G1194" "G1911" "G188" 
+
+---
+CV run  6 (20 genes selected):    
+ [1] "G123"  "G1389" "G742"  "G1158" "G846"  "G545"  "G758"  "G246"  "G1386"
+[10] "G1606" "G1295" "G1955" "G509"  "G335"  "G836"  "G783"  "G1003" "G1884"
+[19] "G1954" "G255" 
+
+---
+CV run  7 (10 genes selected):    
+ [1] "G1389" "G742"  "G509"  "G1955" "G123"  "G246"  "G1158" "G545"  "G846" 
+[10] "G255" 
+
+---
+CV run  8 (20 genes selected):    
+ [1] "G1389" "G846"  "G742"  "G123"  "G1158" "G545"  "G246"  "G255"  "G1955"
+[10] "G1606" "G1601" "G758"  "G1954" "G509"  "G1884" "G589"  "G1295" "G1386"
+[19] "G335"  "G1116"
+
+---
+CV run  9 (35 genes selected):    
+ [1] "G1389" "G742"  "G123"  "G1158" "G1884" "G335"  "G545"  "G783"  "G846" 
+[10] "G246"  "G1386" "G1387" "G836"  "G1955" "G509"  "G1954" "G1606" "G153" 
+[19] "G74"   "G758"  "G255"  "G1662" "G1066" "G1295" "G998"  "G1067" "G823" 
+[28] "G1601" "G976"  "G1036" "G165"  "G187"  "G2144" "G1003" "G1207"
+
+---
+CV run  10 (20 genes selected):    
+ [1] "G1389" "G742"  "G123"  "G846"  "G1158" "G246"  "G545"  "G1606" "G1955"
+[10] "G758"  "G509"  "G836"  "G153"  "G1954" "G589"  "G255"  "G335"  "G1386"
+[19] "G1295" "G1601"
+
+---
+
+
+ Number of shared genes 
+                    OriginalSample CV.run.1 CV.run.2 CV.run.3 CV.run.4 CV.run.5 CV.run.6 CV.run.7 CV.run.8 CV.run.9 CV.run.10
+OriginalSample (20)             20       17       19       10       19       20       19       10       17       20        18
+CV.run.1 (20)                   17       20       17       10       18       20       18        9       16       19        17
+CV.run.2 (20)                   19       17       20       10       18       20       18       10       17       19        18
+CV.run.3 (10)                   10       10       10       10       10       10       10        6        9       10        10
+CV.run.4 (20)                   19       18       18       10       20       20       19       10       18       20        18
+CV.run.5 (50)                   20       20       20       10       20       50       20       10       20       32        20
+CV.run.6 (20)                   19       18       18       10       19       20       20       10       17       20        17
+CV.run.7 (10)                   10        9       10        6       10       10       10       10       10       10        10
+CV.run.8 (20)                   17       16       17        9       18       20       17       10       20       18        18
+CV.run.9 (35)                   20       19       19       10       20       32       20       10       18       35        19
+CV.run.10 (20)                  18       17       18       10       18       20       17       10       18       19        20
+
+
+ Proportion of shared genes (relative to row total) 
+                    OriginalSample CV.run.1 CV.run.2 CV.run.3 CV.run.4 CV.run.5 CV.run.6 CV.run.7 CV.run.8 CV.run.9 CV.run.10
+OriginalSample (20)          1.000    0.850    0.950    0.500    0.950    1.000    0.950    0.500    0.850    1.000     0.900
+CV.run.1 (20)                0.850    1.000    0.850    0.500    0.900    1.000    0.900    0.450    0.800    0.950     0.850
+CV.run.2 (20)                0.950    0.850    1.000    0.500    0.900    1.000    0.900    0.500    0.850    0.950     0.900
+CV.run.3 (10)                1.000    1.000    1.000    1.000    1.000    1.000    1.000    0.600    0.900    1.000     1.000
+CV.run.4 (20)                0.950    0.900    0.900    0.500    1.000    1.000    0.950    0.500    0.900    1.000     0.900
+CV.run.5 (50)                0.400    0.400    0.400    0.200    0.400    1.000    0.400    0.200    0.400    0.640     0.400
+CV.run.6 (20)                0.950    0.900    0.900    0.500    0.950    1.000    1.000    0.500    0.850    1.000     0.850
+CV.run.7 (10)                1.000    0.900    1.000    0.600    1.000    1.000    1.000    1.000    1.000    1.000     1.000
+CV.run.8 (20)                0.850    0.800    0.850    0.450    0.900    1.000    0.850    0.500    1.000    0.900     0.900
+CV.run.9 (35)                0.571    0.543    0.543    0.286    0.571    0.914    0.571    0.286    0.514    1.000     0.543
+CV.run.10 (20)               0.900    0.850    0.900    0.500    0.900    1.000    0.850    0.500    0.900    0.950     1.000
+
+
+
+ Gene freqs. in cross-validated runs of genes selected in model with all data 
+
+G1158  G123 G1389 G1955  G246  G742 G1606  G335  G509  G545  G758  G846 G1295 
+   10    10    10    10    10    10     9     9     9     9     9     9     8 
+G1386 G1954  G255  G836 G1884  G783  G153 
+    8     8     8     8     6     5     4 
+
+
+
+ Gene frequencies in cross-validated runs 
+
+G1158  G123 G1389 G1955  G246  G742 G1606  G335  G509  G545  G758  G846 G1295 
+   10    10    10    10    10    10     9     9     9     9     9     9     8 
+G1386 G1954  G255  G836 G1601 G1884  G783 G1003  G153 G1915  G589 G1066 G1067 
+    8     8     8     8     6     6     5     4     4     3     3     2     2 
+G1116 G1207 G1387  G165 G1662  G187   G74  G976  G998 G1036 G1194 G1279 G1327 
+    2     2     2     2     2     2     2     2     2     1     1     1     1 
+G1375 G1730 G1804  G188 G1911 G1974 G2144  G236  G417  G422  G823  G937  G951 
+    1     1     1     1     1     1     1     1     1     1     1     1     1 
+ G975 
+    1 
+
+</pre></td></tr></table></center><br><br><center><table border=0 bgcolor="#D4DFF4" width="60%" cellpadding=5><tr></tr><td width="20%"><td width="30%"><td width="25%"><td width="25%"><tr><td colspan=4 class="texto" align="center">&nbsp;&nbsp;&nbsp;&nbsp;<b>Send to FatiGO - <a href="#" onClick="help_win('#fatigo'); return false;">Help</a> <a href="#" onClick="help_win('#fatigo'); return false;"><img src="/images/info.gif" border="0"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr><tr><td width="20%"><img src="/images/fatigo.jpg" border=0 height=54></td><td width="80%" colspan="3" class="texto"><b>Use the following buttons to send the list of selected genes to FatiGO or to compare the GO terms between genes select vs. genes unselected.</b><br></td></tr><tr><td colspan=2 align="center" width="50%"><b><input type="Button"  value=" List " onClick="open_win('6006_gavtawpk','list','fatigo')" name="list"></b></td><td colspan=2 align="center" width="50%"><b><input type="Button"  value=" Compare " onClick="open_win('6006_gavtawpk','compare','fatigo')" name="compare"></b></td></tr></table><br><br><table border=0 bgcolor="#D4DFF4" width="60%" cellpadding=5><tr></tr><td width="20%"><td width="30%"><td width="25%"><td width="25%"><tr><td colspan=4 class="texto" align="center">&nbsp;&nbsp;&nbsp;&nbsp;<b>Send to FatiWise - <a href="#" onClick="help_win('#fatiwise'); return false;">Help</a> <a href="#" onClick="help_win('#fatiwise'); return false;"><img src="/images/info.gif" border="0"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr><tr><td width="20%"><img src="/images/fatiwise.jpg" border=0 height=54></td><td width="80%" colspan="3" class="texto"><b>Use the following buttons to send the list of selected genes to FatiWise or to compare between genes select vs. genes unselected.</b><br></td></tr><tr><td colspan=2 align="center" width="50%"><b><input type="Button"  value=" List " onClick="open_win2('6006_gavtawpk','list','fatiwise')" name="list"></b></td><td colspan=2 align="center" width="50%"><b><input type="Button"  value=" Compare " onClick="open_win2('6006_gavtawpk','compare','fatiwise')" name="compare"></b></td></tr></table><br><br><table border=0 bgcolor="#D4DFF4" width="60%" cellpadding=5><tr></tr><td width="20%"><td width="30%"><td width="25%"><td width="25%"><tr><td colspan=4 class="texto" align="center">&nbsp;&nbsp;&nbsp;&nbsp;<b>Send to TMT - <a href="#" onClick="help_win('#fatiwise'); return false;">Help</a> <a href="#" onClick="help_win('#fatiwise'); return false;"><img src="/images/info.gif" border="0"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr><tr><td width="20%"><img src="" border=0 height=54></td><td width="80%" colspan="3" class="texto"><b>Use the following buttons to send the list of selected genes to TMT or to compare between genes select vs. genes unselected.</b><br></td></tr><tr><td colspan=2 align="center" width="50%"></td><td colspan=2 align="center" width="50%"><b><input type="Button"  value=" Compare " onClick="open_win2('6006_gavtawpk','compare','tmt')" name="compare"></b></td></tr></table><br><br><table border=0 bgcolor="#D4DFF4" width="60%" cellpadding=5><tr></tr><td width="20%"><td width="30%"><td width="25%"><td width="25%"><tr><td colspan=4 class="texto" align="center">&nbsp;&nbsp;&nbsp;&nbsp;<b>Send to TransFAT - <a href="#" onClick="help_win('#fatiwise'); return false;">Help</a> <a href="#" onClick="help_win('#fatiwise'); return false;"><img src="/images/info.gif" border="0"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr><tr><td width="20%"><img src="" border=0 height=54></td><td width="80%" colspan="3" class="texto"><b>Use the following buttons to send the list of selected genes to TransFAT or to compare between genes select vs. genes unselected.</b><br></td></tr><tr><td colspan=2 align="center" width="50%"></td><td colspan=2 align="center" width="50%"><b><input type="Button"  value=" Compare " onClick="open_win2('6006_gavtawpk','compare','transfat')" name="compare"></b></td></tr></table><br><br><br><br><a href="results_6006_gavtawpk.txt" target="_blank"><font size=3 color=#4466FF>Download the results</font></a><br><br></center>	
+		<br><br>
+    		<table border=0 width="100%" BGCOLOR="#D4DFF4" celllspacing=0>
+    			<tr>
+					<td align=left>
+						<font size=2>
+						Click <a href="/"><b>here</b></a> to start a new prediction process. 
+						<a href="/help/tnasas-help.html" target="_blank">
+						<b>Help<b> <img src="/images/info.gif" border="0">
+						</a>
+					</td>
+    				<td align=right>
+						<font size=2>
+						&nbsp;Send comments to the <a href="mailto:rdiaz@cnio.es">webmaster</a>.
+    					Last rev. February 12th, 2004.
+    					</font>
+					</td>
+    			</tr>
+		</table>
+    	</form>
+		</body>
+    	</html>
