@@ -47,9 +47,14 @@
 
 
 #include<cmath>
+#include <R_ext/Print.h>
+
+// Next two, to use R_alloc
+#include <R.h>
+#include <Rinternals.h>
 //#include<iostream>
 
-//xx: use R_alloc instead of new and delete.
+
 
 
 extern "C" {
@@ -92,118 +97,201 @@ extern "C" {
 //     d) The predicted class is the one with smaller value in c).
 
 
-void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
-	  int *nsubjects_ls,
-	  int *num_genes, int *nsubjects_ts, int *predictions) {
+  void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
+	    int *nsubjects_ls,
+	    int *num_genes, int *nsubjects_ts, int *predictions) {
 
-  int n_total = (*num_genes) * (*nsubjects_ls);
+    // mean and var arrays: genes vary faster within classes
+    double *sum_x = (double *) R_alloc((*num_classes) * (*num_genes), sizeof(double));
+    double *sum_x2 = (double *) R_alloc((*num_classes) * (*num_genes), sizeof(double));
+    double *vars = (double *) R_alloc(*num_genes, sizeof(double));
 
-  // mean and var arrays: genes vary faster within classes
-  double *sum_x = new double[(*num_classes) * (*num_genes)];
-  double *sum_x2  = new double[(*num_classes) * (*num_genes)];
-  double *vars  = new double[*num_genes];
-
-
-  //xx: add error checking of new allocation
-
-  // Zero the allocated memory
-  for (int i = 0; i < ((*num_classes) * (*num_genes)); ++i) {
-    sum_x[i] = 0.0;
-    sum_x2[i] = 0.0;
-  }
-  for (int i = 0; i < (*num_genes); ++i) vars[i] = 0.0;
-
-
-  // Get means and variances of each class for each gene, and pooled variance.
-  int k = 0;
-  int m = 0;
-  int current_class;
-  double current_val;
-  int pos_g_by_c_array;
-  for (int gene_index = 0; gene_index < *num_genes; ++gene_index) {
-    for (int subj_ind = 0; subj_ind < *nsubjects_ls; ++subj_ind) {
-      current_class = cll[subj_ind];
-      current_val = ls[k++];
-      sum_x[(current_class * (*num_genes)) + gene_index] += current_val;
-      sum_x2[(current_class * (*num_genes)) + gene_index] +=
-	(current_val * current_val);
+    // Zero the allocated memory
+    for (int i = 0; i < ((*num_classes) * (*num_genes)); ++i) {
+      sum_x[i] = 0.0;
+      sum_x2[i] = 0.0;
     }
+    for (int i = 0; i < (*num_genes); ++i) vars[i] = 0.0;
 
-    for (int class_index = 0; class_index < *num_classes; ++class_index) {
-      pos_g_by_c_array = class_index * (*num_genes) + gene_index;
-      sum_x2[pos_g_by_c_array] -=
-	(sum_x[pos_g_by_c_array] * sum_x[pos_g_by_c_array]) / nk[class_index];
-      //variance (without divisor)
-      vars[gene_index] += sum_x2[pos_g_by_c_array];//pooled variance;
-      //no need to divide by ((*nsubjects_ls) - (*num_classes)) since
-      // common to all genes.
-      sum_x[pos_g_by_c_array] /= nk[class_index];
-    }
-  }
-
-  // Discriminant scores and prediction avoiding looping several times.
-  int predicted_class;
-  double actual_value;
-  double past_score;
-  double *score_class = new double[(*num_classes)];
-  double tmp;
-  k = 0;
-
-  for(int subject_ts = 0; subject_ts < *nsubjects_ts; ++subject_ts) {
-    for (int m = 0; m < (*num_classes); ++m) score_class[m] = 0.0;
-
+    // Get means and variances of each class for each gene, and pooled variance.
+    int k = 0;
+    int current_class;
+    double current_val;
+    int pos_g_by_c_array;
     for (int gene_index = 0; gene_index < *num_genes; ++gene_index) {
-      actual_value = ts[k++];
+      for (int subj_ind = 0; subj_ind < *nsubjects_ls; ++subj_ind) {
+	current_class = cll[subj_ind];
+	current_val = ls[k++];
+	sum_x[(current_class * (*num_genes)) + gene_index] += current_val;
+	sum_x2[(current_class * (*num_genes)) + gene_index] +=
+	  (current_val * current_val);
+      }
+
       for (int class_index = 0; class_index < *num_classes; ++class_index) {
-	tmp = actual_value - sum_x[(class_index * (*num_genes)) + gene_index];
-	score_class[class_index] += tmp * tmp / vars[gene_index];
-// 	score_class[class_index] +=
-// 	  pow(actual_value - sum_x[(class_index *(*num_genes))+gene_index], 2)
-// 	  /vars[gene_index];
+	pos_g_by_c_array = class_index * (*num_genes) + gene_index;
+	sum_x2[pos_g_by_c_array] -=
+	  (sum_x[pos_g_by_c_array] * sum_x[pos_g_by_c_array]) / nk[class_index];
+	//variance (without divisor)
+	vars[gene_index] += sum_x2[pos_g_by_c_array];//pooled variance;
+	//no need to divide by ((*nsubjects_ls) - (*num_classes)) since
+	// common to all genes.
+	sum_x[pos_g_by_c_array] /= nk[class_index];
       }
     }
 
-    //Now, get smallest score
-    predicted_class = 0;
-    past_score = score_class[0];
-    for(int class_index = 1; class_index < *num_classes; ++class_index) {
-      if(score_class[class_index] < past_score) {
-	past_score = score_class[class_index];
-	predicted_class = class_index;
+    // Discriminant scores and prediction avoiding looping several times.
+    int predicted_class;
+    double actual_value;
+    double past_score;
+    double *score_class = (double *) R_alloc(*num_classes, sizeof(double));
+    double tmp;
+    k = 0;
+
+    for(int subject_ts = 0; subject_ts < *nsubjects_ts; ++subject_ts) {
+      for (int m = 0; m < (*num_classes); ++m) score_class[m] = 0.0;
+
+      for (int gene_index = 0; gene_index < *num_genes; ++gene_index) {
+	actual_value = ts[k++];
+	if (vars[gene_index] > 0.0) { // Just in case variance is 0
+	  for (int class_index = 0; class_index < *num_classes; ++class_index) {
+	    tmp = actual_value - sum_x[(class_index * (*num_genes)) + gene_index];
+	    score_class[class_index] += ((tmp * tmp) / vars[gene_index]);
+	  }
+	} else {
+	  Rprintf("Excluded this gene, %d, variance: %f\n", gene_index, vars[gene_index]);
+	}
       }
+
+      //Now, get smallest score
+      predicted_class = 0;
+      past_score = score_class[0];
+      for(int class_index = 1; class_index < *num_classes; ++class_index) {
+	if(score_class[class_index] < past_score) {
+	  past_score = score_class[class_index];
+	  predicted_class = class_index;
+	}
+      }
+      predictions[subject_ts] = predicted_class;
     }
-    predictions[subject_ts] = predicted_class;
+
+    // No delete statements needed - R_alloc memory is automatically freed
   }
 
-  delete [] score_class;
-  delete [] sum_x;
-  delete [] sum_x2;
-  delete [] vars;
-}
+
+} // extern "C"
+
+
+// // Works, and seems robust, but above I use Ralloc.
+// void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
+// 	  int *nsubjects_ls,
+// 	  int *num_genes, int *nsubjects_ts, int *predictions) {
+
+//   // mean and var arrays: genes vary faster within classes
+//   double *sum_x = new double[(*num_classes) * (*num_genes)];
+//   double *sum_x2  = new double[(*num_classes) * (*num_genes)];
+//   double *vars  = new double[*num_genes];
+
+
+//   //xx: add error checking of new allocation
+
+//   // Zero the allocated memory
+//   for (int i = 0; i < ((*num_classes) * (*num_genes)); ++i) {
+//     sum_x[i] = 0.0;
+//     sum_x2[i] = 0.0;
+//   }
+//   for (int i = 0; i < (*num_genes); ++i) vars[i] = 0.0;
+
+
+//   // Get means and variances of each class for each gene, and pooled variance.
+//   int k = 0;
+//   int current_class;
+//   double current_val;
+//   int pos_g_by_c_array;
+//   for (int gene_index = 0; gene_index < *num_genes; ++gene_index) {
+//     for (int subj_ind = 0; subj_ind < *nsubjects_ls; ++subj_ind) {
+//       current_class = cll[subj_ind];
+//       current_val = ls[k++];
+//       sum_x[(current_class * (*num_genes)) + gene_index] += current_val;
+//       sum_x2[(current_class * (*num_genes)) + gene_index] +=
+// 	(current_val * current_val);
+//     }
+
+//     for (int class_index = 0; class_index < *num_classes; ++class_index) {
+//       pos_g_by_c_array = class_index * (*num_genes) + gene_index;
+//       sum_x2[pos_g_by_c_array] -=
+// 	(sum_x[pos_g_by_c_array] * sum_x[pos_g_by_c_array]) / nk[class_index];
+//       //variance (without divisor)
+//       vars[gene_index] += sum_x2[pos_g_by_c_array];//pooled variance;
+//       //no need to divide by ((*nsubjects_ls) - (*num_classes)) since
+//       // common to all genes.
+//       sum_x[pos_g_by_c_array] /= nk[class_index];
+//     }
+//   }
+
+//   // Discriminant scores and prediction avoiding looping several times.
+//   int predicted_class;
+//   double actual_value;
+//   double past_score;
+//   double *score_class = new double[(*num_classes)];
+//   double tmp;
+//   k = 0;
+
+//   for(int subject_ts = 0; subject_ts < *nsubjects_ts; ++subject_ts) {
+//     for (int m = 0; m < (*num_classes); ++m) score_class[m] = 0.0;
+
+//     for (int gene_index = 0; gene_index < *num_genes; ++gene_index) {
+//       actual_value = ts[k++];
+//       if (vars[gene_index] > 0.0) { // Just in case variance is 0
+// 	for (int class_index = 0; class_index < *num_classes; ++class_index) {
+// 	  tmp = actual_value - sum_x[(class_index * (*num_genes)) + gene_index];
+// 	  score_class[class_index] += ((tmp * tmp) / vars[gene_index]);
+// 	}
+//       } else {
+// 	Rprintf("Excluded this gene, %d, variance: %f\n", gene_index, vars[gene_index]);
+//       }
+//     }
+
+//     //Now, get smallest score
+//     predicted_class = 0;
+//     past_score = score_class[0];
+//     for(int class_index = 1; class_index < *num_classes; ++class_index) {
+//       if(score_class[class_index] < past_score) {
+// 	past_score = score_class[class_index];
+// 	predicted_class = class_index;
+//       }
+//     }
+//     predictions[subject_ts] = predicted_class;
+//   }
+
+//   delete [] score_class;
+//   delete [] sum_x;
+//   delete [] sum_x2;
+//   delete [] vars;
+// }
 
 
 
 
+// //dldaPredError returns the relative error
+// // But I am not using it anywhere
 
-//dldaPredError returns the relative error
+// void dldaPredError(double *ls, int *cll, int *nk, double *ts, int *tcll,
+// 		     int *num_classes,
+// 		     int *nsubjects_ls, int *num_genes, int *nsubjects_ts,
+// 		     double *PredError) {
+//   int *predictions = new int[*nsubjects_ts];
+//   dlda(ls, cll, nk, ts, num_classes, nsubjects_ls, num_genes, nsubjects_ts,
+// 	 predictions);
 
-  void dldaPredError(double *ls, int *cll, int *nk, double *ts, int *tcll,
-		     int *num_classes,
-		     int *nsubjects_ls, int *num_genes, int *nsubjects_ts,
-		     double *PredError) {
-    int *predictions = new int[*nsubjects_ts];
-    dlda(ls, cll, nk, ts, num_classes, nsubjects_ls, num_genes, nsubjects_ts,
-	 predictions);
+//   int PredNeReal = 0;
+//   *PredError = 0.0;
+//   for(int i = 0; i < (*nsubjects_ts); ++i) {
+//     if(predictions[i] != tcll[i]) ++PredNeReal;
+//   }
+//   *PredError = static_cast<double>(PredNeReal)/(*nsubjects_ts);
+//   delete [] predictions;
 
-    int PredNeReal = 0;
-    *PredError = 0.0;
-    for(int i = 0; i < (*nsubjects_ts); ++i) {
-      if(predictions[i] != tcll[i]) ++PredNeReal;
-    }
-    *PredError = static_cast<double>(PredNeReal)/(*nsubjects_ts);
-    delete [] predictions;
-
-  }
+// }
 
 
 /* void dlda_original(double *ls, int *cll, double *ts,  */
@@ -318,5 +406,3 @@ void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
 /*    delete [] vars; */
 /*    delete [] discr; */
 /* } */
-
-} // extern "C"
