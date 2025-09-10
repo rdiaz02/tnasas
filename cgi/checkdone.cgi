@@ -20,7 +20,7 @@ import cgitb
 cgitb.enable() ## zz: eliminar for real work?
 sys.stderr = sys.stdout ## eliminar?
 
-sys.path.append("/asterias-web-apps/web-apps-common")
+sys.path.append("/home2/ramon/web-apps/web-apps-common")
 from web_apps_config import R_MAX_time
 ## R_MAX_time = 4 * 3600 ## 4 hours is max duration allowd for any process
 
@@ -269,7 +269,7 @@ if re.search(r'[^0-9]', str(newDir)):
     sys.exit()
     
 redirectLoc = "/tmp/" + newDir
-tmpDir = "/asterias-web-apps/tnasas/www/tmp/" + newDir
+tmpDir = "/home2/ramon/web-apps/tnasas/www/tmp/" + newDir
 
 if not os.path.isdir(tmpDir):
     commonOutput()
@@ -310,18 +310,18 @@ if os.path.exists(tmpDir + "/pid.txt"):
         os.rename(tmpDir + '/pid.txt', tmpDir + '/killed.pid.txt')
         os.remove(tmpDir + '/f1.R')
         try:
-            os.system("rm /asterias-web-apps/tnasas/www/R.running.procs/R." + newDir + "*")
+            os.system("rm /home2/ramon/web-apps/tnasas/www/R.running.procs/R." + newDir + "*")
         except:
             None
         print 'Location: http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
-##                chkmpi = os.system('/asterias-web-apps/mpi.log/adhocCheckRmpi.py Tnasas&')
+##                chkmpi = os.system('/home2/ramon/web-apps/mpi.log/adhocCheckRmpi.py Tnasas&')
         sys.exit()
 
 if errorRun > 0:
     printErrorRun()
     os.rename(tmpDir + '/pid.txt', tmpDir + '/natural.death.pid.txt')
     os.remove(tmpDir + '/f1.R')
-##    chkmpi = os.system('/asterias-web-apps/mpi.log/adhocCheckRmpi.py Tnasas&')
+##    chkmpi = os.system('/home2/ramon/web-apps/mpi.log/adhocCheckRmpi.py Tnasas&')
     # try:
     #     lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
     # except:
@@ -332,7 +332,7 @@ if errorRun > 0:
     # except:
     #     None
     try:
-        os.system("rm /asterias-web-apps/tnasas/www/R.running.procs/R." + newDir + "*")
+        os.system("rm /home2/ramon/web-apps/tnasas/www/R.running.procs/R." + newDir + "*")
     except:
         None
     print 'Location: http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
@@ -352,9 +352,9 @@ elif finishedOK > 0:
     printOKRun()
     os.rename(tmpDir + '/pid.txt', tmpDir + '/natural.death.pid.txt')
     os.remove(tmpDir + '/f1.R')
-    ##    chkmpi = os.system('/asterias-web-apps/mpi.log/adhocCheckRmpi.py Tnasas&')
+    ##    chkmpi = os.system('/home2/ramon/web-apps/mpi.log/adhocCheckRmpi.py Tnasas&')
     try:
-        os.system("rm /asterias-web-apps/tnasas/www/R.running.procs/R." + newDir  + "*")
+        os.system("rm /home2/ramon/web-apps/tnasas/www/R.running.procs/R." + newDir  + "*")
     except:
         None
     print 'Location: http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'

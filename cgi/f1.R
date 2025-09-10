@@ -41,7 +41,7 @@ write.table(file = "pid.txt", pid,
 ######   This might be specific to our setup at CNIO
 ######
 ##########################################################
-system(paste("/http/mpi.log/counterAppsFromR.py Tnasas", getwd()))
+system(paste("/home2/ramon/web-apps/web-apps-common/counterAppsFromR.py Tnasas", getwd()))
 ## attach pid to name in R.running.procs
 hostn <- system("hostname", intern = TRUE)
 cat("\n HOSTNAME IS ", hostn, "\n")
@@ -58,7 +58,7 @@ library(Tnasas)
 runif(1)
 library(Cairo)
 ## library(GDD)
-                                        #library(CGIwithR)
+## library(CGIwithR)
 save.seed <- .Random.seed ## in case there are problems
 png.width <- 500
 png.height <- 500
@@ -80,7 +80,7 @@ graphDir <- paste(getwd(), "/", sep = "")
 
 caughtUserError <- function(message) {
     CairoPNG("predictor_error_rates.png", width = png.width,
-           height = png.height, 
+           height = png.height,
            ps = png.pointsize)
     plot(x = c(0, 1), y = c(0, 1),
          type = "n", axes = FALSE, xlab = "", ylab = "")
@@ -88,7 +88,7 @@ caughtUserError <- function(message) {
     text(0.5, 0.7, "There was a PROBLEM with your data.")
     text(0.5, 0.5,
     "Please read carefully the error messages under Results,")
-    
+
     text(0.5, 0.3, "fix the problem, and try again.")
     dev.off()
     sink(file = "results.txt")
@@ -103,7 +103,7 @@ caughtUserError <- function(message) {
 
 caughtOurError <- function(message) {
     CairoPNG("predictor_error_rates.png", width = png.width,
-           height = png.height, 
+           height = png.height,
            ps = png.pointsize)
     plot(x = c(0, 1), y = c(0, 1),
          type = "n", axes = FALSE, xlab = "", ylab = "")
@@ -111,7 +111,7 @@ caughtOurError <- function(message) {
     text(0.5, 0.7, "There was a PROBLEM with the code.")
     text(0.5, 0.5,
     "Please let us know (send us the URL),")
-    
+
     text(0.5, 0.3, "so that we can fix it.")
     dev.off()
     sink(file = "results.txt")
@@ -203,7 +203,8 @@ tryxdata <- try(
 xdata <- read.table("covariate", header = FALSE, sep = "\t",
                     strip.white = TRUE,
                     comment.char = "#",
-		    quote = ""))
+                    stringsAsFactors = TRUE,
+                    quote = ""))
 if(class(tryxdata) == "try-error")
     caughtUserError("The covariate file is not of the appropriate format\n")
 geneNames <- xdata[, 1]
@@ -253,7 +254,7 @@ if(length(Class) != dim(xdata)[1]) {
                       length(Class), " arrays according to the class file but \n",
                       dim(xdata)[1], " arrays according to the covariate data.\n",
                       "Please fix this problem and try again.\n")
-    caughtUserError(emessage)  
+    caughtUserError(emessage)
 }
 if(!(is.numeric(xdata))) {
     caughtUserError("Your covariate file contains non-numeric data. \n That is not allowed.\n")
@@ -354,7 +355,7 @@ par(cex.axis = 1)
 par(cex.main = 1.25)
 
 
-    
+
 if(the.predictor != "PAM") {
     the.run <- try(f.pred.errors(datos, classes,
                                  sizeGenes = num.genes,
@@ -370,7 +371,7 @@ if(the.predictor != "PAM") {
                                      cv.error = TRUE,
                                      cv.error.k = cv.error.k,
                                      title.figure = title.figure))
-    
+
 }
 
 dev.off()
@@ -412,4 +413,3 @@ cat("\n\n Normal termination\n")
 
 
 ### checkdone is a piece of cake: incorporate figure and results.txt, and compress output.
-

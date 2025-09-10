@@ -20,7 +20,7 @@
 
 
 // Code for Diagonal Linear Discriminant Analysis.
-// Two functions: 
+// Two functions:
 //     - dlda: returns the predictions, given a
 //             training set and a test set.
 //     - dldaPredError: returns relative prediction
@@ -34,7 +34,7 @@
 // The code is originally based on the stat.diag.da code from Dudoit and
 // Fridlyand, in the sma package for R. A very direct translation of the
 // the R code to C++ is the dlda_original. I then tried to make it faster
-// and the result is dlda. I also searched for C/C++ code for DLDA and LDA 
+// and the result is dlda. I also searched for C/C++ code for DLDA and LDA
 // in statlib and netlib and I didn find anything (there is code in Fortran,
 // but for general discriminant analysis).
 
@@ -42,12 +42,12 @@
 // compiled code from R, using ".C".
 
 
-
+// 2025-09-18: the code is failing with segfault.
 
 
 
 #include<cmath>
-//#include<iostream> 
+//#include<iostream>
 
 //xx: use R_alloc instead of new and delete.
 
@@ -56,11 +56,11 @@ extern "C" {
 
 // dlda: Diagonal Linear Discriminat Analysis. Arguments are:
 
-//  ls: learning set matrix of covariates. In ls subjects change faster 
-//      than genes; in R ls is a matrix with subjects as rows 
+//  ls: learning set matrix of covariates. In ls subjects change faster
+//      than genes; in R ls is a matrix with subjects as rows
 //      (and genes as columns).
 
-//  cll: the class to which each subject belongs. cll goes from 0 
+//  cll: the class to which each subject belongs. cll goes from 0
 //      to (num_classes - 1) in steps of 1.
 
 //  nk: number of subjects in each class.
@@ -92,8 +92,8 @@ extern "C" {
 //     d) The predicted class is the one with smaller value in c).
 
 
-void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes, 
-	  int *nsubjects_ls, 
+void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
+	  int *nsubjects_ls,
 	  int *num_genes, int *nsubjects_ts, int *predictions) {
 
   int n_total = (*num_genes) * (*nsubjects_ls);
@@ -101,9 +101,9 @@ void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
   // mean and var arrays: genes vary faster within classes
   double *sum_x = new double[(*num_classes) * (*num_genes)];
   double *sum_x2  = new double[(*num_classes) * (*num_genes)];
-  double *vars  = new double[*num_genes]; 
+  double *vars  = new double[*num_genes];
 
-  
+
   //xx: add error checking of new allocation
 
   // Zero the allocated memory
@@ -125,16 +125,16 @@ void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
       current_class = cll[subj_ind];
       current_val = ls[k++];
       sum_x[(current_class * (*num_genes)) + gene_index] += current_val;
-      sum_x2[(current_class * (*num_genes)) + gene_index] += 
+      sum_x2[(current_class * (*num_genes)) + gene_index] +=
 	(current_val * current_val);
     }
 
     for (int class_index = 0; class_index < *num_classes; ++class_index) {
       pos_g_by_c_array = class_index * (*num_genes) + gene_index;
-      sum_x2[pos_g_by_c_array] -= 
+      sum_x2[pos_g_by_c_array] -=
 	(sum_x[pos_g_by_c_array] * sum_x[pos_g_by_c_array]) / nk[class_index];
       //variance (without divisor)
-      vars[gene_index] += sum_x2[pos_g_by_c_array];//pooled variance; 
+      vars[gene_index] += sum_x2[pos_g_by_c_array];//pooled variance;
       //no need to divide by ((*nsubjects_ls) - (*num_classes)) since
       // common to all genes.
       sum_x[pos_g_by_c_array] /= nk[class_index];
@@ -157,7 +157,7 @@ void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
       for (int class_index = 0; class_index < *num_classes; ++class_index) {
 	tmp = actual_value - sum_x[(class_index * (*num_genes)) + gene_index];
 	score_class[class_index] += tmp * tmp / vars[gene_index];
-// 	score_class[class_index] += 
+// 	score_class[class_index] +=
 // 	  pow(actual_value - sum_x[(class_index *(*num_genes))+gene_index], 2)
 // 	  /vars[gene_index];
       }
@@ -187,12 +187,12 @@ void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
 
 //dldaPredError returns the relative error
 
-  void dldaPredError(double *ls, int *cll, int *nk, double *ts, int *tcll, 
-		     int *num_classes, 
-		     int *nsubjects_ls, int *num_genes, int *nsubjects_ts, 
+  void dldaPredError(double *ls, int *cll, int *nk, double *ts, int *tcll,
+		     int *num_classes,
+		     int *nsubjects_ls, int *num_genes, int *nsubjects_ts,
 		     double *PredError) {
     int *predictions = new int[*nsubjects_ts];
-    dlda(ls, cll, nk, ts, num_classes, nsubjects_ls, num_genes, nsubjects_ts, 
+    dlda(ls, cll, nk, ts, num_classes, nsubjects_ls, num_genes, nsubjects_ts,
 	 predictions);
 
     int PredNeReal = 0;
@@ -233,7 +233,7 @@ void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
 /*   double *sum_x2  = new double[(*num_classes) * (*num_genes)]; */
 /*   double *vars  = new double[*num_genes];  */
 /*   //since using DLDA, pooled over classes. */
-  
+
 /*   //xx: add error checking of new allocation */
 
 /*   // Zero the allocated memory */
@@ -319,4 +319,4 @@ void dlda(double *ls, int *cll, int *nk, double *ts, int *num_classes,
 /*    delete [] discr; */
 /* } */
 
-} // extern "C"  
+} // extern "C"

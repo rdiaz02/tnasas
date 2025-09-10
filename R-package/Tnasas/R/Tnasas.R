@@ -53,7 +53,7 @@ dldaC <- function (ls, cll, ts) {
        as.integer(ncol(ls)), as.integer(nrow(ts)),
        predictions = as.integer(rep(-9, nrow(ts))))$predictions
 }
- 
+
 ###select.k <- function(data, class, max.k = 20) {
 ##### For knn, choose best number of neighbors by cross-validations
 ##### But no longer used
@@ -139,7 +139,7 @@ cv.balance <- function(index, cll, kn) {
     unlist(tapply(index, cll,
                   function(x) sample(rep(1:kn, length = length(x)),
                                      length(x), replace = FALSE)))
-    
+
 }
 
 ## to see number of each class in testing:
@@ -156,7 +156,7 @@ internalPredictor.svmLinear <- function(x, y, test.data) {
 }
 
 internalPredictor.dldaC <- function(x, y, test.data) {
-    yn <- as.integer(unclass(y)) - min(as.integer(unclass(y))) 
+    yn <- as.integer(unclass(y)) - min(as.integer(unclass(y)))
     predictions.numeric <- dldaC(x, yn, test.data)
     predictions.factor <- factor(predictions.numeric + min(as.integer(unclass(y))),
                                  levels = seq(along = levels(y)),
@@ -169,7 +169,7 @@ internalPredictor.dldaC <- function(x, y, test.data) {
 ###        best.k <- select.k(x, y, max.k = 20)
 ###    knn(x, test.data, y, best.k)
 ###}
-    
+
 
 ###internalPredictor.knn <- function(x, y, test.data, ...) {
 ###### so we select best neighbor among odd numbers 1 to 15
@@ -262,8 +262,8 @@ print.cvPred <- function(x) {
       cat("\n\n\n Gene freqs. in cross-validated runs of genes selected in model with all data \n\n")
       print(sort(table(named.unlisted.selected, dnn = NULL)[in.all.data], decreasing = TRUE))
       cat("\n")
-      
-      
+
+
       cat("\n\n Gene frequencies in cross-validated runs \n\n")
       tmp.table <- sort(table(named.unlisted.selected, dnn = NULL),
                         decreasing = TRUE)
@@ -292,7 +292,7 @@ linkGene <- function(id) {
               organism,"\" target=\"icl_window\" >",id,"</a>", sep = "")
 ## target=\"icl_window\"\
 }
-     
+
 
 
 linkGene2 <- function(id) {
@@ -300,35 +300,35 @@ linkGene2 <- function(id) {
     ## to IDClight.
     if ((idtype == "None") | (organism == "None"))
         return(id)
-    else 
+    else
         paste("http://idclight.bioinfo.cnio.es/IDClight.prog",
               "?idtype=", idtype, "&id=", id, "&org=",
               organism, sep = "")
 }
 
 html.data.frame <- function (object, first.col = "Name",
-                             file = paste(first.word(deparse(substitute(object))), 
-                             "html", sep = "."), append = FALSE, link = NULL, linkCol = 1, 
-                             linkType = c("href", "name"), ...) 
+                             file = paste(first.word(deparse(substitute(object))),
+                             "html", sep = "."), append = FALSE, link = NULL, linkCol = 1,
+                             linkType = c("href", "name"), ...)
 {
     linkType <- match.arg(linkType)
     x <- format.df(object, ...)
     adj <- attr(x, "col.just")
-    if (any(adj == "r")) 
-        for (i in seq(along = adj)[adj == "r"]) x[, i] <- paste("<div align=right>", 
+    if (any(adj == "r"))
+        for (i in seq(along = adj)[adj == "r"]) x[, i] <- paste("<div align=right>",
             x[, i], "</div>", sep = "")
-    if (length(r <- dimnames(x)[[1]])) 
+    if (length(r <- dimnames(x)[[1]]))
         x <- cbind(first.col = r, x)
     colnames(x)[1] <- first.col
     cat("<TABLE BORDER>\n", file = file, append = append)
-    cat("<tr>", paste("<td>", dimnames(x)[[2]], "</td>", sep = ""), 
+    cat("<tr>", paste("<td>", dimnames(x)[[2]], "</td>", sep = ""),
         "</tr>\n", sep = "", file = file, append = file != "")
-    if (length(link)) 
-        x[, linkCol] <- ifelse(link == "", x[, linkCol], paste("<a ", 
-            linkType, "=\"", link, "\">", x[, linkCol], "</a>", 
+    if (length(link))
+        x[, linkCol] <- ifelse(link == "", x[, linkCol], paste("<a ",
+            linkType, "=\"", link, "\">", x[, linkCol], "</a>",
             sep = ""))
-    for (i in 1:nrow(x)) cat("<tr>", paste("<td>", x[i, ], "</td>", 
-        sep = ""), "</tr>\n", sep = "", file = file, append = file != 
+    for (i in 1:nrow(x)) cat("<tr>", paste("<td>", x[i, ], "</td>",
+        sep = ""), "</tr>\n", sep = "", file = file, append = file !=
         "")
     cat("</TABLE>\n", file = file, append = file != "")
     structure(list(file = file), class = "html")
@@ -340,7 +340,7 @@ html.data.frame <- function (object, first.col = "Name",
 
 
 
-HTML.cvPred <- function (x, file = "results.txt", append = TRUE) 
+HTML.cvPred <- function (x, file = "results.txt", append = TRUE)
 {
     sink(file, append)
     cat("<h3>Prediction error (using cross-validation)</h3>")
@@ -348,13 +348,13 @@ HTML.cvPred <- function (x, file = "results.txt", append = TRUE)
     cat("<p>Confussion Matrix:<br><pre>")
     print(x[[2]])
     cat("</pre></p>")
-    cat("<br>Number of predictors that yields minimum error rate:", 
+    cat("<br>Number of predictors that yields minimum error rate:",
         x[[3]], "<br>")
     cat("<h3>Selected predictor genes:</h3>")
     cat("<TABLE frame=\"box\">\n")
     cat("<tr><th width=200>Gene name</th></tr>\n")
-    if(length(x[[4]] == 1) && (x[[4]] == "All the genes")) {
-      cat("<tr><td> All the genes in the data set</td></tr>\n")
+    if((length(x[[4]]) == 1) && (x[[4]] == "All the genes")) {
+        cat("<tr><td> All the genes in the data set</td></tr>\n")
     } else {
       gns <- x$geneNames[x[[4]]]
       for (i in 1:length(gns)) {
@@ -367,7 +367,7 @@ HTML.cvPred <- function (x, file = "results.txt", append = TRUE)
     wrong.pred <- which(x[[5]][, 1] != x[[5]][, 2])
     if (length(wrong.pred)) {
         cat("<h4>Cases with incorrect predictions (errors): </h4>")
-        html.data.frame(x[[5]][wrong.pred, ], file = file, append = TRUE, 
+        html.data.frame(x[[5]][wrong.pred, ], file = file, append = TRUE,
             first.col = "Subject/array")
     }
     ks <- length(x$genesSelected.cv)
@@ -376,7 +376,7 @@ HTML.cvPred <- function (x, file = "results.txt", append = TRUE)
     cat("<br><br><h3> Stability assessments </h3>")
     cat("<h4> Genes selected in each of the cross-validation runs </h4>")
     for (i in 1:ks) {
-        cat(paste("<h5>CV run  ", i, " (", num.selected[i], " genes selected):   ", 
+        cat(paste("<h5>CV run  ", i, " (", num.selected[i], " genes selected):   ",
             sep = ""), "</h5>")
         tmpgs <- x$geneNames[x$genesSelected.cv[[i]]]
         tmpgsl <- linkGene(tmpgs)
@@ -387,24 +387,24 @@ HTML.cvPred <- function (x, file = "results.txt", append = TRUE)
         }
         cat("</TABLE>")
     }
-    shared.genes <- matrix(NA, nrow = (ks + 1), ncol = (ks + 
+    shared.genes <- matrix(NA, nrow = (ks + 1), ncol = (ks +
         1))
     tmp.genesSelected <- list()
     tmp.genesSelected[[1]] <- x[[4]]
     tmp.genesSelected <- c(tmp.genesSelected, x$genesSelected.cv)
     for (i in 1:(ks + 1)) {
         for (j in 1:(ks + 1)) {
-            shared.genes[i, j] <- length(intersect(tmp.genesSelected[[i]], 
+            shared.genes[i, j] <- length(intersect(tmp.genesSelected[[i]],
                 tmp.genesSelected[[j]]))
         }
     }
-    prop.shared <- round(shared.genes/c(x[[3]], num.selected), 
+    prop.shared <- round(shared.genes/c(x[[3]], num.selected),
         3)
     num.selected <- c(x[[3]], num.selected)
     num.selectedS <- paste("(", num.selected, ")", sep = "")
-    colnames(shared.genes) <- colnames(prop.shared) <- c("OriginalSample", 
+    colnames(shared.genes) <- colnames(prop.shared) <- c("OriginalSample",
         cv.names)
-    rownames(shared.genes) <- rownames(prop.shared) <- paste(c("OriginalSample", 
+    rownames(shared.genes) <- rownames(prop.shared) <- paste(c("OriginalSample",
         cv.names), num.selectedS)
     options(width = 200)
     cat("<br><br><h4>Number of shared genes</h4>")
@@ -419,35 +419,34 @@ HTML.cvPred <- function (x, file = "results.txt", append = TRUE)
     unlisted.genes.selected <- unlist(x$genesSelected.cv)
     named.unlisted.selected <- x$geneNames[unlisted.genes.selected]
     cat("<br><br><h4>Gene freqs. in cross-validated runs of genes selected in model with all data</h4>")
-
-    if(length(x[[4]] == 1) && (x[[4]] == "All the genes")) {
-      cat("<p> See table below </p>")
+    if((length(x[[4]]) == 1) && (x[[4]] == "All the genes")) {
+        cat("<p> See table below </p>")
     } else {
-      in.all.data <- which(names(table(named.unlisted.selected, 
-                                       dnn = NULL)) %in% x$geneNames[x[[4]]])
-      sgad <- sort(table(named.unlisted.selected, dnn = NULL)[in.all.data], 
-                   decreasing = TRUE)
-      sgadl <- linkGene(names(sgad))
-      cat("<TABLE frame=\"box\">\n")
-      cat("<tr><th width=200>Gene name</th><th>Frequency</th></tr>\n")
-      for (i in 1:length(sgadl)) {
-        cat("<tr><td>", sgadl[i], "</td><td>", sgad[i], "</td></tr>\n")
-      }
-      cat("</TABLE>")
-    } 
+            in.all.data <- which(names(table(named.unlisted.selected,
+                                             dnn = NULL)) %in% x$geneNames[x[[4]]])
+            sgad <- sort(table(named.unlisted.selected, dnn = NULL)[in.all.data],
+                         decreasing = TRUE)
+            sgadl <- linkGene(names(sgad))
+            cat("<TABLE frame=\"box\">\n")
+            cat("<tr><th width=200>Gene name</th><th>Frequency</th></tr>\n")
+            for (i in 1:length(sgadl)) {
+                cat("<tr><td>", sgadl[i], "</td><td>", sgad[i], "</td></tr>\n")
+            }
+            cat("</TABLE>")
+        }
 
-    cat("<h4>Gene frequencies in cross-validated runs</h4>")
-    tmp.table <- sort(table(named.unlisted.selected, dnn = NULL), 
-        decreasing = TRUE)
-    tmp.table.l <- linkGene(names(tmp.table))
-    cat("<TABLE frame=\"box\">\n")
-    cat("<tr><th width=200>Gene name</th><th>Frequency</th></tr>\n")
-    for (i in 1:length(tmp.table.l)) {
-        cat("<tr><td>", tmp.table.l[i], "</td><td>", tmp.table[i], 
-            "</td></tr>\n")
-    }
-    cat("</TABLE>")
-    sink()
+        cat("<h4>Gene frequencies in cross-validated runs</h4>")
+        tmp.table <- sort(table(named.unlisted.selected, dnn = NULL),
+                          decreasing = TRUE)
+        tmp.table.l <- linkGene(names(tmp.table))
+        cat("<TABLE frame=\"box\">\n")
+        cat("<tr><th width=200>Gene name</th><th>Frequency</th></tr>\n")
+        for (i in 1:length(tmp.table.l)) {
+            cat("<tr><td>", tmp.table.l[i], "</td><td>", tmp.table[i],
+                "</td></tr>\n")
+        }
+        cat("</TABLE>")
+        sink()
 }
 
 
@@ -468,7 +467,7 @@ HTML.cvPred <- function (x, file = "results.txt", append = TRUE)
 
 
 
-pamr.listgenes.fixed <- function (fit, data, threshold, genenames = FALSE) 
+pamr.listgenes.fixed <- function (fit, data, threshold, genenames = FALSE)
 { ##changed to prevent errors when no genes
     x <- data$x[fit$gene.subset, fit$sample.subset]
     if (genenames) {
@@ -502,27 +501,27 @@ pamr.listgenes.fixed <- function (fit, data, threshold, genenames = FALSE)
     schdr <- paste(clabs, "score", sep = " ")
     ## add the "drop = FALSE"
     res <- cbind(as.character(g1), g, d)[oo, ,drop = FALSE]
-    
+
     ## somehtings for debugging; not first line
 
-   if(is.null(dim(res))) { 
+   if(is.null(dim(res))) {
         the.problem.thing <<- list(g1 = g1, g = g,
                                    d = d, fit = fit, data = data,
                                    threshold = threshold,
                                    genenames = genenames)
         stop("It happened")
     }
-    
-    if(is.null(res)) { 
+
+    if(is.null(res)) {
         the.problem.thing <<- list(g1 = g1, g = g,
                                    d = d, fit = fit, data = data,
                                    threshold = threshold,
                                    genenames = genenames)
         stop("It happened")
     }
-    
+
     if(length(res) < 1) res <- NULL
-    
+
     return(res)
 ###     ##    browser()
 ###     if(dim(res)[1]) { ## I add this
@@ -537,7 +536,7 @@ pamr.listgenes.fixed <- function (fit, data, threshold, genenames = FALSE)
 VarSelPAM <- function(x, y, training.rows, testing.rows,
                       select = "size") {
     ## recall we have genes as columns, subjects are rows.
-    ## 
+    ##
     train.pam.data <- list(x = t(x[training.rows,, drop = FALSE]),
 ##                           y = factor(y[training.rows]),
                            y = y[training.rows],
@@ -552,13 +551,13 @@ VarSelPAM <- function(x, y, training.rows, testing.rows,
     trained.pam <- pamr.train(train.pam.data)
     trained.pam.cv <- pamr.cv(trained.pam, data = train.pam.data)
 
-    if(select == "loglik") 
+    if(select == "loglik")
 ### for automated selection: minimize error and break ties by loglik.
         chosen.threshold <-
             trained.pam.cv$threshold[order(trained.pam.cv$error,
                                            -trained.pam.cv$loglik)[1]]
 
-    if(select == "size") ## minimize number 
+    if(select == "size") ## minimize number
         chosen.threshold <-
             trained.pam.cv$threshold[order(trained.pam.cv$error,
                                            -trained.pam.cv$threshold)[1]]
@@ -567,7 +566,7 @@ VarSelPAM <- function(x, y, training.rows, testing.rows,
                                   data = train.pam.data,
                                   threshold = chosen.threshold,
                                   genenames = FALSE)[, 1])
-    
+
     if(!is.null(testing.rows)) {
 ####        predictions.prob <-
 ####        pamr.predict(fit = trained.pam,
@@ -594,7 +593,7 @@ VarSelPAM <- function(x, y, training.rows, testing.rows,
 }
 
 
-f.pred.errors.PAM <- function(data, y, 
+f.pred.errors.PAM <- function(data, y,
                               cv.error.k = 5,
                               title.figure = NULL,
                               plot = TRUE,
@@ -625,7 +624,7 @@ f.pred.errors.PAM <- function(data, y,
                               testing.rows = NULL,
                               select = "size")
     the.best.genes <- all.data.run$selected.vars
-    
+
     if(length(all.data.run$selected.vars) == ncol(data)) {
             the.best.genes <- "All the genes"
         }
@@ -675,11 +674,11 @@ f.pred.errors.PAM <- function(data, y,
     }
 
 
-    
-    
+
+
     ### If we have asked to return the cross-validated
     ### error of the rule (this takes a while to get done)
-   
+
     rule.cv.error <- NULL
     genesSelected.cv <- list()
     if(cv.error) { ### < if(cv.error)>
@@ -691,7 +690,7 @@ f.pred.errors.PAM <- function(data, y,
         OOB.predictions <- y
 
         index.select <- cv.balance(1:N, y, cv.error.k)
-        
+
         for(sample.number in 1:cv.error.k) {
           print(paste(".... cv.error of rule; cv.sample number = ", sample.number))
 ###          train.x <- data[index.select != sample.number, , drop = FALSE]
@@ -709,10 +708,10 @@ f.pred.errors.PAM <- function(data, y,
           if(plot) { ## we add the lines on the fly
               lines(pam.cv.run$other$trained.pam.cv$size,
                     pam.cv.run$other$trained.pam.cv$error,
-                    lty = 1, col = "grey", lwd = 1.5)             
+                    lty = 1, col = "grey", lwd = 1.5)
           }
-            
-          
+
+
 ####browser()
           OOB.predictions[testing.rows] <- pam.cv.run$predictions.class
           genesSelected.cv[[sample.number]] <- pam.cv.run$selected.vars
@@ -732,7 +731,7 @@ f.pred.errors.PAM <- function(data, y,
 #           stop("OOOOPS: factor error in paranoid check")
 #         }
         ## </paranoid check>
-        
+
       } ### </ if(cv.error)>
 #    browser()
     ## we also want the confussion matrix
@@ -748,7 +747,7 @@ f.pred.errors.PAM <- function(data, y,
         OOB.predictions <- data.frame(OOB.predictions = OOB.predictions,
                                       TrueClass = y)
         rownames(OOB.predictions) <- rownames(data)
-    
+
         ##<paranoid test 2>
         if(abs(rule.cv.error - sum(overall.error)) > 1e-06)
             stop("OOOOPS: failed second paranoid test")
@@ -757,13 +756,13 @@ f.pred.errors.PAM <- function(data, y,
         OOB.predictions <- NULL
         conf.matrix <- NULL
     }
-    
+
     if(plot) {
         nk <- as.vector(table(y))
         error.max.bet <- 1 - (max(nk)/sum(nk))
         abline(h = error.max.bet, lty = 2, col = "blue", lwd = 1.5)
         axis(4, at = error.max.bet, labels = round(error.max.bet, 3),
-             col = "blue", col.axis = "blue", las = 1)        
+             col = "blue", col.axis = "blue", las = 1)
       if(cv.error) {
         abline(h = rule.cv.error, lty = 2, col = "red", lwd = 1.5)
         axis(4, at = rule.cv.error, labels = round(rule.cv.error, 3),
@@ -778,7 +777,7 @@ f.pred.errors.PAM <- function(data, y,
                cex = 1, lwd = 2)
 
 
-        
+
 ###        legend(x = 2, y = 0.95,
 ###               c("Error rate w.o. predictor", "Error rate of predictor building rule"),
 ###                 lty = 2, col = c("blue", "red"), cex = 2, lwd = 2)
@@ -787,7 +786,7 @@ f.pred.errors.PAM <- function(data, y,
                c("Error rate w.o. predictor", "Original sample"),
                lty = c(2, 1), col = c("blue", "black"),
                cex = 1, lwd = 2)
-      }  
+      }
     }
 
     if(plot) {
@@ -795,7 +794,7 @@ f.pred.errors.PAM <- function(data, y,
         lines(ngenes, all.data.errors, col = "black", lwd = 2)
     }
 
-   
+
     ret.val <- list("Error Rate" = rule.cv.error,
                 "ConfussionMatrix" = conf.matrix,
                 "Number of predictors that yields minimum error" =
@@ -821,7 +820,7 @@ cross.valid.predictor <- function(x, y,
                                   training.rows = NULL,
                                   testing.rows = NULL,
                                   typePredictor = "dldaC",
-                                  geneSelection = "F", 
+                                  geneSelection = "F",
 ##                                  test.data = NULL, test.class = NULL,
                                   sizeGenes = c(5, 10, 50), knumber = 5) {
 
@@ -835,10 +834,10 @@ cross.valid.predictor <- function(x, y,
         stop("If you specify testing rows you MUST specify training rows")
     numgenes <- ncol(x)
     N <- length(y)
-    
+
     fPredictor <-
         eval(parse(text = paste("internalPredictor",
-                   typePredictor, sep = "."))) 
+                   typePredictor, sep = ".")))
 
     gene.select <-
         eval(parse(text = paste("geneSelect",
@@ -851,16 +850,16 @@ cross.valid.predictor <- function(x, y,
 ###    if(is.null(knumber)) {
 ###        knumber <- length(y)
 ###    }
-    
+
     index.select <- cv.balance(1:N, y, knumber) ## cv with balance in
     ## class props. in testing and testing
-    
+
     cv.errors <- matrix(-99, nrow = length(sizeGenes),
                         ncol = knumber)
-    
+
     genesSelected <- list()
-    
-    
+
+
     for(sample.number in 1:knumber) {
         intra.training.rows <- (1:N)[index.select != sample.number]
         intra.testing.rows <- (1:N)[index.select == sample.number]
@@ -884,13 +883,13 @@ cross.valid.predictor <- function(x, y,
     cv.error <-  apply(cv.errors, 1, sum)
     cv.error <- cv.error/N
     genes.minimum.error <- sizeGenes[which.min(cv.error)]
-    
+
     if(genes.minimum.error == numgenes) {
         selected.genes <- 1:numgenes
     } else {
         selected.genes <- gene.select(x, y)[1:genes.minimum.error]
     }
-    
+
     if(!is.null(testing.rows)) { ## we are passed a test data and test class
         test.data <- x.orig[testing.rows, selected.genes, drop = FALSE]
         train.data <- x[ ,selected.genes, drop = FALSE]
@@ -909,7 +908,7 @@ cross.valid.predictor <- function(x, y,
 }
 
 
-f.pred.errors <- function(data, y, 
+f.pred.errors <- function(data, y,
                           sizeGenes,
                           typePredictor = "dldaC",
                           geneSelection = "F",
@@ -946,7 +945,7 @@ f.pred.errors <- function(data, y,
                                           sizeGenes = sizeGenes,
                                           knumber = knumber)
     the.best.genes <- all.data.run$selected.vars
-    
+
     if(length(all.data.run$selected.vars) == ncol(data)) {
             the.best.genes <- "All the genes"
         }
@@ -957,7 +956,7 @@ f.pred.errors <- function(data, y,
 ##        par(cex.lab = 1.5)
 ##        par(cex.axis = 1.5)
 ##        par(cex.main = 1.5)
-        
+
         all.data.errors <- all.data.run$other$cv.error
         ngenes <- all.data.run$other$sizeGenes
         minplot <- 0; maxplot <- 1
@@ -977,12 +976,12 @@ f.pred.errors <- function(data, y,
         axis(1, at = ngenes,
              labels = ngenes)
     }
-    
-    
-    
+
+
+
 ### If we have asked to return the cross-validated
     ### error of the rule (this takes a while to get done)
-    
+
     rule.cv.error <- NULL
     genesSelected.cv <- list()
     if(cv.error) { ### < if(cv.error)>
@@ -992,9 +991,9 @@ f.pred.errors <- function(data, y,
         }
         N <- length(y)
         OOB.predictions <- y
-        
+
         index.select <- cv.balance(1:N, y, knumber)
-        
+
         for(sample.number in 1:knumber) {
             print(paste(".... cv.error of rule; cv.sample number = ", sample.number))
             training.rows <- (1:N)[index.select != sample.number]
@@ -1010,7 +1009,7 @@ f.pred.errors <- function(data, y,
           if(plot) { ## we add the lines on the fly
               lines(cv.run$other$sizeGenes,
                     cv.run$other$cv.error,
-                   lty = 1, col = "grey", lwd = 1.5)             
+                   lty = 1, col = "grey", lwd = 1.5)
           }
             OOB.predictions[testing.rows] <- cv.run$predictions.class
             genesSelected.cv[[sample.number]] <- cv.run$selected.vars
@@ -1022,7 +1021,7 @@ f.pred.errors <- function(data, y,
         ## <paranoid check>
         ## NO!! This is silly: it will fail if OOB.predictions are all identical.
         ## Commented out!!!
-#         
+#
 #         oob.tmp <- factor(OOB.predictions)
 #         try(paranoid.check <- any(OOB.predictions != oob.tmp))
 #         if(class(paranoid.check) == "try-error") {
@@ -1032,7 +1031,7 @@ f.pred.errors <- function(data, y,
 #           stop("OOOOPS: factor error in paranoid check")
 #         }
         ## </paranoid check>
-        
+
       } ### </ if(cv.error)>
 #    browser()
     ## we also want the confussion matrix
@@ -1048,7 +1047,7 @@ f.pred.errors <- function(data, y,
         OOB.predictions <- data.frame(OOB.predictions = OOB.predictions,
                                       TrueClass = y)
         rownames(OOB.predictions) <- rownames(data)
-    
+
         ##<paranoid test 2>
         if(abs(rule.cv.error - sum(overall.error)) > 1e-06)
             stop("OOOOPS: failed second paranoid test")
@@ -1057,14 +1056,14 @@ f.pred.errors <- function(data, y,
         OOB.predictions <- NULL
         conf.matrix <- NULL
     }
-    
+
     if(plot) {
         nk <- as.vector(table(y))
         error.max.bet <- 1 - (max(nk)/sum(nk))
         abline(h = error.max.bet, lty = 2, col = "blue", lwd = 1.5)
         axis(4, at = error.max.bet, labels = round(error.max.bet, 3),
              col = "blue", col.axis = "blue", las = 1)
-        
+
       if(cv.error) {
         abline(h = rule.cv.error, lty = 2, col = "red", lwd = 1.5)
         axis(4, at = rule.cv.error, labels = round(rule.cv.error, 3),
@@ -1086,15 +1085,15 @@ f.pred.errors <- function(data, y,
                c("Error rate w.o. predictor", "Original sample"),
                lty = c(2, 1), col = c("blue", "black"),
                cex = 1, lwd = 2)
-      }  
+      }
     }
 
     if(plot) {
-        ## Paint this line again, just in case.
-        lines(ngenes, all.data.errors, col = "black", lwd = 2)
+       ## Paint this line again, just in case.
+       lines(ngenes, all.data.errors, col = "black", lwd = 2)
     }
 
-   
+
     ret.val <- list("Error Rate" = rule.cv.error,
                     "ConfussionMatrix" = conf.matrix,
                     "Number of predictors that yields minimum error" =
@@ -1216,21 +1215,21 @@ f.pred.errors <- function(data, y,
 
 
 
-####r10b <- f.pred.errors(lymphoma.data, lcl, 
+####r10b <- f.pred.errors(lymphoma.data, lcl,
 ####                      sizeGenes = c(5, 10, 20),
 ####                      typePredictor = "knn",
 ####                      geneSelection = "F",
 ####                      knumber = 5,
 ####                      title.figure = "DLDA")
 
-####r11b <- f.pred.errors(lymphoma.data, lcl, 
+####r11b <- f.pred.errors(lymphoma.data, lcl,
 ####                      sizeGenes = num.genes,
 ####                      typePredictor = "knn",
 ####                      geneSelection = "F",
 ####                      knumber = 5,
 ####                      title.figure = "DLDA")
 
-####r11b <- f.pred.errors(lymphoma.data, lcl, 
+####r11b <- f.pred.errors(lymphoma.data, lcl,
 ####                      sizeGenes = num.genes,
 ####                      typePredictor = "knn",
 ####                      geneSelection = "F",
@@ -1238,32 +1237,30 @@ f.pred.errors <- function(data, y,
 ####                      title.figure = "DLDA")
 
 ####rownames(colon.data) <- paste("r", 1:dim(colon.data)[1], sep = "")
-####r12b <- f.pred.errors(colon.data, colon.class, 
+####r12b <- f.pred.errors(colon.data, colon.class,
 ####                      sizeGenes = c(num.genes, 2000),
 ####                      typePredictor = "knn",
 ####                      geneSelection = "F",
 ####                      knumber = 5,
 ####                      title.figure = "DLDA")
 
-####r12b <- f.pred.errors(colon.data, colon.class, 
+####r12b <- f.pred.errors(colon.data, colon.class,
 ####                      sizeGenes = c(num.genes, 2000),
 ####                      typePredictor = "knn",
 ####                      geneSelection = "Wilcoxon",
 ####                      knumber = 5,
 ####                      title.figure = "DLDA")
 
-####r13 <- f.pred.errors(colon.data, colon.class, 
+####r13 <- f.pred.errors(colon.data, colon.class,
 ####                      sizeGenes = c(num.genes, 2000),
 ####                      typePredictor = "knn",
 ####                      geneSelection = "rF",
 ####                      knumber = 5,
 ####                      title.figure = "DLDA")
 
-####r14 <- f.pred.errors(colon.data, colon.class, 
+####r14 <- f.pred.errors(colon.data, colon.class,
 ####                      sizeGenes = c(num.genes, 2000),
 ####                      typePredictor = "rF",
 ####                      geneSelection = "F",
 ####                      knumber = 5,
 ####                      title.figure = "DLDA")
-
-

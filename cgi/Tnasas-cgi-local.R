@@ -19,7 +19,7 @@ classes <- factor(scan(paste(datadir, "arrays", "classes", sep = "/"),
                        what = "char"))
 
 datos <- read.table(paste(datadir, "arrays", "predictors", sep = "/"),
-                    header = FALSE, sep = "\t")
+                    header = FALSE, sep = "\t", stringsAsFactors = TRUE)
 datos <- t(datos)
 rownames(datos) <- subject.names
 colnames(datos) <- gene.names
@@ -67,7 +67,7 @@ graphDir <- paste(datadir, "/", sep = "")
 #graphURLroot <- paste(url, formData$pid, "/", sep="")
 
 ## Define a better name for the image (avoiding confussions with several runs)
-##image.file <- paste("predictor_error_rates_", formData$pid, ".png", sep = "") 
+##image.file <- paste("predictor_error_rates_", formData$pid, ".png", sep = "")
 
 ## Define the file results (including path cause we're not running
 ## the script in the temp_process dir)
@@ -149,7 +149,7 @@ if(min(table(classes)) <  5) {
             " RESULTS: "
             ),
           file = results.file)
-    
+
     if(class(the.run) == "try-error") {
         sink(file = results.file, append = TRUE)
         cat(" ..... starting traceback \n")
@@ -170,17 +170,17 @@ if(min(table(classes)) <  5) {
         sink(file = results.file, append = TRUE)
         print(the.run)
         sink()
-        
+
         write.table(the.run[[4]], sep = "\t", quote = FALSE,
                     row.names = FALSE, col.names = FALSE,
                     file = selected.genes.file)
-        
+
         write.table(setdiff(colnames(datos), the.run[[4]]), sep = "\t",
                     quote = FALSE,
                     row.names = FALSE, col.names = FALSE,
                     file = nonselected.genes.file)
     }##</no errors>
-} ## </OK, assuming no other probable mistakes...>		
+} ## </OK, assuming no other probable mistakes...>
 cat("OK")
 
 
@@ -198,7 +198,7 @@ gene.names <- NULL
 classes <- factor(scan(paste(datadir, "arrays", "golub.class.txt", sep = "/"),
                        what = "char"))
 datos <- read.table(paste(datadir, "arrays", "golub.data.txt", sep = "/"),
-                    header = FALSE, sep = "\t")
+                    header = FALSE, sep = "\t", stringsAsFactors = TRUE)
 datos <- t(datos)
 num.cols.datos <- ncol(datos)
 
@@ -233,7 +233,7 @@ classes <- factor(scan(paste(datadir, "arrays", "nci.class.txt", sep = "/"),
                        what = "char"))
 levels(classes) <- letters[8:1]
 datos <- read.table(paste(datadir, "arrays", "nci.data.txt", sep = "/"),
-                    header = FALSE, sep = "\t")
+                    header = FALSE, sep = "\t", stringsAsFactors = TRUE)
 datos <- t(datos)
 num.cols.datos <- ncol(datos)
 
@@ -262,7 +262,7 @@ dev.off()
 classes <- factor(scan(paste(datadir, "arrays", "vVeer3.class.txt", sep = "/"),
                        what = "char"))
 datos <- read.table(paste(datadir, "arrays", "vVeer3.data.txt", sep = "/"),
-                    header = FALSE, sep = "\t")
+                    header = FALSE, sep = "\t", stringsAsFactors = TRUE)
 datos <- t(datos)
 num.cols.datos <- ncol(datos)
 

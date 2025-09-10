@@ -17,7 +17,8 @@ sys.stderr = sys.stdout
 
 
 APP_NAME = "Tnasas"
-sys.path.append("/asterias-web-apps/web-apps-common")
+sys.path.append("/home2/ramon/web-apps/web-apps-common")
+
 from web_apps_config import *
 from web_apps_common_funcs import *
 
@@ -151,9 +152,9 @@ acceptedModels = ('dlda', 'knn', 'svm', 'randomforest', 'PAM')
 
 ## Deleting tmp directories older than MAX_time
 currentTime = time.time()
-currentTmp = dircache.listdir("/asterias-web-apps/tnasas/www/tmp")
+currentTmp = dircache.listdir("/home2/ramon/web-apps/tnasas/www/tmp")
 for directory in currentTmp:
-    tmpS = "/asterias-web-apps/tnasas/www/tmp/" + directory
+    tmpS = "/home2/ramon/web-apps/tnasas/www/tmp/" + directory
     if (currentTime - os.path.getmtime(tmpS)) > MAX_time:
         shutil.rmtree(tmpS)
 
@@ -161,7 +162,7 @@ for directory in currentTmp:
 ### Creating temporal directories
 newDir = str(random.randint(1, 10000)) + str(os.getpid()) + str(random.randint(1, 100000)) + str(int(currentTime)) + str(random.randint(1, 10000))
 redirectLoc = "/tmp/" + newDir
-tmpDir = "/asterias-web-apps/tnasas/www/tmp/" + newDir
+tmpDir = "/home2/ramon/web-apps/tnasas/www/tmp/" + newDir
 os.mkdir(tmpDir)
 os.chmod(tmpDir, 0700)
 
@@ -180,7 +181,7 @@ genesel = radioUpload('genesel', acceptedGeneSels, fs, tmpDir, APP_NAME)
 
 if(fs.getfirst("covariate2")!= None):
     prep_tmpdir = fs.getfirst("covariate2")
-    shutil.copy("/asterias-web-apps/prep/www/tmp/" + prep_tmpdir +"/outdata.txt",tmpDir + "/covariate")
+    shutil.copy("/home2/ramon/web-apps/prep/www/tmp/" + prep_tmpdir +"/outdata.txt",tmpDir + "/covariate")
 else:
     fileUpload('covariate', fs, tmpDir, APP_NAME)
     if os.stat(tmpDir + '/covariate')[ST_SIZE] > MAX_covariate_size:
@@ -220,14 +221,14 @@ fileNamesBrowser.close()
 ##
 
 ## Now, delete any R file left (e.g., from killing procs, etc).
-RrunningFiles = dircache.listdir("/asterias-web-apps/tnasas/www/R.running.procs")
+RrunningFiles = dircache.listdir("/home2/ramon/web-apps/tnasas/www/R.running.procs")
 for Rtouchfile in RrunningFiles:
-    tmpS = "/asterias-web-apps/tnasas/www/R.running.procs/" + Rtouchfile
+    tmpS = "/home2/ramon/web-apps/tnasas/www/R.running.procs/" + Rtouchfile
     if (currentTime - os.path.getmtime(tmpS)) > R_MAX_time:
         os.remove(tmpS)
 
 ## Now, verify any processes left
-numRtnasas = len(glob.glob("/asterias-web-apps/tnasas/www/R.running.procs/R.*@*%*"))
+numRtnasas = len(glob.glob("/home2/ramon/web-apps/tnasas/www/R.running.procs/R.*@*%*"))
 if numRtnasas > MAX_tnasas:
     shutil.rmtree(tmpDir)
     commonOutput(APP_NAME)
@@ -282,14 +283,14 @@ os.chmod(arrayNames, 0600)
 
 ## touch Rout, o.w. checkdone can try to open a non-existing file
 touchRout = os.system("/bin/touch " + tmpDir + "/f1.Rout") 
-touchRrunning = os.system("/bin/touch /asterias-web-apps/tnasas/www/R.running.procs/R." + newDir +
+touchRrunning = os.system("/bin/touch /home2/ramon/web-apps/tnasas/www/R.running.procs/R." + newDir +
                           "@" + socket.gethostname())
-shutil.copy("/asterias-web-apps/tnasas/cgi/f1.R", tmpDir)
+shutil.copy("/home2/ramon/web-apps/tnasas/cgi/f1.R", tmpDir)
 ## we add the 2> error.msg because o.w. if we kill R we get a server error as standard
 ## error is sent to the server
 Rcommand = "cd " + tmpDir + "; " + R_exec + " --no-restore --no-readline --no-save --slave <f1.R >f1.Rout 2> error.msg &"
 Rrun = os.system(Rcommand)
-# tryrrun = os.system('/asterias-web-apps/mpi.log/tryRrun2.py ' + tmpDir +' 10 ' + 'Tnasas &')
+# tryrrun = os.system('/home2/ramon/web-apps/mpi.log/tryRrun2.py ' + tmpDir +' 10 ' + 'Tnasas &')
 createResultsFile = os.system("/bin/touch " + tmpDir + "/results.txt")
 
 
@@ -299,7 +300,7 @@ createResultsFile = os.system("/bin/touch " + tmpDir + "/results.txt")
 ## Copy to tmpDir a results.html that redirects to checkdone.cgi
 ## If communication gets broken, there is always a results.html
 ## that will do the right thing.
-shutil.copy("/asterias-web-apps/tnasas/cgi/results-pre.html", tmpDir)
+shutil.copy("/home2/ramon/web-apps/tnasas/cgi/results-pre.html", tmpDir)
 os.system("cd " + tmpDir + "; /bin/sed 's/sustituyeme/" +
           newDir + "/g' results-pre.html > results.html; rm results-pre.html")
 
