@@ -3,7 +3,7 @@ import glob
 import socket
 import sys
 import os
-import cgi 
+import cgi
 ##import types
 import time
 import shutil
@@ -13,7 +13,7 @@ import random
 from stat import ST_SIZE
 import cgitb
 cgitb.enable() ## zz: eliminar for real work?
-sys.stderr = sys.stdout
+## sys.stderr = sys.stdout
 
 
 APP_NAME = "Tnasas"
@@ -62,7 +62,7 @@ acceptedModels = ('dlda', 'knn', 'svm', 'randomforest', 'PAM')
 
 #     result = "%s://%s" % (schema, host)
 #     if uri: result = result + uri
-    
+
 #     return result
 
 # def getScriptname():
@@ -87,13 +87,13 @@ acceptedModels = ('dlda', 'knn', 'svm', 'randomforest', 'PAM')
 # ## we don't deal with OS specific "\n"
 # ## because R does not have a problem (at least with Windows files)
 # ## no problem in R either with empty carriage returns at end of file
-    
+
 #     if fs.has_key(fieldName):
 #         fileClient = fs[fieldName].file
 #         if not fileClient:
 #             shutil.rmtree(tmpDir)
 #             commonOutput()
-#             print "<h1> TNASAS ERROR </h1>"    
+#             print "<h1> TNASAS ERROR </h1>"
 #             print "<p> The ", fieldName, "file you entered is not a file </p>"
 #             print "<p> Please fill up the required fields and try again</p>"
 #             print "</body></html>"
@@ -101,12 +101,12 @@ acceptedModels = ('dlda', 'knn', 'svm', 'randomforest', 'PAM')
 #     else:
 #         shutil.rmtree(tmpDir)
 #         commonOutput()
-#         print "<h1> TNASAS ERROR </h1>"    
+#         print "<h1> TNASAS ERROR </h1>"
 #         print "<p> ", fieldName, "file required </p>"
 #         print "<p> Please fill up the required fields and try again</p>"
 #         print "</body></html>"
 #         sys.exit()
-            
+
 #     # transferring files to final destination;
 
 #     fileInServer = tmpDir + "/" + fieldName
@@ -123,9 +123,9 @@ acceptedModels = ('dlda', 'knn', 'svm', 'randomforest', 'PAM')
 #     #         if not line: break
 #     #         srvfile.write(line)
 #     #     srvfile.close()
-    
+
 #     os.chmod(fileInServer, 0666)
-        
+
 #     if os.path.getsize(fileInServer) == 0:
 #         shutil.rmtree(tmpDir)
 #         commonOutput()
@@ -236,10 +236,10 @@ if numRtnasas > MAX_tnasas:
     print "<p> Because of the popularity of the application "
     print " the maximum number of simultaneous runs of tnasas has been reached.</p>"
     print "<p> Please try again later.</p>"
-    print "<p> We apologize for the inconvenience.</p>"    
+    print "<p> We apologize for the inconvenience.</p>"
     print "</body></html>"
     sys.exit()
-    
+
 
 ################        Launching R   ###############
 
@@ -263,10 +263,10 @@ while 1:
             sys.exit()
         arrayfile.write(line)
         arrayfile.write("\n\n")
-        
-    
+
+
 srvfile.close()
-arrayfile.close()   
+arrayfile.close()
 os.chmod(arrayNames, 0600)
 
 
@@ -282,7 +282,7 @@ os.chmod(arrayNames, 0600)
     ##write.table(file = "pid.txt", pid, row.names = FALSE, col.names = FALSE)
 
 ## touch Rout, o.w. checkdone can try to open a non-existing file
-touchRout = os.system("/bin/touch " + tmpDir + "/f1.Rout") 
+touchRout = os.system("/bin/touch " + tmpDir + "/f1.Rout")
 touchRrunning = os.system("/bin/touch /home2/ramon/web-apps/tnasas/www/R.running.procs/R." + newDir +
                           "@" + socket.gethostname())
 shutil.copy("/home2/ramon/web-apps/tnasas/cgi/f1.R", tmpDir)
@@ -306,5 +306,3 @@ os.system("cd " + tmpDir + "; /bin/sed 's/sustituyeme/" +
 
 ##############    Redirect to checkdone.cgi    ##################
 print "Location: "+ getQualifiedURL("/cgi-bin/checkdone.cgi") + "?newDir=" + newDir, "\n\n"
-
-

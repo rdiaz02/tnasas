@@ -6,7 +6,7 @@
 
 import sys
 import os
-import cgi 
+import cgi
 import types
 import time
 import shutil
@@ -18,7 +18,7 @@ import tarfile
 
 import cgitb
 cgitb.enable() ## zz: eliminar for real work?
-sys.stderr = sys.stdout ## eliminar?
+## sys.stderr = sys.stdout ## eliminar?
 
 sys.path.append("/home2/ramon/web-apps/web-apps-common")
 from web_apps_config import R_MAX_time
@@ -28,7 +28,7 @@ from web_apps_config import R_MAX_time
 
 def getQualifiedURL(uri = None):
     """ Return a full URL starting with schema, servername and port.
-    
+
     *uri* -- append this server-rooted uri (must start with a slash)
     """
     schema, stdport = ('http', '80')
@@ -37,10 +37,10 @@ def getQualifiedURL(uri = None):
         host = os.environ.get('SERVER_NAME')
         port = os.environ.get('SERVER_PORT', '80')
         if port != stdport: host = host + ":" + port
-        
+
     result = "%s://%s" % (schema, host)
     if uri: result = result + uri
-    
+
     return result
 
 def getScriptname():
@@ -113,7 +113,7 @@ def printPalsURL(newDir,
              '">' + s1 + ' to PaLS</a></p>' + \
              '<p> Send set of <a href="http://pals.iib.uam.es?' + \
              url_org_id + 'datafile=' + gl2 + \
-             '">' + s2 + ' to PaLS</a></p>' 
+             '">' + s2 + ' to PaLS</a></p>'
     return(outstr)
 
 
@@ -132,7 +132,7 @@ def commonOutput():
     </head>
     <body>
     """
-    
+
 ## to keep executing myself:
 def relaunchCGI():
     print "Content-type: text/html\n\n"
@@ -146,9 +146,9 @@ def relaunchCGI():
     print '</head> <body>'
     print '<p> This is an autorefreshing page; your results will eventually be displayed here.\n'
     print 'If your browser does not autorefresh, the results will be kept for five days at</p>'
-    print '<p><a href="' + getBaseURL() + '?newDir=' + newDir + '">', 'http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html</a>.' 
+    print '<p><a href="' + getBaseURL() + '?newDir=' + newDir + '">', 'http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html</a>.'
     print '</p> </body> </html>'
-    
+
 
 ## Output-generating functions
 def printErrorRun():
@@ -192,7 +192,7 @@ def printOKRun():
     outf.write("<html><head><title>Tnasas results </title></head><body>\n")
     outf.write("<h2>Tnasas results </h2>")
     outf.write('<h3>CV error rate vs. number of genes used for classification</h3>')
-    outf.write('<IMG BORDER="0" SRC="./predictor_error_rates.png">') 
+    outf.write('<IMG BORDER="0" SRC="./predictor_error_rates.png">')
     outf.write("<br /><br /> <hr>")
     outf.write('<br /><br /><h2> Results <a href="http://tnasas.iib.uam.es/help/tnasas-help.html#resultstext">(help)</a></h2> \n')
     outf.write(resultsFile)
@@ -203,7 +203,7 @@ def printOKRun():
 ##    os.system('html2text -width 200 -nobs -o correlationMatrixClusters.txt correlationMatrixCluters.html')
     allResults.close()
     outf.write('<hr> <a href="http://tnasas.iib.uam.es/tmp/' +
-               newDir + '/all.results.tar.gz">Download</a> all figures and text results.')  
+               newDir + '/all.results.tar.gz">Download</a> all figures and text results.')
     # try:
     #     outf.write(printPalsURL(newDir, tmpDir))
     # except:
@@ -237,15 +237,15 @@ def printRKilled():
     shutil.copyfile(tmpDir + "/pre-results.html", tmpDir + "/results.html")
 
 
-    
+
 ## Changing to the appropriate directory
-    
+
 form = cgi.FieldStorage()
 if form.has_key('newDir'):
    value=form['newDir']
    if type(value) is types.ListType:
        commonOutput()
-       print "<h1> ERROR </h1>"    
+       print "<h1> ERROR </h1>"
        print "<p> newDir should not be a list. </p>"
        print "<p> Anyone trying to mess with it?</p>"
        print "</body></html>"
@@ -254,7 +254,7 @@ if form.has_key('newDir'):
        newDir = value.value
 else:
     commonOutput()
-    print "<h1> ERROR </h1>"    
+    print "<h1> ERROR </h1>"
     print "<p> newDir is empty. </p>"
     print "</body></html>"
     sys.exit()
@@ -262,23 +262,23 @@ else:
 if re.search(r'[^0-9]', str(newDir)):
 ## newDir can ONLY contain digits.
     commonOutput()
-    print "<h1> ERROR </h1>"    
+    print "<h1> ERROR </h1>"
     print "<p> newDir does not have a valid format. </p>"
     print "<p> Anyone trying to mess with it?</p>"
     print "</body></html>"
     sys.exit()
-    
+
 redirectLoc = "/tmp/" + newDir
 tmpDir = "/home2/ramon/web-apps/tnasas/www/tmp/" + newDir
 
 if not os.path.isdir(tmpDir):
     commonOutput()
-    print "<h1> ERROR </h1>"    
+    print "<h1> ERROR </h1>"
     print "<p> newDir is not a valid directory. </p>"
     print "<p> Anyone trying to mess with it?</p>"
     print "</body></html>"
     sys.exit()
-    
+
 
 ## Were we already done in a previous execution?
 ## No need to reopen files or check anything else. Return url with results
@@ -359,11 +359,8 @@ elif finishedOK > 0:
         None
     print 'Location: http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
 
-    
+
 else:
-    ## we only end up here if: we were not done in a previous run AND no process was overtime 
+    ## we only end up here if: we were not done in a previous run AND no process was overtime
     ## AND we did not just finish. So we must continue.
     relaunchCGI()
-    
-
-
