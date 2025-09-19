@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Help - Tnasas</title>
 <style type="text/css">
-                 body { margin-left: 10%; margin-right: 10%; color: black;} 
+                 body { margin-left: 10%; margin-right: 10%; color: black;}
 <!--                  body { margin-left: 10%; margin-right: 10%; color: black; background="fondo3.jpg";} -->
                  <!-- h1 { margin-left: -8%;} -->
                  h2,h3,h4,h5,h6 { margin-left: -4%; }
@@ -18,7 +18,7 @@ h1,h2 { font-family: Verdana, sans-serif; }
 pre { font-family: monospace; }
                </style>
   </head>
-<body background="fondo3.jpg"> 
+<body background="fondo3.jpg">
 
 
 
@@ -103,17 +103,17 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
       <li><a href="#what">What the program does</a></li>
       <li><a href="#fast">Is the program fast?</a></li>
       <li><a href="#usage">Usage</a>
-	<ul> 
+	<ul>
 	  <li><a href="#input">Input</a></li>
 	  <li><a href="#output">Output</a></li>
 	</ul>
-	</li>	
+	</li>
 	  <li><a href="#examples">Examples</a></li>
 
       <li><a href="#authors">Authors and Acknowledgements</a></li>
       <li><a href="#terms.use">Terms of use</a></li>
       <li><a href="#privacy">Privacy and	Security</a></li>
-      <li><a href="#warranty">Disclaimer</a></li>  
+      <li><a href="#warranty">Disclaimer</a></li>
       <li><a href="#refs">References</a></li>
     </ol>
       <hr>
@@ -130,7 +130,7 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
       people aware of the widespread problem of <a href="#selection.bias">"selection bias"</a>. At the same
       time, we hope to make it easy for people to see that <b>some data sets are
       "easy", and some are "hard"</b>: whatever the method you use, with some data
-      sets you always can do a great job, and with others the situation seems hopeless. 
+      sets you always can do a great job, and with others the situation seems hopeless.
 	  Finally, Tnasas can be used as a <b>benchmark</b> against some
 	  (overly) optimistic claims that occasionally
 	  are attached to new methods and algorithms. This is a particularly
@@ -152,7 +152,7 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
     algorithms</a> with different methods for <a href="#var.sel">gene selection</a>.
 
 
-    
+
     <h2><a name="methods">Methods included</a></h2>
     <p>We have included several methods, support vector machines (SVM),
       k-nearest neighbor (NN), diagonal linear discriminant analysis
@@ -165,8 +165,8 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
     <p>Full explanations of the methods used can be used in the
       <a href="#references">references</a>. What follows is a quick summary:</p>
 
-      <ul> 
-      
+      <ul>
+
       <li><b><a name="dlda">Diagonal Linear Discriminant Analysis (DLDA)</a></b> DLDA is the
       maximum likelihood discriminant rule, for multivariate normal class
       densities, when the class densities have the same diagonal
@@ -188,7 +188,7 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
       multivariate normal class densities), this method has been found to work
       very well. In contrast to the more common Fisher's LDA technique, DLDA
 	works even when the number of cases is smaller than the number of variables.
-	Details and explanations of DLDA can be found in 
+	Details and explanations of DLDA can be found in
       <cite>Dudoit et al. 2002</cite>.</li>
 
       <li><b><a name="knn">Nearest neighbor (KNN)</a></b> KNN is a non-parametric
@@ -202,12 +202,12 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
       <i>k</i> that produces the smallest error is used).  However, since
       finding the optimal <i>k</i> by cross-validation is time consuming, we
       have set <i>k = 1</i>, as this is often a successful rule (<cite>Ripley 1996</cite>; <cite>Hastie et al., 2001</cite>).</li>
-      
+
       <li><b><a name="svm">Support Vector Machines (SVM)</a></b>SVM are becoming increasingly popular classifiers
 	in many areas, including microarrays (<cite>Furey et al.,
 	  2000</cite>; <cite>Lee &amp; Lee, 2003</cite>; <cite>Ramaswamy et al., 2001</cite>).
 	SVM (with linear kernel, as used here) try to find an
-	optimal separating hyperplane between the classes. When 
+	optimal separating hyperplane between the classes. When
 	the classes are linearly separable, the hyperplane is located
 	so that it has maximal margin (i.e., so that there is maximal distance between the
 	hyperplane and the nearest point of any of the classes) which should
@@ -218,7 +218,7 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
 	less than a constant. For problems involving more than two classes
 	there are several possible approaches; the one used here
 	is the ``one-against-one'' approach, as implemented
-	in libsvm (<cite> Chang &amp; Lin, 2003</cite>). 
+	in libsvm (<cite> Chang &amp; Lin, 2003</cite>).
 	Reviews and introductions to SVM can be found in <cite>Burgues,
 	  1998</cite> and <cite>Hastie et al., 2001</cite>.
       </li>
@@ -272,7 +272,7 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
       subest, and then build the predictor. We provide three ways of ranking
     genes, and each can be used with any of the above class-prediction
     algorithms (except PAM, which includes gene selection as part of the
-    algorithm itself). 
+    algorithm itself).
 
     <ul>
       <li><b><a name="Fratio">F-ratio, or between to within classes sums of
@@ -292,7 +292,7 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
     best performing predictor. In the current version of Tnasas
       we build the predictor <b>using the best <i>g</i> &#061;2, 5, 10, 20, 35,
       50, 75, 120, 200, 500, 1000, 2000 and the total number of genes</b>.
-    
+
 
 
 
@@ -313,10 +313,11 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
       this can lead to <b>severe underestimates of prediction error</b> (and the
       references given provide several alarming examples). In addition it is
       very easily to obtain "excellent" predictors with completely random data,
-      if we do not account for the preselection (we present some numerical
-      examples with KNN and SVM in our <a
-	href="http://iib.uam.es/~rdiaz/R-course-CNIO.html">R
-	course</a>.</p>
+      if we do not account for the preselection.<!--  (we present some numerical -->
+      <!-- examples with KNN and SVM in our <a -->
+      <!-- 	href="http://iib.uam.es/~rdiaz/R-course-CNIO.html">R -->
+      <!-- 	course</a>. -->
+    </p>
 
     <p>A way to obtain better estimates of the prediction error is to use
     cross-validation over the whole process of
@@ -325,7 +326,7 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
     predict the left out samples. This way, the left-out samples do not
     participate in the selection of the genes, and the "selection bias" problem
     is avoided.</p>
-    
+
     <p>In the procedures we have implemented, the problem of selection bias is
       taken into account: all the cross-validated error rates include the
       process of gene selection.</p>
@@ -375,7 +376,7 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
       the number of genes this way should lead to better predictors, since we
       base our choice on an estimate of prediction error rate that
       accounts for selection bias.</p>
-    
+
     <p>The methods we have implemented return, as part of their final output, the
       cross-validated error rate of the complete process; in other words, we
       cross-validate the process of "building several predictors and then
@@ -390,9 +391,9 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
 	most of the "usual" variable selection procedures, such as the
 	(in)famous <b>stepwise, backwards, and forward methods</b> in, for example,
 	linear regression, are severely biased (and, for example, lead to
-	p-values that are not meaningful). This is issue is ellaborated upon 
+	p-values that are not meaningful). This is issue is ellaborated upon
 	beautifully by Frank Harrell Jr. in his book <cite>Regression modeling
-	  strategies</cite>; some of the main arguments can be found 
+	  strategies</cite>; some of the main arguments can be found
 	at <a href="http://www.pitt.edu/~wpilib/statfaq/regrfaq.html">this
 	  site</a>. This is very relevant here, because some people think they
 	can escape this problem by doing something like: "first, select 50
@@ -415,10 +416,10 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
 	to build a fantastic logistic regression model using stepwise
 	regression methods; a logistic regression model that will fail
 	miserably when we apply it to new samples &hellip; </font></p>
-	
+
 
     <h2><a name="what">What the program does</a></h2>
-    Essentially, this is what the program does. 
+    Essentially, this is what the program does.
 
     <h3>To find the best number of predictors</h3>
 
@@ -442,15 +443,15 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
     the one corresponding to the smaller number of genes.</li>
     <li>Now run the gene ranking method on the complete sample, and select the
     top <i>gb</i> genes.
-    
+
   </ol>
 
   <p>If using <a href="#PAM">shrunken centroids</a> a somewhat similar
   procedure is used implicitly by the method.</p>
 
-  
+
     <h3>To evaluate the error rate of this procedure</h3>
-    Do a 10-fold cross-validation of the procedure above. So: 
+    Do a 10-fold cross-validation of the procedure above. So:
     <ol>
       <li>Divide the whole data set in 10 approximately equal subsets.</li>
       <li>For each of the 10 subsets do:
@@ -476,32 +477,32 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
     cross-validation samples are selected so that the relative proportions of
     each class are the same (or as close to the same as possible) in all
     training and test samples.</p>
-    
+
     <h2><a name="fast">Is the program fast?</a></h2>
     <p>Some procedures are faster than others. NN and DLDA with randking based
     on the F-ratio are relatively fast (< 3 minutes). SVM and random
     forest are slower than NN and DLDA. The Wilcoxon and random forest ranking are
     slower than the F-ratio. Shrunken centroids is relatively fast.</p>
-	
+
 
 
     <h2><a name="usage">Usage</a></h2>
-    
+
     <h3><a name="input">Input</a></h3>
 
     <h4><a name="covariates">Covariates file</a></h4>
-    <p>The file with the covariates; generally the gene 
+    <p>The file with the covariates; generally the gene
     expression data. In this file, rows represent variables (generally genes),
     and columns represent subjects, or samples, or arrays.</p>
 
-    <p> The file for the covariates should be <a name="requirements">formated</a> as:</p> 
-    <ul> 
-      <li>Data should conform to the "genes in rows,  patients (or arrays) in columns". 
-          In other words, each row of the data file is supposed to represent a different gene 
-          or variable.</li> 
-      <li>Use tab (\t) as the field separator within rows.</li> 
-      <li>Use newline or carriage return (\n) between rows. It is also convenient to finish each 
-              file with one carriage return (\n).</li> 
+    <p> The file for the covariates should be <a name="requirements">formated</a> as:</p>
+    <ul>
+      <li>Data should conform to the "genes in rows,  patients (or arrays) in columns".
+          In other words, each row of the data file is supposed to represent a different gene
+          or variable.</li>
+      <li>Use tab (\t) as the field separator within rows.</li>
+      <li>Use newline or carriage return (\n) between rows. It is also convenient to finish each
+              file with one carriage return (\n).</li>
       <li>Array names: if you want to name your arrays (useful for the output of
 	the analyses) do as follows:
 	<ol>
@@ -510,10 +511,10 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
 	    don't give you choices);</li>
 	  <li>Write the array names (separated by tabs).</li>
 	</ol>
-      <li>The first column is assumed to contain the ID information for genes, marker, 
-        or whatever. This will be used to label the output (but it also means that whatever is 
-        in the first column is not used in the analyses).</li> 
-      <li>You can have an arbitrary number of rows with comments. These rows must always start 
+      <li>The first column is assumed to contain the ID information for genes, marker,
+        or whatever. This will be used to label the output (but it also means that whatever is
+        in the first column is not used in the analyses).</li>
+      <li>You can have an arbitrary number of rows with comments. These rows must always start
         with an "&#035;".</li>
 	    <li><b>Gene names and array names MUST be unique</b>. If
 	      they are not, the program will let you know. If you do
@@ -529,44 +530,44 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
 	      classifier (and what should we do if two or more genes
 	      are named "gene B"?).</li>
 
-      <li><b>Missing values are NOT allowed</b>. You can use the 
+      <li><b>Missing values are NOT allowed</b>. You can use the
 	      <a href="http://prep.iib.uam.es">preprocessor</a> and do
 	      several things with your data before sending it
 	      to Tnasas. We would probably recommend you do imputation after
 	      eliminating genes with too many (more than, say, 20&#037;?) missing. Anyway,
 	      how best to deal with missing values is not a trivial issue and is outside
 	      the scope of this help file.
-      
-      <li> This is a small covariate data file: 
-        <div class="color"> 
-          <pre> 
-#Name     ge1      ge2      ge1      ge1      ge2 
-gene1   23.4    45.6    44      76      85.6 
-genW@   3      34      23      56      13 
-geneX#  23      25.6    29.4    13.2    1.98   </pre> </div> 
-        </li> 
+
+      <li> This is a small covariate data file:
+        <div class="color">
+          <pre>
+#Name     ge1      ge2      ge1      ge1      ge2
+gene1   23.4    45.6    44      76      85.6
+genW@   3      34      23      56      13
+geneX#  23      25.6    29.4    13.2    1.98   </pre> </div>
+        </li>
 
     </ul>
-    
-    
+
+
     <h4><a name="class">Class file</a></h4>
-    <p>These are the class labels 
+    <p>These are the class labels
       (e.g., healthy or affected, or different types of cancer) that group the
       samples. Our predictor will try to predict these class labels.</p>
-    
+
 	<p>Please note that we do not allow any data set with 3 or fewer cases in any class.
 	  Why? Because, on the one hand, any results from such data would be hard to believe;
 	  on the other hand, that would result in some cross-validation samples
     having some training samples with 0 elements from one of the classes.</p>
-	  
-    <p>Separate values by tab (\t), and finish the file with a carriage return or newline.  
-      No missing values are allowed here. Class labels can be anything you wish; they 
-      can be integers, they can be words, whatever. </p>  
+
+    <p>Separate values by tab (\t), and finish the file with a carriage return or newline.
+      No missing values are allowed here. Class labels can be anything you wish; they
+      can be integers, they can be words, whatever. </p>
     <p> This is a simple example of class labels file  </p>
-    <div class="color"> 
-      <pre>  
-CL1     CL2     CL1     CL4     CL2     CL2     CL1     CL4       </pre>        </div>       
-  
+    <div class="color">
+      <pre>
+CL1     CL2     CL1     CL4     CL2     CL2     CL1     CL4       </pre>        </div>
+
 
 
 <h4><a name="idc">Type of gene identifier and species</a></h4>
@@ -599,7 +600,7 @@ tool.</p>
       and the estimate of the error rate from the 10-fold cross-validation (a dotted
       red line) that is returned also in the Results).</p>
       </li>
-      
+
       <li>The <b>results text</b>. Here you find:
       <ol>
 	<li>OPTIONS: information about the options and defaults used by the
@@ -611,9 +612,9 @@ tool.</p>
 	  with the set of genes that leads to smallest error (as seen in
 	  the figure). Thus, this estimate of the error rate takes care
 	  of the two potential types of severe underestimates of error
-	  rates (see <a href="#selection.bias">Selection bias</a> and 
-	  <a href="#recv">Further biases</a>). (Technically, this 
-	  estimate of the error rate is not unbiased, but the amount of bias is 
+	  rates (see <a href="#selection.bias">Selection bias</a> and
+	  <a href="#recv">Further biases</a>). (Technically, this
+	  estimate of the error rate is not unbiased, but the amount of bias is
 	  negligible compared to the severe biased introduced
 	  if not accounting for selection of genes and number of genes).</li>
 	  <li>Confussion matrix: a 2-way table of true class ("Observed"),
@@ -633,21 +634,21 @@ tool.</p>
 	  Error" column is identical to the "error
 	  rate".
 	  <p>Lets show an example:</p>
-	  
-	  <div class="color"><pre>  
+
+	  <div class="color"><pre>
 Confussion Matrix:
            N  T TotalError RelativeErrorPerClass
 Observed N 4  3       0.06            0.42857143
 Observed T 1 42       0.02            0.02325581</pre>
 	  </div>
-	  
+
 	  <p>The Total Error is obtained as the number of misclassifications relative to the
 	  total number of predictions. The total number of
 	  missclassifications is 3 + 1 = 4, and the total number of
 	  predictions is 50. As said before, all these are "out-of-bag"
 	  predictions. So the "Error rate" here is
 	  4&#047;50 = 0.08. </p>
-	  
+
 	  <p>The "TotalError" column entries are 3&#047;50 = 0.06 and
 	  1&#047;50 = 0.02, when the true, observed, classes are "N"
 	  and "T" respectively. Sure enough, the "Error rate" = 0.08 = 0.06 + 0.02.</p>
@@ -678,7 +679,7 @@ accounting for selection bias.
 	      <li>Selected predictor genes: if the previous output says its 50
 		genes, these are the top 50 genes, according to the ranking
 		criterion you choose.</li>
-		
+
 		<li>OOB predictions: the OOB predictions. We also
 		provide the true class and the labels. You can use these data
 		to reproduce the confussion matrix above.</li>
@@ -711,13 +712,13 @@ accounting for selection bias.
 		  the cross-validation runs.</li>
 		  </ol>
 
-		
+
 	    </ol>
 	  </li>
 	</ol>
       </li>
     </ul>
-	
+
 
 
 <h4><a name="pals">Sending results to <a
@@ -752,33 +753,34 @@ clickable, and display additional information from <href =
 
 
 <h3><a name="examples">Examples</a></h3>
-<p>Examples of several runs, one with fully commented results, are available 
+<p>Examples of several runs, one with fully commented results, are available
 <a href="http://tnasas.iib.uam.es/Examples/index.html">here</a>.
 
 
 
     <h2><a name="authors">Authors and Acknowledgements</a></h2>
-    
-    <p>This program was developped by Juan M. Vaquerizas and 
-      <a href="http://iib.uam.es/~rdiaz" target="_blank">Ramón Díaz-Uriarte</a>, 
-      from the <a href="http://iib.uam.es" target="_blank">Bioinformatics Unit</a> at
-      <a href="http://www.cnio.es" target="_blank">CNIO</a>.
-      This tool is, essentially, a web interface to a set of 
-      <a href="http://www.R-project.org/">R</a> functions, 
-      plus a small piece of C++ code (for the dlda part), written by 
+
+    <p>This program was developped by Juan M. Vaquerizas and
+      <a href="http://iib.uam.es/~rdiaz" target="_blank">Ramón Díaz-Uriarte</a>, while at CNIO. It is maintained (kept alive)
+      by Ramon Diaz-Uriarte (currently at UAM and IIBM.)
+      <!-- from the <a href="http://iib.uam.es" target="_blank">Bioinformatics Unit</a> at -->
+      <!-- <a href="http://www.cnio.es" target="_blank">CNIO</a>. -->
+      This tool is, essentially, a web interface to a set of
+      <a href="http://www.R-project.org/">R</a> functions,
+      plus a small piece of C++ code (for the dlda part), written by
       Ramón. Some of these
       functions themselves call functions in the packages
-      <a href="http://cran.r-project.org/src/contrib/Descriptions/e1071.html">e1071</a> (by 
-E. Dimitriadou, K. Hornik, F. Leisch, D. Meyer, and A. Weingessel), 
+      <a href="http://cran.r-project.org/src/contrib/Descriptions/e1071.html">e1071</a> (by
+E. Dimitriadou, K. Hornik, F. Leisch, D. Meyer, and A. Weingessel),
       <a
 	href="http://cran.r-project.org/src/contrib/Descriptions/VR.html">class</a>
       (by W. Venables and B. Ripley),
      <a
     href="http://cran.r-project.org/src/contrib/Descriptions/pamr.html">pamr</a>
-(by T. Hastie, R. Tibshirani, Balasubramanian Narasimhan, G. Chu), 
+(by T. Hastie, R. Tibshirani, Balasubramanian Narasimhan, G. Chu),
     <a
     href="http://cran.r-project.org/src/contrib/Descriptions/supclust.html">supclust</a>
-    (by M. Dettling and M. Maechler), 
+    (by M. Dettling and M. Maechler),
       <a
 	href="http://www.bioconductor.org/repository/release1.3/package/html/multtest.html">multtest</a>
       (by Y. Ge and S. Dudoit) and
@@ -788,18 +790,18 @@ E. Dimitriadou, K. Hornik, F. Leisch, D. Meyer, and A. Weingessel),
       Our set of functions themselves will (soon) be converted into an R
       package and released under the GPL.</p>
 
-  
+
     <p>We want to thank all these authors for the great tools that they have
       made available for all to use. If you find this useful, and since R and Bioconductor are
       developed by a team of volunteers, we suggest you consider making a
       donation to the <a href="http://www.R-project.org/foundation/main.html">
 	R foundation for statistical computing</a>.</p>
-      
+
  <!--    <p>We also want to thank the people of the <a href="http://iib.uam.es" target="_blank"> -->
 <!-- 	CNIO Bioinformatics Unit</a> for beta testing, and comments with the design of the tool. In -->
 <!--       particular thanks to J. Santoyo and <a href="http://iib.uam.es/~jherrero" target="_blank">J. Herrero</a> for help with the graphical design and with the -->
 <!--       catching of errors. -->
-      
+
  <!--    <h2>For your records: versions, etc</h2> -->
 <!--     You <b>want to keep this in your records</b>. -->
 <!--     <ul> -->
@@ -827,16 +829,16 @@ E. Dimitriadou, K. Hornik, F. Leisch, D. Meyer, and A. Weingessel),
 <!-- 	</pre> -->
 <!--       </li> -->
 <!--       <li> Other options (defaults used by limma):  -->
-	
+
 <!-- 	<pre> -->
 <!--          normalizeWithinArrays: -->
 <!--                method="printtiploess" ## or loess -->
 <!--                span=0.3 -->
 <!-- 	</pre> -->
 <!--       </li> -->
-              
+
 <!--     </ul> -->
-    
+
 
 <!--     <h2><a name="bugs">Before you start: If "The program doesn't work"</a></h2> -->
 <!--     <p>Please, before calling/emailing us if "the program doesn't work", make -->
@@ -847,15 +849,14 @@ E. Dimitriadou, K. Hornik, F. Leisch, D. Meyer, and A. Weingessel),
 <!--       (i.e., fix the reported problems before asking us).<br> -->
 <!--       Please, also make sure that javascript is enabled on your web browser. -->
 <!--       This tool has been tested in Explorer 6.0, Netscape 7.0 and Konqueror 3.1.1. <br> -->
-      
-      
+
+
     <h2><a name="terms.use">Terms of use</a></h2>
     <ul>
       <li>You acknowledge that the Tnasas Software is experimental in nature
-	and is supplied "AS IS", without obligation by the authors, the CNIO's
-	Bioinformatics Unit or the CNIO to provide accompanying
+	and is supplied "AS IS", without obligation by the authors, or their institutions, to provide accompanying
 	services or support. The entire risk as to the quality and performance of the
-	Software is with you. The CNIO and the authors expressly disclaim any and all
+	Software is with you. The authors expressly disclaim any and all
 	warranties regarding the software, whether express or implied, including but
 	not limited to warranties pertaining to merchantability or fitness for a
 	particular purpose.</li>
@@ -868,7 +869,7 @@ E. Dimitriadou, K. Hornik, F. Leisch, D. Meyer, and A. Weingessel),
 	Complaints or suggestions are welcome.</li>
     </ul>
     <br>
-    
+
     <h2><a name="privacy">Privacy and	Security</a></h2>
     <p>Uploaded data set are saved in temporary directories in the server and are
       accessible through the web until they are erased after some time. Anybody can
@@ -879,26 +880,26 @@ E. Dimitriadou, K. Hornik, F. Leisch, D. Meyer, and A. Weingessel),
       possible for somebody else to look at your data while you are uploading or
       dowloading them.</p>
       <br>
-      
+
     <h2><a name="warranty">Disclaimer</a></h2>
     <p>This software is experimental in nature and is supplied "AS IS", without
-      obligation by the authors or the CNIO the to provide accompanying services or
+      obligation by the authors or their institutions to provide accompanying services or
       support. The entire risk as to the quality and performance of the software is
       with you. The authors expressly disclaim any and all warranties regarding the
       software, whether express or implied, including but not limited to warranties
       pertaining to merchantability or fitness for a particular purpose.<br>
-      
+
       <!--     (If you are lost using these types of applications, or new, you -->
       <!--       might want to read  -->
       <!--       <a href="http://www.catb.org/~esr/faqs/smart-questions.html"> -->
       <!-- 	How To Ask Questions The Smart Way</a>, by Eric Raymond.) -->
-      
-      
-      
+
+
+
     <h2><a name="refs">References</a></h2>
-    
+
 <p>Ambroise C, McLachlan GJ (2002) Selection bias in gene extraction on the basis
-    of microarray gene-expression data. 
+    of microarray gene-expression data.
       <a href="http://www.pnas.org/cgi/content/abstract/99/10/6562">Proc Natl
 	Acad Sci USA 99: 6562--6566</a>.</p>
 
@@ -945,7 +946,7 @@ report</a>.)</p>
   1132--1139.</p>
 
 
-<p>Liaw A, Wiener M (2002) 
+<p>Liaw A, Wiener M (2002)
     <a href="http://cran.r-project.org/doc/Rnews/Rnews_2002-3.pdf">
 Classification and regression by randomForest</a>. <i>R
       News</i>, 2: 18--22.</p>
@@ -961,7 +962,7 @@ Classification and regression by randomForest</a>. <i>R
 <p>Romualdi C, Campanaro S, Campagna D, Celegato B, Cannata N, et~al. (2003)
   Pattern recognition in gene expression profiling using DNA array: a
   comparative study of different statistical methods applied to cancer
-  classification. 
+  classification.
     <a href="http://hmg.oupjournals.org/cgi/content/full/12/8/823">Hum Mol Genet 12: 823--836.</a>.</p>
 
 <p>Simon R, Radmacher MD, Dobbin K, McShane LM (2003) Pitfalls in the use of DNA
@@ -977,7 +978,7 @@ Proc Natl Acad Sci USA, 99: 6567--6572.</p>
 
 
 <h3>Copyright</h3>
-This document is copyrighted. Copyright © 2003, 2004, 2005, 2006, Ramón Díaz-Uriarte, Juan M. Vaquerizas, 
+This document is copyrighted. Copyright © 2003, 2004, 2005, 2006, Ramón Díaz-Uriarte, Juan M. Vaquerizas,
 <hr>
 
 <!-- Created: Wed Jul 24 15:37:41 CEST 2002 -->
