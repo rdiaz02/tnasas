@@ -31,11 +31,11 @@ def getQualifiedURL(uri = None):
 
     *uri* -- append this server-rooted uri (must start with a slash)
     """
-    schema, stdport = ('http', '80')
+    schema, stdport = ('https', '443')
     host = os.environ.get('HTTP_HOST')
     if not host:
         host = os.environ.get('SERVER_NAME')
-        port = os.environ.get('SERVER_PORT', '80')
+        port = os.environ.get('SERVER_PORT', '443')
         if port != stdport: host = host + ":" + port
 
     result = "%s://%s" % (schema, host)
@@ -83,7 +83,7 @@ def clean_for_PaLS(file_in, file_out):
 
 def printPalsURL(newDir,
                  tmpDir,
-                 application_url = "http://tnasas.iib.uam.es",
+                 application_url = "https://tnasas.iib.uam.es",
                  f1 = "Selected.genes.txt",
                  f2 = "Selected.and.CV.selected.txt",
                  s1 = "genes selected in main run",
@@ -105,13 +105,13 @@ def printPalsURL(newDir,
     clean_for_PaLS(tmpDir + '/' + f1, tmpDir + '/' + f1)
     clean_for_PaLS(tmpDir + '/' + f2, tmpDir + '/' + f2)
     outstr0 = '<br /> <hr> ' + \
-              '<h3> Send results to <a href = "http://pals.iib.uam.es">' + \
+              '<h3> Send results to <a href = "https://pals.iib.uam.es">' + \
               '<IMG BORDER="0" SRC="../../palsfavicon40.png" align="middle"></a></h3>'
     outstr = outstr0 + \
-             '<p> Send set of <a href="http://pals.iib.uam.es?' + \
+             '<p> Send set of <a href="https://pals.iib.uam.es?' + \
              url_org_id + 'datafile=' + gl1 + \
              '">' + s1 + ' to PaLS</a></p>' + \
-             '<p> Send set of <a href="http://pals.iib.uam.es?' + \
+             '<p> Send set of <a href="https://pals.iib.uam.es?' + \
              url_org_id + 'datafile=' + gl2 + \
              '">' + s2 + ' to PaLS</a></p>'
     return(outstr)
@@ -146,7 +146,7 @@ def relaunchCGI():
     print '</head> <body>'
     print '<p> This is an autorefreshing page; your results will eventually be displayed here.\n'
     print 'If your browser does not autorefresh, the results will be kept for five days at</p>'
-    print '<p><a href="' + getBaseURL() + '?newDir=' + newDir + '">', 'http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html</a>.'
+    print '<p><a href="' + getBaseURL() + '?newDir=' + newDir + '">', 'https://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html</a>.'
     print '</p> </body> </html>'
 
 
@@ -194,7 +194,7 @@ def printOKRun():
     outf.write('<h3>CV error rate vs. number of genes used for classification</h3>')
     outf.write('<IMG BORDER="0" SRC="./predictor_error_rates.png">')
     outf.write("<br /><br /> <hr>")
-    outf.write('<br /><br /><h2> Results <a href="http://tnasas.iib.uam.es/help/tnasas-help.html#resultstext">(help)</a></h2> \n')
+    outf.write('<br /><br /><h2> Results <a href="https://tnasas.iib.uam.es/help/tnasas-help.html#resultstext">(help)</a></h2> \n')
     outf.write(resultsFile)
     ## compress all the results
     allResults = tarfile.open(tmpDir + '/all.results.tar.gz', 'w:gz')
@@ -202,7 +202,7 @@ def printOKRun():
     allResults.add(tmpDir + '/predictor_error_rates.png', 'predictor_error_rates.png')
 ##    os.system('html2text -width 200 -nobs -o correlationMatrixClusters.txt correlationMatrixCluters.html')
     allResults.close()
-    outf.write('<hr> <a href="http://tnasas.iib.uam.es/tmp/' +
+    outf.write('<hr> <a href="https://tnasas.iib.uam.es/tmp/' +
                newDir + '/all.results.tar.gz">Download</a> all figures and text results.')
     # try:
     #     outf.write(printPalsURL(newDir, tmpDir))
@@ -284,7 +284,7 @@ if not os.path.isdir(tmpDir):
 ## No need to reopen files or check anything else. Return url with results
 ## and bail out.
 if os.path.exists(tmpDir + "/natural.death.pid.txt") or os.path.exists(tmpDir + "/killed.pid.txt"):
-    print 'Location: http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
+    print 'Location: https://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
     sys.exit()
 
 ## No, we were not done. Need to examine R output
@@ -313,7 +313,7 @@ if os.path.exists(tmpDir + "/pid.txt"):
             os.system("rm /home2/ramon/web-apps/tnasas/www/R.running.procs/R." + newDir + "*")
         except:
             None
-        print 'Location: http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
+        print 'Location: https://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
 ##                chkmpi = os.system('/home2/ramon/web-apps/mpi.log/adhocCheckRmpi.py Tnasas&')
         sys.exit()
 
@@ -335,7 +335,7 @@ if errorRun > 0:
         os.system("rm /home2/ramon/web-apps/tnasas/www/R.running.procs/R." + newDir + "*")
     except:
         None
-    print 'Location: http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
+    print 'Location: https://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
 
 
 elif finishedOK > 0:
@@ -357,7 +357,7 @@ elif finishedOK > 0:
         os.system("rm /home2/ramon/web-apps/tnasas/www/R.running.procs/R." + newDir  + "*")
     except:
         None
-    print 'Location: http://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
+    print 'Location: https://tnasas.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
 
 
 else:
